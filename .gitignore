@@ -1,3 +1,6 @@
+# Windsurf rules
+.windsurfrules
+
 # Python
 __pycache__/
 *.py[cod]
