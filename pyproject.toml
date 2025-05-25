@@ -7,7 +7,7 @@ name = "cafe"
 version = "0.1.0"
 description = "A modular AI forecasting platform integrating LLMs, time-series forecasting, and live news data."
 authors = [
-    { name = "Cafe Developers", email = "you@example.com" }
+    { name = "Moy Yuan", email = "moy.zhangdie.yuan@gmail.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.9"
