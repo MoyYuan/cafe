@@ -3,6 +3,8 @@ uvicorn
 pydantic
 httpx
 typing-extensions
+numpy
+python-dotenv
 pytest
 mypy
 black
