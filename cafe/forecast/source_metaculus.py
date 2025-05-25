@@ -1,8 +1,10 @@
-import httpx
+from datetime import datetime
 from typing import List
+
+import httpx
+
 from .forecast_question import ForecastQuestion
 from .source_base import ForecastSourceBase
-from datetime import datetime
 
 
 class MetaculusForecastSource(ForecastSourceBase):

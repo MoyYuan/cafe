@@ -1,6 +1,8 @@
-from .base import BaseModel
 from typing import Any, Dict
+
 import httpx
+
+from .base import BaseModel
 
 
 class GeminiModel(BaseModel):

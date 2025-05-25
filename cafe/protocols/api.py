@@ -1,11 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from .schemas import ForecastRequest, ForecastResponse
-from cafe.models.llm.vllm import VLLMModel
-from cafe.models.llm.gemini import GeminiModel
-from cafe.models.timeseries.local import TimeSeriesLocalModel
-from cafe.models.timeseries.api import TimeSeriesAPIModel
-from cafe.context.memory import InMemoryContext
 import os
+
+from fastapi import APIRouter, Depends, HTTPException, status
+
+from cafe.context.memory import InMemoryContext
+from cafe.models.llm.gemini import GeminiModel
+from cafe.models.llm.vllm import VLLMModel
+from cafe.models.timeseries.api import TimeSeriesAPIModel
+from cafe.models.timeseries.local import TimeSeriesLocalModel
+
+from .schemas import ForecastRequest, ForecastResponse
 
 router = APIRouter()
 

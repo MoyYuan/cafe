@@ -1,5 +1,5 @@
-from cafe.evaluation.metrics import brier_score, log_loss, accuracy
 from cafe.evaluation.evaluator import DefaultEvaluator
+from cafe.evaluation.metrics import accuracy, brier_score, log_loss
 
 y_true = [1, 0, 1]
 y_prob = [0.8, 0.2, 0.6]

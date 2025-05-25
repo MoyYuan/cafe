@@ -1,5 +1,6 @@
-from .base import BaseModel
 from typing import Any, Dict
+
+from .base import BaseModel
 
 
 class TimeSeriesLocalModel(BaseModel):

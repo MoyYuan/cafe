@@ -1,8 +1,9 @@
 import json
+from datetime import datetime
 from typing import List
+
 from .forecast_question import ForecastQuestion
 from .source_base import ForecastSourceBase
-from datetime import datetime
 
 
 class LocalForecastSource(ForecastSourceBase):

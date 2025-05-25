@@ -1,5 +1,6 @@
-from typing import List, Dict, Callable
-from .metrics import brier_score, log_loss, accuracy
+from typing import Callable, Dict, List
+
+from .metrics import accuracy, brier_score, log_loss
 
 
 class Evaluator:

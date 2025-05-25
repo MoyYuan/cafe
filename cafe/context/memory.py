@@ -1,5 +1,6 @@
-from .base import BaseContext
 from typing import Any
+
+from .base import BaseContext
 
 
 class InMemoryContext(BaseContext):

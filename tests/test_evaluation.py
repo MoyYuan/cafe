@@ -1,5 +1,6 @@
 import pytest
-from cafe.evaluation.metrics import brier_score, log_loss, accuracy
+
+from cafe.evaluation.metrics import accuracy, brier_score, log_loss
 
 
 def test_brier_score():
