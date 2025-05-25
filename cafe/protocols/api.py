@@ -3,6 +3,7 @@ import os
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from cafe.context.memory import InMemoryContext
+from cafe.models.base import Predictable
 from cafe.models.llm.gemini import GeminiModel
 from cafe.models.llm.vllm import VLLMModel
 from cafe.models.timeseries.api import TimeSeriesAPIModel
@@ -16,7 +17,7 @@ router = APIRouter()
 context = InMemoryContext()
 
 # Model registry
-models = {
+models: dict[str, Predictable] = {
     "vllm": VLLMModel(),
     "gemini": GeminiModel(api_key=os.getenv("GEMINI_API_KEY")),
     "timeseries_local": TimeSeriesLocalModel(),

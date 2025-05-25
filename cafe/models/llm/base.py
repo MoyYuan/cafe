@@ -1,1 +1,4 @@
-# Base classes for LLM models
+class BaseModel:
+    """Base class for LLM models."""
+
+    pass

@@ -1,1 +1,4 @@
-# Base classes for timeseries models
+class BaseModel:
+    """Base class for time series models."""
+
+    pass

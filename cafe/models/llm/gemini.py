@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -6,7 +6,7 @@ from .base import BaseModel
 
 
 class GeminiModel(BaseModel):
-    def __init__(self, api_key: str = None):
+    def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key
 
     def predict(self, prompt: str, parameters: Dict[str, Any], context) -> Any:

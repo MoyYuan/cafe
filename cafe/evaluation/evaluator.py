@@ -1,4 +1,4 @@
-from typing import Callable, Dict, Sequence
+from typing import Callable, Dict, Optional, Sequence
 
 from .metrics import accuracy, brier_score, log_loss
 
