@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cafe"
+version = "0.1.0"
+description = "A modular AI forecasting platform integrating LLMs, time-series forecasting, and live news data."
+authors = [
+    { name = "Cafe Developers", email = "you@example.com" }
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "httpx",
+    "typing-extensions",
+    "pytest",
+    "mypy",
+    "black",
+    "isort"
+]
+
+[tool.setuptools.packages.find]
+where = ["cafe"]

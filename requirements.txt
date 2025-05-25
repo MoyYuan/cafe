@@ -7,7 +7,3 @@ pytest
 mypy
 black
 isort
-# Type stubs for better mypy coverage
- types-pyyaml
-types-requests
-types-ujson

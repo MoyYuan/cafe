@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any, Dict, List
 
 
@@ -22,7 +22,7 @@ class ExperimentTracker:
                 "parameters": parameters,
                 "metrics": metrics,
                 "notes": notes,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(UTC).isoformat(),
             }
         )
         return run_id
