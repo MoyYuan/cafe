@@ -1,6 +1,7 @@
 from .base import BaseContext
 from typing import Any
 
+
 class InMemoryContext(BaseContext):
     def __init__(self):
         self._store = {}

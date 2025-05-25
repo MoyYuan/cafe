@@ -20,12 +20,16 @@ models = {
     "timeseries_api": TimeSeriesAPIModel(),
 }
 
+
 @router.post("/forecast", response_model=ForecastResponse)
 def forecast(request: ForecastRequest):
     model = models.get(request.model)
     if not model:
         valid_models = ", ".join(models.keys())
-        raise HTTPException(status_code=400, detail=f"Unknown model: {request.model}. Valid models: {valid_models}")
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unknown model: {request.model}. Valid models: {valid_models}",
+        )
     try:
         result = model.predict(request.prompt, request.parameters or {}, context)
         return ForecastResponse(result=result, model=request.model)

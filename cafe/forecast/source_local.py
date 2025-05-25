@@ -4,6 +4,7 @@ from .forecast_question import ForecastQuestion
 from .source_base import ForecastSourceBase
 from datetime import datetime
 
+
 class LocalForecastSource(ForecastSourceBase):
     def __init__(self, path: str):
         self.path = path
@@ -34,7 +35,7 @@ class LocalForecastSource(ForecastSourceBase):
             community_prediction=item.get("community_prediction"),
             url=item.get("url"),
             tags=item.get("tags", []),
-            raw=item
+            raw=item,
         )
 
     def _parse_date(self, s):

@@ -4,6 +4,7 @@ from .forecast_question import ForecastQuestion
 from .source_base import ForecastSourceBase
 from datetime import datetime
 
+
 class MetaculusForecastSource(ForecastSourceBase):
     BASE_URL = "https://www.metaculus.com/api2/questions/"
 
@@ -34,7 +35,7 @@ class MetaculusForecastSource(ForecastSourceBase):
             community_prediction=item.get("community_prediction"),
             url=f"https://www.metaculus.com/questions/{item.get('id')}/",
             tags=item.get("tags", []),
-            raw=item
+            raw=item,
         )
 
     def _parse_date(self, s):

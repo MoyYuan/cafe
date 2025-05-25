@@ -2,6 +2,7 @@ from .base import BaseModel
 from typing import Any, Dict
 import httpx
 
+
 class GeminiModel(BaseModel):
     def __init__(self, api_key: str = None):
         self.api_key = api_key
@@ -15,7 +16,9 @@ class GeminiModel(BaseModel):
         payload = {"contents": [{"parts": [{"text": prompt}]}]}
         params = {"key": self.api_key}
         try:
-            response = httpx.post(url, headers=headers, json=payload, params=params, timeout=10)
+            response = httpx.post(
+                url, headers=headers, json=payload, params=params, timeout=10
+            )
             response.raise_for_status()
             return response.json()
         except Exception as e:

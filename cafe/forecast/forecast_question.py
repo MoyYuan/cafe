@@ -1,6 +1,7 @@
 from typing import Optional, List, Any
 from datetime import datetime
 
+
 class ForecastQuestion:
     def __init__(
         self,
