@@ -1,4 +1,4 @@
-name: Cafe AI CI
+name: Cafe CI
 
 on:
   push:

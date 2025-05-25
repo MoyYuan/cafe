@@ -1,4 +1,4 @@
-from typing import Callable, Dict, List
+from typing import Callable, Dict, Sequence
 
 from .metrics import accuracy, brier_score, log_loss
 
@@ -8,7 +8,7 @@ class Evaluator:
         self.metrics = metrics
 
     def evaluate(
-        self, y_true: List[float], y_prob: List[float], y_pred: List[float] = None
+        self, y_true: Sequence[float], y_prob: Sequence[float], y_pred: Optional[Sequence[float]] = None
     ) -> Dict[str, float]:
         results = {}
         if "brier" in self.metrics:
