@@ -10,7 +10,9 @@ def brier_score(y_true: Sequence[float], y_prob: Sequence[float]) -> float:
     return np.mean((y_true - y_prob) ** 2)
 
 
-def log_loss(y_true: Sequence[float], y_prob: Sequence[float], eps: float = 1e-15) -> float:
+def log_loss(
+    y_true: Sequence[float], y_prob: Sequence[float], eps: float = 1e-15
+) -> float:
     """Compute the log loss for probabilistic forecasts."""
     y_true = np.array(y_true)
     y_prob = np.clip(np.array(y_prob), eps, 1 - eps)

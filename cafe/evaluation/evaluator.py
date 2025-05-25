@@ -8,7 +8,10 @@ class Evaluator:
         self.metrics = metrics
 
     def evaluate(
-        self, y_true: Sequence[float], y_prob: Sequence[float], y_pred: Optional[Sequence[float]] = None
+        self,
+        y_true: Sequence[float],
+        y_prob: Sequence[float],
+        y_pred: Optional[Sequence[float]] = None,
     ) -> Dict[str, float]:
         results = {}
         if "brier" in self.metrics:
