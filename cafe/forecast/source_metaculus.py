@@ -6,8 +6,12 @@ from typing import List, Optional
 import httpx
 from dotenv import load_dotenv
 
-from .comment import (MetaculusChangedMyMind, MetaculusComment,
-                      MetaculusCommentAuthor, MetaculusMentionedUser)
+from .comment import (
+    MetaculusChangedMyMind,
+    MetaculusComment,
+    MetaculusCommentAuthor,
+    MetaculusMentionedUser,
+)
 from .question import MetaculusForecastQuestion
 from .source_base import ForecastSourceBase
 
@@ -92,7 +96,9 @@ class MetaculusForecastSource(ForecastSourceBase):
     def get_question(self, id: str) -> MetaculusForecastQuestion:
         """Get a Metaculus question by id (MetaculusForecastQuestion object)."""
         raw = self.get_resource("questions", id)
-        return self._parse_metaculus_question(raw) if raw else None
+        if not raw:
+            raise ValueError(f"Question with id {id} not found.")
+        return self._parse_metaculus_question(raw)
 
     def list_users(self, params: Optional[dict] = None):
         """List Metaculus users (raw dicts or list)."""

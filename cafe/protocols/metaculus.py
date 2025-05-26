@@ -73,9 +73,13 @@ def get_metaculus_comments_for_question(question_id: str, force_refresh: bool = 
         comment_cache_dir, f"metaculus_comments_{question_id}.json"
     )
     if not force_refresh and os.path.exists(local_path):
-        comments = LocalForecastCommentSource(local_path).list_comments_for_question(question_id)
+        comments = LocalForecastCommentSource(local_path).list_comments_for_question(
+            question_id
+        )
     else:
-        comments = MetaculusForecastSource().list_metaculus_comments_for_question(int(question_id))
+        comments = MetaculusForecastSource().list_metaculus_comments_for_question(
+            int(question_id)
+        )
         if comments is None:
             raise HTTPException(
                 status_code=404, detail=f"No comments found for question {question_id}"

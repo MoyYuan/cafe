@@ -2,8 +2,12 @@ import json
 from datetime import datetime
 from typing import List
 
-from .comment import (MetaculusChangedMyMind, MetaculusComment,
-                      MetaculusCommentAuthor, MetaculusMentionedUser)
+from .comment import (
+    MetaculusChangedMyMind,
+    MetaculusComment,
+    MetaculusCommentAuthor,
+    MetaculusMentionedUser,
+)
 from .question import MetaculusForecastQuestion
 from .source_base import ForecastSourceBase
 
