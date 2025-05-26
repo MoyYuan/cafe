@@ -17,8 +17,10 @@ jobs:
           python-version: '3.11'
       - name: Install uv
         run: pip install uv
+      - name: Create virtual environment
+        run: uv venv .venv
       - name: Install dependencies
-        run: uv pip install .
+        run: .venv/bin/uv pip install .
       - name: Lint
         run: |
           black --check .
