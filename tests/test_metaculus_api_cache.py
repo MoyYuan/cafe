@@ -93,7 +93,7 @@ def test_questions_cache(tmp_path, monkeypatch):
     resp = client.get("/metaculus/questions?force_refresh=true")
     assert resp.status_code == 200
     data = resp.json()
-    assert data[0]["id"] == "q2"  # reversed
+    assert str(data[0]["id"]) == "2"  # reversed
 
 
 def test_comments_cache(tmp_path, monkeypatch):
