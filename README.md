@@ -20,12 +20,12 @@ A modular forecasting platform integrating LLMs, time-series forecasting, and li
 ## Quickstart
 1. Create and activate the virtual environment using [uv](https://github.com/astral-sh/uv):
    ```bash
-   uv venv venv
-   source venv/bin/activate
+   uv venv .venv
+   source .venv/bin/activate
    ```
-2. Install dependencies:
+2. Install dependencies from `pyproject.toml`:
    ```bash
-   pip install -r requirements.txt
+   uv pip install .
    ```
 3. Copy `.env.example` to `.env` and set your Gemini API key
 4. Run the API server:

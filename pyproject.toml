@@ -20,7 +20,8 @@ dependencies = [
     "pytest",
     "mypy",
     "black",
-    "isort"
+    "isort",
+    "python-dotenv"
 ]
 
 [tool.setuptools.packages.find]
