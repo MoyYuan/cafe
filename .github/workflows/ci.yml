@@ -23,9 +23,9 @@ jobs:
         run: uv pip install . --python=.venv/bin/python
       - name: Lint
         run: |
-          black --check .
-          isort --check-only .
+          .venv/bin/black --check .
+          .venv/bin/isort --check-only .
       - name: Type check
-        run: mypy .
+        run: .venv/bin/mypy .
       - name: Test
-        run: pytest
+        run: .venv/bin/pytest
