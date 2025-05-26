@@ -42,5 +42,6 @@ def forecast(request: ForecastRequest):
     except Exception as e:
         return ForecastResponse(result=None, model=request.model, error=str(e))
 
+
 # Mount Metaculus endpoints
 router.include_router(metaculus_router, prefix="")

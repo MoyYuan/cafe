@@ -1,8 +1,10 @@
+import json
 import os
 import tempfile
-import json
-from cafe.forecast.source_local import LocalForecastCommentSource
+
 from cafe.forecast.comment import MetaculusComment
+from cafe.forecast.source_local import LocalForecastCommentSource
+
 
 def sample_comment(comment_id=1, question_id="101"):
     return {
@@ -21,10 +23,15 @@ def sample_comment(comment_id=1, question_id="101"):
         "user_vote": None,
     }
 
+
 def test_local_comment_source():
     # Create a temp file with sample comments
     with tempfile.NamedTemporaryFile(mode="w+", delete=False) as f:
-        comments = [sample_comment(1, "101"), sample_comment(2, "101"), sample_comment(3, "102")]
+        comments = [
+            sample_comment(1, "101"),
+            sample_comment(2, "101"),
+            sample_comment(3, "102"),
+        ]
         json.dump(comments, f)
         f.flush()
         path = f.name

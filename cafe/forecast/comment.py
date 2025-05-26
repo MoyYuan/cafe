@@ -6,6 +6,7 @@ from typing import Dict, List, Optional
 @dataclass
 class MetaculusCommentAuthor:
     """Metaculus-specific comment author."""
+
     id: int
     username: str
     is_bot: Optional[bool] = False
@@ -15,6 +16,7 @@ class MetaculusCommentAuthor:
 @dataclass
 class MetaculusMentionedUser:
     """Metaculus-specific mentioned user in a comment."""
+
     id: int
     username: str
 
@@ -22,6 +24,7 @@ class MetaculusMentionedUser:
 @dataclass
 class MetaculusChangedMyMind:
     """Metaculus-specific 'Changed My Mind' reaction info."""
+
     count: int
     for_this_user: Optional[bool] = False
 
@@ -29,6 +32,7 @@ class MetaculusChangedMyMind:
 @dataclass
 class MetaculusComment:
     """Metaculus-specific comment object."""
+
     """Represents a comment from the Metaculus API."""
 
     id: int

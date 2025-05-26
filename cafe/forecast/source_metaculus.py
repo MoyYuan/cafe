@@ -27,7 +27,11 @@ class MetaculusForecastSource(ForecastSourceBase):
     def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None):
         load_dotenv()
         # Remove trailing slash if present, then add /questions/
-        base = base_url if base_url is not None else os.getenv("METACULUS_API_URL", "https://www.metaculus.com/api2/")
+        base = (
+            base_url
+            if base_url is not None
+            else os.getenv("METACULUS_API_URL", "https://www.metaculus.com/api2/")
+        )
         base = base.rstrip("/")
         self.base_url = f"{base}/questions/"
         self.api_url = base  # For generic resources
@@ -76,16 +80,19 @@ class MetaculusForecastSource(ForecastSourceBase):
             return None
 
     # Convenience wrappers
-    def list_questions(self, params: Optional[dict] = None) -> List[MetaculusForecastQuestion]:
+    def list_questions(
+        self, params: Optional[dict] = None
+    ) -> List[MetaculusForecastQuestion]:
         """List Metaculus questions as MetaculusForecastQuestion objects."""
         raw_items = self.list_resource("questions", params=params or {})
         if not raw_items:
             return []
         return [self._parse_metaculus_question(item) for item in raw_items]
 
-    def get_question(self, id: str):
-        """Get a Metaculus question by id (raw dict)."""
-        return self.get_resource("questions", id)
+    def get_question(self, id: str) -> MetaculusForecastQuestion:
+        """Get a Metaculus question by id (MetaculusForecastQuestion object)."""
+        raw = self.get_resource("questions", id)
+        return self._parse_metaculus_question(raw) if raw else None
 
     def list_users(self, params: Optional[dict] = None):
         """List Metaculus users (raw dicts or list)."""
@@ -252,7 +259,9 @@ class MetaculusForecastSource(ForecastSourceBase):
             return None
 
     @staticmethod
-    def save_questions_to_json(questions: List[MetaculusForecastQuestion], filepath: Optional[str] = None):
+    def save_questions_to_json(
+        questions: List[MetaculusForecastQuestion], filepath: Optional[str] = None
+    ):
         if filepath is None:
             filepath = MetaculusForecastSource.DATA_FILE
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
@@ -260,14 +269,19 @@ class MetaculusForecastSource(ForecastSourceBase):
             json.dump([q.raw for q in questions], f, ensure_ascii=False, indent=2)
 
     @staticmethod
-    def load_questions_from_json(filepath: Optional[str] = None) -> List[MetaculusForecastQuestion]:
+    def load_questions_from_json(
+        filepath: Optional[str] = None,
+    ) -> List[MetaculusForecastQuestion]:
         if filepath is None:
             filepath = MetaculusForecastSource.DATA_FILE
         if not os.path.exists(filepath):
             return []
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
-        return [MetaculusForecastSource._parse_metaculus_question_static(item) for item in data]
+        return [
+            MetaculusForecastSource._parse_metaculus_question_static(item)
+            for item in data
+        ]
 
     @staticmethod
     def _parse_metaculus_question_static(item: dict) -> MetaculusForecastQuestion:

@@ -2,9 +2,10 @@ import json
 from datetime import datetime
 from typing import List
 
+from .comment import (MetaculusChangedMyMind, MetaculusComment,
+                      MetaculusCommentAuthor, MetaculusMentionedUser)
 from .question import MetaculusForecastQuestion
 from .source_base import ForecastSourceBase
-from .comment import MetaculusComment, MetaculusCommentAuthor, MetaculusMentionedUser, MetaculusChangedMyMind
 
 
 class LocalForecastCommentSource:
@@ -14,7 +15,11 @@ class LocalForecastCommentSource:
     def list_comments_for_question(self, question_id: str) -> List[MetaculusComment]:
         with open(self.path, "r") as f:
             data = json.load(f)
-        return [self._parse_comment(item) for item in data if str(item.get("on_post")) == str(question_id)]
+        return [
+            self._parse_comment(item)
+            for item in data
+            if str(item.get("on_post")) == str(question_id)
+        ]
 
     def get_comment(self, comment_id: int) -> MetaculusComment:
         with open(self.path, "r") as f:
@@ -26,16 +31,32 @@ class LocalForecastCommentSource:
 
     def _parse_comment(self, item: dict) -> MetaculusComment:
         author = item.get("author", {})
-        mentioned_users = [MetaculusMentionedUser(**u) for u in item.get("mentioned_users", [])] if item.get("mentioned_users") else None
-        changed_my_mind = MetaculusChangedMyMind(**item["changed_my_mind"]) if item.get("changed_my_mind") else None
+        if not author:
+            author = {"id": -1, "username": "unknown"}
+        mentioned_users = (
+            [MetaculusMentionedUser(**u) for u in item.get("mentioned_users", [])]
+            if item.get("mentioned_users")
+            else None
+        )
+        changed_my_mind = (
+            MetaculusChangedMyMind(**item["changed_my_mind"])
+            if item.get("changed_my_mind")
+            else None
+        )
+        created_at = (
+            datetime.fromisoformat(item["created_at"])
+            if item.get("created_at")
+            else datetime(1970, 1, 1)
+        )
+        on_post = int(item["on_post"]) if item.get("on_post") is not None else -1
         return MetaculusComment(
             id=int(item["id"]),
-            author=MetaculusCommentAuthor(**author) if author else None,
+            author=MetaculusCommentAuthor(**author),
             parent_id=item.get("parent_id"),
             root_id=item.get("root_id"),
-            created_at=datetime.fromisoformat(item["created_at"]) if item.get("created_at") else None,
+            created_at=created_at,
             text=item.get("text", ""),
-            on_post=item.get("on_post"),
+            on_post=on_post,
             included_forecast=item.get("included_forecast"),
             is_private=item.get("is_private"),
             vote_score=item.get("vote_score"),
