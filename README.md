@@ -8,6 +8,7 @@ A modular forecasting platform integrating LLMs, time-series forecasting, and li
 - Pluggable news/data retrieval (API or local)
 - Evaluation and experiment tracking modules
 - FastAPI-based API layer
+- File-based caching for Metaculus questions and comments (with force-refresh option)
 - Extensible and easy to onboard
 
 ## Architecture
@@ -97,7 +98,7 @@ See `.roadmap.md` and `.progress.md`.
   - `news/api`: API-based news retriever (stub) — import from `cafe.news.api`
 - **Forecast Data**
   - `forecast/forecast_question.py`: The `ForecastQuestion` class captures all attributes of a forecast/event question (id, title, description, resolution criteria, dates, status, predictions, tags, etc).
-  - `forecast/source_metaculus.py`: Fetches questions from the Metaculus API.
+  - `forecast/source_metaculus.py`: Fetches questions from the Metaculus API, with file-based caching for questions and comments. The API allows a `force_refresh` flag to fetch fresh data and update the cache.
   - `forecast/source_local.py`: Loads questions from local files (JSON).
 
 All models are accessible via the `/forecast` endpoint by specifying the `model` field as one of: `llm/vllm`, `llm/gemini`, `timeseries/local`, `timeseries/api`.
