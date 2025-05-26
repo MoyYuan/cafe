@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Any, List, Optional
 
 
-class ForecastQuestion:
+class MetaculusForecastQuestion:
     def __init__(
         self,
         id: str,
@@ -32,4 +32,5 @@ class ForecastQuestion:
         self.raw = raw or {}
 
     def __repr__(self):
-        return f"<ForecastQuestion id={self.id} title={self.title!r}>"
+        """Represents a forecast question from the Metaculus API (MetaculusForecastQuestion)."""
+        return f"<MetaculusForecastQuestion id={self.id} title={self.title!r}>"

@@ -13,6 +13,8 @@ from .schemas import ForecastRequest, ForecastResponse
 
 router = APIRouter()
 
+from .metaculus import router as metaculus_router
+
 # Context instance (in-memory)
 context = InMemoryContext()
 
@@ -39,3 +41,6 @@ def forecast(request: ForecastRequest):
         return ForecastResponse(result=result, model=request.model)
     except Exception as e:
         return ForecastResponse(result=None, model=request.model, error=str(e))
+
+# Mount Metaculus endpoints
+router.include_router(metaculus_router, prefix="")

@@ -7,8 +7,9 @@ load_dotenv()
 
 class Config:
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+    METACULUS_API_KEY = os.getenv("METACULUS_API_KEY", None)
     METACULUS_API_URL = os.getenv(
-        "METACULUS_API_URL", "https://www.metaculus.com/api2/questions/"
+        "METACULUS_API_URL", "https://www.metaculus.com/api2/"
     )
     GOOGLE_SEARCH_API_KEY = os.getenv("GOOGLE_SEARCH_API_KEY", "")
     GOOGLE_SEARCH_CX = os.getenv("GOOGLE_SEARCH_CX", "")
