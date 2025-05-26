@@ -20,7 +20,7 @@ jobs:
       - name: Create virtual environment
         run: uv venv .venv
       - name: Install dependencies
-        run: .venv/bin/uv pip install .
+        run: uv pip install . --python=.venv/bin/python
       - name: Lint
         run: |
           black --check .
