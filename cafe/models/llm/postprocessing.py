@@ -35,6 +35,9 @@ class AdvancedPostprocessor:
         self.fallbacks = fallbacks or []
 
     def extract_answer(self, raw_output: Any) -> Union[dict, str, None]:
+        # Treat empty dict, empty list, or None as no answer
+        if raw_output is None or raw_output == {} or raw_output == []:
+            return None
         text = self._get_text(raw_output)
         if not isinstance(text, str) or not text:
             return None
