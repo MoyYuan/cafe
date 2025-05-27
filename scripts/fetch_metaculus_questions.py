@@ -159,14 +159,20 @@ def main():
     # Determine question cache/refresh/resume modes
     refresh_questions = args.refresh or args.refresh_questions
     resume_questions = args.resume or args.resume_questions
-    # Load cache if allowed and available
+    # --- Questions cache logic ---
+    # If cache exists and not refreshing, use it. Otherwise, fetch questions.
     if not args.no_cache and cache_questions_file.exists() and not refresh_questions:
         with cache_questions_file.open() as f:
             questions = json.load(f)
         fetched_qids = set(str(q.get("id")) for q in questions)
         print(f"Loaded {len(questions)} questions from cache.")
     else:
-        print("Not using questions cache (refresh or no cache mode).")
+        if not cache_questions_file.exists():
+            print("Questions cache not found: fetching questions from API...")
+        else:
+            print("Refreshing questions from API (refresh flag set)...")
+        # The actual fetching logic will run below (see while True loop)
+        # Cache will be written after fetching if not --no-cache.
 
     # Resume support: load checkpoint
     resume_page = 0
@@ -209,6 +215,7 @@ def main():
         fetched_qids.update(str(q.get("id")) for q in new_questions)
         if args.limit is not None and len(all_questions) >= args.limit:
             all_questions = all_questions[: args.limit]
+            # Always write cache after every page, unless --no-cache
             if not args.no_cache:
                 with cache_questions_file.open("w") as f:
                     json.dump(all_questions, f, indent=2)
@@ -216,6 +223,7 @@ def main():
             with checkpoint_file.open("w") as f:
                 json.dump({"page": page}, f)
             break
+        # Always write cache after every page, unless --no-cache
         if not args.no_cache:
             with cache_questions_file.open("w") as f:
                 json.dump(all_questions, f, indent=2)
@@ -231,6 +239,11 @@ def main():
     if not all_questions:
         print("No questions found.")
         return
+    # Always write cache if we fetched questions (cache missing or refresh), unless --no-cache
+    if (refresh_questions or not cache_questions_file.exists()) and not args.no_cache:
+        with cache_questions_file.open("w") as f:
+            json.dump(all_questions, f, indent=2)
+        print(f"Wrote {len(all_questions)} questions to cache.")
     # Apply limit if set
     if args.limit is not None:
         all_questions = all_questions[: args.limit]

@@ -128,9 +128,14 @@ class MetaculusForecastSource(ForecastSourceBase):
             + "/comments/"
         )
         all_items = []
+        first = True
         while url:
             try:
-                response = httpx.get(url, headers=self._headers(), params=params)
+                if first:
+                    response = httpx.get(url, headers=self._headers(), params=params)
+                    first = False
+                else:
+                    response = httpx.get(url, headers=self._headers())
                 response.raise_for_status()
                 data = response.json()
                 items = (
@@ -142,7 +147,6 @@ class MetaculusForecastSource(ForecastSourceBase):
                     [self._parse_metaculus_comment(item) for item in items]
                 )
                 url = data.get("next", None)
-                params = None  # Only send params on the first request
             except Exception as e:
                 print(f"[Metaculus] Error fetching comments: {e}")
                 break
