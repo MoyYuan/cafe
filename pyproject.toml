@@ -22,7 +22,8 @@ dependencies = [
     "black",
     "isort",
     "python-dotenv",
-    "numpy"
+    "numpy",
+    "google-genai>=1.16.1",
 ]
 
 [tool.setuptools.packages.find]

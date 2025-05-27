@@ -4,6 +4,7 @@ import time
 from typing import Any, Dict, Optional
 
 from cafe.config.config import Config
+from cafe.models.llm.postprocessing import GeminiPostprocessor
 
 from .base import BaseModel
 
@@ -51,6 +52,7 @@ class GeminiModel(BaseModel):
             if mock_mode is not None
             else os.getenv("GEMINI_MOCK_MODE", "0") == "1"
         )
+        self.postprocessor = GeminiPostprocessor()
 
     def _make_cache_key(self, prompt: str, parameters: Dict[str, Any]) -> str:
         import hashlib
@@ -134,6 +136,7 @@ class GeminiModel(BaseModel):
                 result = {
                     "text": getattr(response, "text", str(response)),
                     "raw": response,
+                    "answer": self.postprocessor.extract_answer(response),
                 }
                 if self.cache_enabled:
                     context.set_data(cache_key, result)
