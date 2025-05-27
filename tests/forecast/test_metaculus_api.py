@@ -44,11 +44,6 @@ def test_list_predictions():
 import pytest
 
 
-@pytest.mark.skip(reason="MetaculusForecastSource has no list_comments method.")
-def test_list_comments():
-    pass
-
-
 def test_list_series():
     src = MetaculusForecastSource.from_env()
     series = src.list_series()

@@ -1,0 +1,2351 @@
+{
+  "38058": [
+    {
+      "id": 349037,
+      "author": {
+        "id": 115975,
+        "username": "johnnycaffeine",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348952,
+      "root_id": 348952,
+      "created_at": "2025-05-26T21:56:07.387794Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(palcu) Thanks very much, I'll go ahead and resolve the question as **Nicu\u0219or Dan**.",
+      "on_post": 30859,
+      "on_post_data": {
+        "id": 30859,
+        "title": "Who will be the next President of Romania in 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 116988,
+          "username": "palcu",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 349012,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348897,
+      "root_id": 325258,
+      "created_at": "2025-05-26T20:29:47.135532Z",
+      "text_edited_at": "2025-05-26T20:31:17.595078Z",
+      "is_soft_deleted": false,
+      "text": "@(johnnycaffeine) nothing official, I think it's extremely likely this has happened but no one is showing the subcategories now.\n\nThe problem is that the resolution criteria would resolve this to the date when the model was released and not the day when we get the information. Are we supposed to put a component on the release date of each of the potential models, i.e 2.5 Pro, 3.7 sonnet, 4 Opus, o3, o1 Pro and 4.5? (I may have forgotten some)\n\nEdit: Considering the question is up to 2039 I would prefer annulment to the statu quo because updating non stop for 15 years if no one updates the MMLU rankings anymore...",
+      "on_post": 5276,
+      "on_post_data": {
+        "id": 5276,
+        "title": "When will AI achieve competency on multi-choice questions across diverse fields of expertise (MMLU)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 115975,
+          "username": "johnnycaffeine",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348952,
+      "author": {
+        "id": 116988,
+        "username": "palcu",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T20:08:53.135905Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(admins) as of today Nicusor Dan has taken the vow to become president and this question can now resolve.\n\n[https://en.wikipedia.org/wiki/President\\_of\\_Romania](https://en.wikipedia.org/wiki/President_of_Romania)",
+      "on_post": 30859,
+      "on_post_data": {
+        "id": 30859,
+        "title": "Who will be the next President of Romania in 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348951,
+      "author": {
+        "id": 133407,
+        "username": "jleibowich",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T20:08:50.381837Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "My forecast is 20%. Here are some important things to consider:\n\n\n\nFirst of all, it's important to remember that new business tax credits are almost never reversed within 3 years (if the opposite party takes control during this period). For example, the ACA repeal failed, the TCJA corporate rate was not repealed, and the Bush 2001/2003 tax cuts had a partial sunset.\n\n\n\nAs far as downside pressure: Republicans can only lose three votes in the Senate, but several GOP Senators are hesitant about this legislation (Tillis, Murkowski, Curtis, Moran, Cramer, Capito). See here: [https://www.politico.com/news/2025/05/23/senate-republicans-house-rollback-ira-tax-credits-00366212](https://www.politico.com/news/2025/05/23/senate-republicans-house-rollback-ira-tax-credits-00366212)\n\nAnd in the House, 14 House Republicans wrote a pre-vote letter that asked the GOP leadership to keep transferability throughout any phase-out. See here: [https://www.utilitydive.com/news/rep-kiggans-house-gop-members-request-transferability-placed-in-service-tax-credit-tweaks/748609/](https://www.utilitydive.com/news/rep-kiggans-house-gop-members-request-transferability-placed-in-service-tax-credit-tweaks/748609/)\n\n\n\nThere is some upside pressure, though. For one thing, the House already passed a reconciliation bill that would get rid of most of the \u00a7 6418 framework. See here: [https://www.utilitydive.com/news/house-gop-budget-worse-than-feared-for-clean-energy-analysts/748862/](https://www.utilitydive.com/news/house-gop-budget-worse-than-feared-for-clean-energy-analysts/748862/)\n\n\n\nTaking everything into account, I put the likelihood of this question resolving yes at 20%.",
+      "on_post": 36880,
+      "on_post_data": {
+        "id": 36880,
+        "title": "Will legislation enacted before January 1, 2026 eliminate the transferability of any of these clean energy tax credits (\u00a748E ITC,  \u00a745Y PTC, \u00a745X AMPC)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348897,
+      "author": {
+        "id": 115975,
+        "username": "johnnycaffeine",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348844,
+      "root_id": 325258,
+      "created_at": "2025-05-26T20:01:34.536131Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "Hi @(exmateriae), has any model both gotten \u226570% accuracy on every task and \u226585% mean accuracy across all tasks? I haven't been able to find any information that anything has accomplished both.",
+      "on_post": 5276,
+      "on_post_data": {
+        "id": 5276,
+        "title": "When will AI achieve competency on multi-choice questions across diverse fields of expertise (MMLU)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348895,
+      "author": {
+        "id": 139161,
+        "username": "Zaldath",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348742,
+      "root_id": 348742,
+      "created_at": "2025-05-26T19:38:23.097111Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(exmateriae) Great comments by you recently! I'm actually getting less confident that the commenting prize cap will be reached in this tournament - since let's say one of us two (or AlexK864 etc.) wins the #1 comment prize, which is already a big share of the total prize pool, and then the other top commenters will be competing for the remaining comment prizes... This would not have been such a big issue in some of the past tournaments where the prize cap was 30-40% of the prize pool. However, here the prize cap is 50% of the prize pool, which makes it relatively tougher for one person to reach it (even if the competition wasn't difficult - and it seems to be relatively tough here, since at least 3 people are generating many good comments). I'm still slightly leaning toward a positive resolution, but it's certainly more uncertain than in any of the previous tournaments with commenting prizes (all of which resolved Yes).\n\nAs for your comment itself, it was helpful since this topic is pretty unfamiliar to me. Unfortunately I couldn't get Wayback Machine to work for that site so I was uncertain even if the current top score had changed in recent weeks etc. I guess I'll keep a (small) extra component at the current top score, though, but your comment made me think that it most likely won't stay at that level for three more months.",
+      "on_post": 37126,
+      "on_post_data": {
+        "id": 37126,
+        "title": "What will be the highest score for the \"ARC Prize 2025\" competition on it's public leaderboard on August 31, 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348854,
+      "author": {
+        "id": 121719,
+        "username": "TemetNosce",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T18:37:14.425687Z",
+      "text_edited_at": "2025-05-26T21:20:17.296889Z",
+      "is_soft_deleted": false,
+      "text": "How would this resolve currently, given Harvard got a restraining order against it? As written it seems as if it would resolve positive given the 'in effect' part, but I'd prefer a clarification.\n\n\n\nEdit: Came back and there's also a discrepancy in the resolution criteria about whether it's about on or on or before July 1, which should also be clarified.",
+      "on_post": 37920,
+      "on_post_data": {
+        "id": 37920,
+        "title": "Will Harvard University have a Student and Exchange Visitor Program certification on July 1, 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348844,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 325258,
+      "root_id": 325258,
+      "created_at": "2025-05-26T18:29:27.508042Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(admins) tagging because this just got even more likely with the release of Claude 4 Opus which reached an average score of 88.8% on MMMLU. Also because I'm forecasting in the past now so if htis does not resolve I have to update...",
+      "on_post": 5276,
+      "on_post_data": {
+        "id": 5276,
+        "title": "When will AI achieve competency on multi-choice questions across diverse fields of expertise (MMLU)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348789,
+      "author": {
+        "id": 115975,
+        "username": "johnnycaffeine",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T18:06:41.335662Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "Question resolves as **Yes**. The Progressive Reform Party [won](https://en.wikipedia.org/wiki/2025_Surinamese_general_election) 20 seats, which is more than any other party.",
+      "on_post": 37225,
+      "on_post_data": {
+        "id": 37225,
+        "title": "Will the Progressive Reform Party win the most seats in the 2025 Surinamese general election?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348742,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T17:56:39.080058Z",
+      "text_edited_at": "2025-05-26T18:00:16.238610Z",
+      "is_soft_deleted": false,
+      "text": "[Last year](https://arcprize.org/blog/arc-prize-2024-winners-technical-report#:~:text=In%20total%2C%201%2C430%20teams%20submitted,efforts%20to%20tackle%20ARC%2DAGI. \"source\"), there were 1.430 teams with 17.789 entries. For now, only 410 teams and 3k submissions but we are only 2/7th of the total duration. Of note : the prize money is obviously very important but not as much as the technical proficiency, some teams having refused to open source last year, prefering prestige to tens of thousands of dollars. Or maybe they thought they could sell it for more?\n\n> In total, 1,430 teams submitted 17,789 entries for ARC Prize 2024. We're aware of at least seven well-funded startups who shifted priorities to work on ARC-AGI and heard from multiple large corporate labs who've spun up internal efforts to tackle ARC-AGI.\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_qDw1hOl.png)\n\nIf you've been following AI in the last three years, one thing is extremely clear : benchmark saturation is not a possibility but a *short time* inevitability. Lmarena has been rendered pretty much useless because most answers are now good enough to simple queries and you need to go for more and more difficult questions to get the AI stuck.\n\nARC Prize 1 was supposed to be able to challenge open source AIs and determine how far away from AGI we were. The results of the best AIs were so good that a new benchmark was needed and planned for as soon as the competition was over. What this first competition showed was that humans are absolutely unable to evaluate what is general intelligence : ARC was supposed to be pretty hard and yet in six months, 55% of the problems were solved. I'm pretty sure ARC 2 will be the same and out of the window by EOY. The same thing happened with the so called Humanity's Last Exam, which has now gotten a version 2...\n\nIn the first two months of competition, SOTA in ARC 2 went from 3% to 15.3%, a 410% increase. Increase in the last month was \"only\" 50% but even with only two more 50% increases by August 31, that would mean a result around 33%.\n\nAdvancement through time of SOTA ARC 2:\n\n| Period and score                       | Leaderboard                                                                       |\n| -------------------------------------- | --------------------------------------------------------------------------------- |\n| Late March, baseline score at launch : | ![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_oUXWJj0.png) |\n| April 10 - 10.14%                      | ![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_9s5RP0O.png) |\n| May 14 - 15.3%                         | ![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_qz8pEJF.png) |\n\nThis is already impressive compared to last year's progress:\n\n1 11 Jun 2024 34%\n\n2 19 Jun 2024 38%\n\n3 18 Jul 2024 41%\n\n4 20 Jul 2024 42%\n\n5 19 Aug 2024 46%\n\n6 29 Sep 2024 48%\n\n7 09 Oct 2024 49%\n\n8 23 Oct 2024 53%\n\n9 29 Oct 2024 54.5%&#x20;\n\nThe progress last year was barely above one 50% increase and even in term of pure point increase, there's already been almost 2/3rd of last year's progress : 12.3/20.5. Note that a lot of the progress was made in the last 6 weeks : almost a 10 point increase, half the total progress. This will matter a lot regarding my forecast as I think at least a third of the final gain will be made out of this forecast's time window.\n\nThere is however one difference compared to most other benchmarks, it seems that scaling has a limited effect and algorithm upgrades are the only way to really improve performance. First that's a really good achievement for a benchmark. Second, it would be great if it could bring algorithmic advances, I think it will, and it seems to have already been partially the case.\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_Z7K9PLg.png)\n\nComparison of results on ARC-AGI-1 and 2: (yes the first benchmark will soon be saturated)\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_I8pbv7C.png)\n\nIn theory, the benchmark is supposed to show \"easy\" tasks for humans that do not scale well on AIs. Have you tried some of the puzzles? I don't know if there was a mistake on my side but I was unable to do the daily puzzle today, this seems much harder than last year's.\n\nAdd to that the very strict limitations on the prize (50\\$ of compute only) and I think there are diminishing returns and it will actually be difficult for competitors to keep improving as fast as they have done until now. End period is similar to last year's (3 Nov this year, 10 Nov last year) but it started \\~10 weeks earlier which ended up mattering quite a bit. More teams will also get in before the end, I don't see a reason why there would be significantly less participants than last year as AI is becoming more and more popular and easier to access.\n\nI don't think there's more than 5% chance that someone gets the grand prize this year but I think there's a decent chance that the score of 40-45% will be reached by the end of the competition. As I said earlier two 50% increases by end of August (which would be a significant but logical, almost inevitable, slow down) would bring this around 33% which seems possible and would likely not be my 75% but a lower point. I'm actually surprised that the prediction scope is so narrow. I will have significant weight on the higher side to account for surprising breakthroughs, which are almost ubiquitous in AI right now. On the lower side I will not hedge as much as I would be surprised if 25% was not reached by end of August. (there's still three months)",
+      "on_post": 37126,
+      "on_post_data": {
+        "id": 37126,
+        "title": "What will be the highest score for the \"ARC Prize 2025\" competition on it's public leaderboard on August 31, 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 2,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": [
+        {
+          "id": 147,
+          "text": "Algorithmic breakthrough",
+          "author": {
+            "id": 119188,
+            "username": "exmateriae",
+            "is_bot": false,
+            "is_staff": false
+          },
+          "comment_id": 348742,
+          "post_id": 37126,
+          "user_votes": [],
+          "votes_score": 0,
+          "vote_type": null
+        },
+        {
+          "id": 148,
+          "text": "Progress faster than previous year",
+          "author": {
+            "id": 119188,
+            "username": "exmateriae",
+            "is_bot": false,
+            "is_staff": false
+          },
+          "comment_id": 348742,
+          "post_id": 37126,
+          "user_votes": [],
+          "votes_score": 0,
+          "vote_type": null
+        }
+      ]
+    },
+    {
+      "id": 348723,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348694,
+      "root_id": 332272,
+      "created_at": "2025-05-26T16:31:38.562873Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(skmmcj) sorry and thanks!",
+      "on_post": 13880,
+      "on_post_data": {
+        "id": 13880,
+        "title": "What will be the largest payload capacity (in tons) of a successfully reused launch vehicle in the following years?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 126626,
+          "username": "skmmcj",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348694,
+      "author": {
+        "id": 126626,
+        "username": "skmmcj",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348684,
+      "root_id": 332272,
+      "created_at": "2025-05-26T16:02:18.472037Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(exmateriae) I was getting to this!\n\n> Unless Block 3 also fulfills the successfully reused criteria by then, it should not be counted right?\n\n> It seemed to me this would resolve if even only Booster and not Ship was reused? Booster 14 is supposed to be used in Flight Test 9 so if SFT9 is successful by the FP criteria, then 150 tons would be the current resolution value?\n\nBoth of these seem correct to me, according to the criteria.",
+      "on_post": 13880,
+      "on_post_data": {
+        "id": 13880,
+        "title": "What will be the largest payload capacity (in tons) of a successfully reused launch vehicle in the following years?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348692,
+      "author": {
+        "id": 126626,
+        "username": "skmmcj",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348688,
+      "root_id": 344545,
+      "created_at": "2025-05-26T15:50:37.516639Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(exmateriae) Ah I see. The [one for March](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/mar-2025) shows it as 4.0. I think it's best to resolve using each months report, so that we don't have to constantly reevaluate all our past resolutions. I'll resolve it as 4.0 and add this to the fine print.",
+      "on_post": 22134,
+      "on_post_data": {
+        "id": 22134,
+        "title": "What will the seasonally adjusted unemployment rate be in Australia, for the following months?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348689,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348504,
+      "root_id": 345152,
+      "created_at": "2025-05-26T15:39:06.163876Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(skmmcj) no worries, I was just surprised!",
+      "on_post": 22519,
+      "on_post_data": {
+        "id": 22519,
+        "title": "Will AI capabilities plateau with the next generation (GPT-5, etc.) of language models?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 126626,
+          "username": "skmmcj",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348688,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348508,
+      "root_id": 344545,
+      "created_at": "2025-05-26T15:37:56.969303Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(skmmcj) Do I have a wrong statistic?\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_xi5QedY.png)\n\nI'm looking at this for March [https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/apr-2025](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/apr-2025)",
+      "on_post": 22134,
+      "on_post_data": {
+        "id": 22134,
+        "title": "What will the seasonally adjusted unemployment rate be in Australia, for the following months?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 126626,
+          "username": "skmmcj",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348684,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 332272,
+      "root_id": 332272,
+      "created_at": "2025-05-26T15:31:59.160973Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(admins) is there some incertitude about the criteria ?",
+      "on_post": 13880,
+      "on_post_data": {
+        "id": 13880,
+        "title": "What will be the largest payload capacity (in tons) of a successfully reused launch vehicle in the following years?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348581,
+      "author": {
+        "id": 113860,
+        "username": "RuslanBes",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T14:50:53.574978Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "Resolving this question will wi tougher because Germany annouced they won't publish their Ukraine military help officially.\n\nAlso Merz tweeted today that they \"don't have any range restrictions\" anymore.\n\n[https://x.com/bundeskanzler/status/1926985204498829795](https://x.com/bundeskanzler/status/1926985204498829795)",
+      "on_post": 37354,
+      "on_post_data": {
+        "id": 37354,
+        "title": "\u0427\u0438 \u043e\u0442\u0440\u0438\u043c\u0430\u0454 \u0423\u043a\u0440\u0430\u0457\u043d\u0430 \u0422\u0430\u0443\u0440\u0443\u0441\u0438 \u0434\u043e \u043b\u0438\u043f\u043d\u044f 2025? / Will Ukraine acquire Taurus missiles before July 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348555,
+      "author": {
+        "id": 139161,
+        "username": "Zaldath",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348553,
+      "root_id": 344678,
+      "created_at": "2025-05-26T13:34:21.498510Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(Sylvain) Could be better that way, yeah, to avoid making the basic graph too filled with information.",
+      "on_post": 935,
+      "on_post_data": {
+        "id": 935,
+        "title": "Platform feature suggestions"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 105951,
+          "username": "Sylvain",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348553,
+      "author": {
+        "id": 105951,
+        "username": "Sylvain",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 344678,
+      "root_id": 344678,
+      "created_at": "2025-05-26T13:24:05.645647Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(Zaldath) this feature has been in my personal drawer since we switched to the current scores. I think for clarity it will have to live in a separate graph close to the scores section.",
+      "on_post": 935,
+      "on_post_data": {
+        "id": 935,
+        "title": "Platform feature suggestions"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 139161,
+          "username": "Zaldath",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348524,
+      "author": {
+        "id": 126626,
+        "username": "skmmcj",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 344383,
+      "root_id": 343008,
+      "created_at": "2025-05-26T12:57:07.715862Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(RuslanBes) @(DiggerDeeper) It is a bug, but they can be. I fixed it, please ping me if you find other such issues.",
+      "on_post": 36304,
+      "on_post_data": {
+        "id": 36304,
+        "title": "Will Crude Oil Futures outperform S&P 500 Futures in total price return over the following Q2 2025 weeks?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 236930,
+          "username": "DiggerDeeper",
+          "is_bot": false,
+          "is_staff": false
+        },
+        {
+          "id": 113860,
+          "username": "RuslanBes",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    }
+  ],
+  "38057": [
+    {
+      "id": 349037,
+      "author": {
+        "id": 115975,
+        "username": "johnnycaffeine",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348952,
+      "root_id": 348952,
+      "created_at": "2025-05-26T21:56:07.387794Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(palcu) Thanks very much, I'll go ahead and resolve the question as **Nicu\u0219or Dan**.",
+      "on_post": 30859,
+      "on_post_data": {
+        "id": 30859,
+        "title": "Who will be the next President of Romania in 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 116988,
+          "username": "palcu",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 349012,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348897,
+      "root_id": 325258,
+      "created_at": "2025-05-26T20:29:47.135532Z",
+      "text_edited_at": "2025-05-26T20:31:17.595078Z",
+      "is_soft_deleted": false,
+      "text": "@(johnnycaffeine) nothing official, I think it's extremely likely this has happened but no one is showing the subcategories now.\n\nThe problem is that the resolution criteria would resolve this to the date when the model was released and not the day when we get the information. Are we supposed to put a component on the release date of each of the potential models, i.e 2.5 Pro, 3.7 sonnet, 4 Opus, o3, o1 Pro and 4.5? (I may have forgotten some)\n\nEdit: Considering the question is up to 2039 I would prefer annulment to the statu quo because updating non stop for 15 years if no one updates the MMLU rankings anymore...",
+      "on_post": 5276,
+      "on_post_data": {
+        "id": 5276,
+        "title": "When will AI achieve competency on multi-choice questions across diverse fields of expertise (MMLU)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 115975,
+          "username": "johnnycaffeine",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348952,
+      "author": {
+        "id": 116988,
+        "username": "palcu",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T20:08:53.135905Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(admins) as of today Nicusor Dan has taken the vow to become president and this question can now resolve.\n\n[https://en.wikipedia.org/wiki/President\\_of\\_Romania](https://en.wikipedia.org/wiki/President_of_Romania)",
+      "on_post": 30859,
+      "on_post_data": {
+        "id": 30859,
+        "title": "Who will be the next President of Romania in 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348951,
+      "author": {
+        "id": 133407,
+        "username": "jleibowich",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T20:08:50.381837Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "My forecast is 20%. Here are some important things to consider:\n\n\n\nFirst of all, it's important to remember that new business tax credits are almost never reversed within 3 years (if the opposite party takes control during this period). For example, the ACA repeal failed, the TCJA corporate rate was not repealed, and the Bush 2001/2003 tax cuts had a partial sunset.\n\n\n\nAs far as downside pressure: Republicans can only lose three votes in the Senate, but several GOP Senators are hesitant about this legislation (Tillis, Murkowski, Curtis, Moran, Cramer, Capito). See here: [https://www.politico.com/news/2025/05/23/senate-republicans-house-rollback-ira-tax-credits-00366212](https://www.politico.com/news/2025/05/23/senate-republicans-house-rollback-ira-tax-credits-00366212)\n\nAnd in the House, 14 House Republicans wrote a pre-vote letter that asked the GOP leadership to keep transferability throughout any phase-out. See here: [https://www.utilitydive.com/news/rep-kiggans-house-gop-members-request-transferability-placed-in-service-tax-credit-tweaks/748609/](https://www.utilitydive.com/news/rep-kiggans-house-gop-members-request-transferability-placed-in-service-tax-credit-tweaks/748609/)\n\n\n\nThere is some upside pressure, though. For one thing, the House already passed a reconciliation bill that would get rid of most of the \u00a7 6418 framework. See here: [https://www.utilitydive.com/news/house-gop-budget-worse-than-feared-for-clean-energy-analysts/748862/](https://www.utilitydive.com/news/house-gop-budget-worse-than-feared-for-clean-energy-analysts/748862/)\n\n\n\nTaking everything into account, I put the likelihood of this question resolving yes at 20%.",
+      "on_post": 36880,
+      "on_post_data": {
+        "id": 36880,
+        "title": "Will legislation enacted before January 1, 2026 eliminate the transferability of any of these clean energy tax credits (\u00a748E ITC,  \u00a745Y PTC, \u00a745X AMPC)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348897,
+      "author": {
+        "id": 115975,
+        "username": "johnnycaffeine",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348844,
+      "root_id": 325258,
+      "created_at": "2025-05-26T20:01:34.536131Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "Hi @(exmateriae), has any model both gotten \u226570% accuracy on every task and \u226585% mean accuracy across all tasks? I haven't been able to find any information that anything has accomplished both.",
+      "on_post": 5276,
+      "on_post_data": {
+        "id": 5276,
+        "title": "When will AI achieve competency on multi-choice questions across diverse fields of expertise (MMLU)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348895,
+      "author": {
+        "id": 139161,
+        "username": "Zaldath",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348742,
+      "root_id": 348742,
+      "created_at": "2025-05-26T19:38:23.097111Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(exmateriae) Great comments by you recently! I'm actually getting less confident that the commenting prize cap will be reached in this tournament - since let's say one of us two (or AlexK864 etc.) wins the #1 comment prize, which is already a big share of the total prize pool, and then the other top commenters will be competing for the remaining comment prizes... This would not have been such a big issue in some of the past tournaments where the prize cap was 30-40% of the prize pool. However, here the prize cap is 50% of the prize pool, which makes it relatively tougher for one person to reach it (even if the competition wasn't difficult - and it seems to be relatively tough here, since at least 3 people are generating many good comments). I'm still slightly leaning toward a positive resolution, but it's certainly more uncertain than in any of the previous tournaments with commenting prizes (all of which resolved Yes).\n\nAs for your comment itself, it was helpful since this topic is pretty unfamiliar to me. Unfortunately I couldn't get Wayback Machine to work for that site so I was uncertain even if the current top score had changed in recent weeks etc. I guess I'll keep a (small) extra component at the current top score, though, but your comment made me think that it most likely won't stay at that level for three more months.",
+      "on_post": 37126,
+      "on_post_data": {
+        "id": 37126,
+        "title": "What will be the highest score for the \"ARC Prize 2025\" competition on it's public leaderboard on August 31, 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348854,
+      "author": {
+        "id": 121719,
+        "username": "TemetNosce",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T18:37:14.425687Z",
+      "text_edited_at": "2025-05-26T21:20:17.296889Z",
+      "is_soft_deleted": false,
+      "text": "How would this resolve currently, given Harvard got a restraining order against it? As written it seems as if it would resolve positive given the 'in effect' part, but I'd prefer a clarification.\n\n\n\nEdit: Came back and there's also a discrepancy in the resolution criteria about whether it's about on or on or before July 1, which should also be clarified.",
+      "on_post": 37920,
+      "on_post_data": {
+        "id": 37920,
+        "title": "Will Harvard University have a Student and Exchange Visitor Program certification on July 1, 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348844,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 325258,
+      "root_id": 325258,
+      "created_at": "2025-05-26T18:29:27.508042Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(admins) tagging because this just got even more likely with the release of Claude 4 Opus which reached an average score of 88.8% on MMMLU. Also because I'm forecasting in the past now so if htis does not resolve I have to update...",
+      "on_post": 5276,
+      "on_post_data": {
+        "id": 5276,
+        "title": "When will AI achieve competency on multi-choice questions across diverse fields of expertise (MMLU)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348789,
+      "author": {
+        "id": 115975,
+        "username": "johnnycaffeine",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T18:06:41.335662Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "Question resolves as **Yes**. The Progressive Reform Party [won](https://en.wikipedia.org/wiki/2025_Surinamese_general_election) 20 seats, which is more than any other party.",
+      "on_post": 37225,
+      "on_post_data": {
+        "id": 37225,
+        "title": "Will the Progressive Reform Party win the most seats in the 2025 Surinamese general election?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348742,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T17:56:39.080058Z",
+      "text_edited_at": "2025-05-26T18:00:16.238610Z",
+      "is_soft_deleted": false,
+      "text": "[Last year](https://arcprize.org/blog/arc-prize-2024-winners-technical-report#:~:text=In%20total%2C%201%2C430%20teams%20submitted,efforts%20to%20tackle%20ARC%2DAGI. \"source\"), there were 1.430 teams with 17.789 entries. For now, only 410 teams and 3k submissions but we are only 2/7th of the total duration. Of note : the prize money is obviously very important but not as much as the technical proficiency, some teams having refused to open source last year, prefering prestige to tens of thousands of dollars. Or maybe they thought they could sell it for more?\n\n> In total, 1,430 teams submitted 17,789 entries for ARC Prize 2024. We're aware of at least seven well-funded startups who shifted priorities to work on ARC-AGI and heard from multiple large corporate labs who've spun up internal efforts to tackle ARC-AGI.\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_qDw1hOl.png)\n\nIf you've been following AI in the last three years, one thing is extremely clear : benchmark saturation is not a possibility but a *short time* inevitability. Lmarena has been rendered pretty much useless because most answers are now good enough to simple queries and you need to go for more and more difficult questions to get the AI stuck.\n\nARC Prize 1 was supposed to be able to challenge open source AIs and determine how far away from AGI we were. The results of the best AIs were so good that a new benchmark was needed and planned for as soon as the competition was over. What this first competition showed was that humans are absolutely unable to evaluate what is general intelligence : ARC was supposed to be pretty hard and yet in six months, 55% of the problems were solved. I'm pretty sure ARC 2 will be the same and out of the window by EOY. The same thing happened with the so called Humanity's Last Exam, which has now gotten a version 2...\n\nIn the first two months of competition, SOTA in ARC 2 went from 3% to 15.3%, a 410% increase. Increase in the last month was \"only\" 50% but even with only two more 50% increases by August 31, that would mean a result around 33%.\n\nAdvancement through time of SOTA ARC 2:\n\n| Period and score                       | Leaderboard                                                                       |\n| -------------------------------------- | --------------------------------------------------------------------------------- |\n| Late March, baseline score at launch : | ![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_oUXWJj0.png) |\n| April 10 - 10.14%                      | ![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_9s5RP0O.png) |\n| May 14 - 15.3%                         | ![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_qz8pEJF.png) |\n\nThis is already impressive compared to last year's progress:\n\n1 11 Jun 2024 34%\n\n2 19 Jun 2024 38%\n\n3 18 Jul 2024 41%\n\n4 20 Jul 2024 42%\n\n5 19 Aug 2024 46%\n\n6 29 Sep 2024 48%\n\n7 09 Oct 2024 49%\n\n8 23 Oct 2024 53%\n\n9 29 Oct 2024 54.5%&#x20;\n\nThe progress last year was barely above one 50% increase and even in term of pure point increase, there's already been almost 2/3rd of last year's progress : 12.3/20.5. Note that a lot of the progress was made in the last 6 weeks : almost a 10 point increase, half the total progress. This will matter a lot regarding my forecast as I think at least a third of the final gain will be made out of this forecast's time window.\n\nThere is however one difference compared to most other benchmarks, it seems that scaling has a limited effect and algorithm upgrades are the only way to really improve performance. First that's a really good achievement for a benchmark. Second, it would be great if it could bring algorithmic advances, I think it will, and it seems to have already been partially the case.\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_Z7K9PLg.png)\n\nComparison of results on ARC-AGI-1 and 2: (yes the first benchmark will soon be saturated)\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_I8pbv7C.png)\n\nIn theory, the benchmark is supposed to show \"easy\" tasks for humans that do not scale well on AIs. Have you tried some of the puzzles? I don't know if there was a mistake on my side but I was unable to do the daily puzzle today, this seems much harder than last year's.\n\nAdd to that the very strict limitations on the prize (50\\$ of compute only) and I think there are diminishing returns and it will actually be difficult for competitors to keep improving as fast as they have done until now. End period is similar to last year's (3 Nov this year, 10 Nov last year) but it started \\~10 weeks earlier which ended up mattering quite a bit. More teams will also get in before the end, I don't see a reason why there would be significantly less participants than last year as AI is becoming more and more popular and easier to access.\n\nI don't think there's more than 5% chance that someone gets the grand prize this year but I think there's a decent chance that the score of 40-45% will be reached by the end of the competition. As I said earlier two 50% increases by end of August (which would be a significant but logical, almost inevitable, slow down) would bring this around 33% which seems possible and would likely not be my 75% but a lower point. I'm actually surprised that the prediction scope is so narrow. I will have significant weight on the higher side to account for surprising breakthroughs, which are almost ubiquitous in AI right now. On the lower side I will not hedge as much as I would be surprised if 25% was not reached by end of August. (there's still three months)",
+      "on_post": 37126,
+      "on_post_data": {
+        "id": 37126,
+        "title": "What will be the highest score for the \"ARC Prize 2025\" competition on it's public leaderboard on August 31, 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 2,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": [
+        {
+          "id": 147,
+          "text": "Algorithmic breakthrough",
+          "author": {
+            "id": 119188,
+            "username": "exmateriae",
+            "is_bot": false,
+            "is_staff": false
+          },
+          "comment_id": 348742,
+          "post_id": 37126,
+          "user_votes": [],
+          "votes_score": 0,
+          "vote_type": null
+        },
+        {
+          "id": 148,
+          "text": "Progress faster than previous year",
+          "author": {
+            "id": 119188,
+            "username": "exmateriae",
+            "is_bot": false,
+            "is_staff": false
+          },
+          "comment_id": 348742,
+          "post_id": 37126,
+          "user_votes": [],
+          "votes_score": 0,
+          "vote_type": null
+        }
+      ]
+    },
+    {
+      "id": 348723,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348694,
+      "root_id": 332272,
+      "created_at": "2025-05-26T16:31:38.562873Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(skmmcj) sorry and thanks!",
+      "on_post": 13880,
+      "on_post_data": {
+        "id": 13880,
+        "title": "What will be the largest payload capacity (in tons) of a successfully reused launch vehicle in the following years?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 126626,
+          "username": "skmmcj",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348694,
+      "author": {
+        "id": 126626,
+        "username": "skmmcj",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348684,
+      "root_id": 332272,
+      "created_at": "2025-05-26T16:02:18.472037Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(exmateriae) I was getting to this!\n\n> Unless Block 3 also fulfills the successfully reused criteria by then, it should not be counted right?\n\n> It seemed to me this would resolve if even only Booster and not Ship was reused? Booster 14 is supposed to be used in Flight Test 9 so if SFT9 is successful by the FP criteria, then 150 tons would be the current resolution value?\n\nBoth of these seem correct to me, according to the criteria.",
+      "on_post": 13880,
+      "on_post_data": {
+        "id": 13880,
+        "title": "What will be the largest payload capacity (in tons) of a successfully reused launch vehicle in the following years?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348692,
+      "author": {
+        "id": 126626,
+        "username": "skmmcj",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348688,
+      "root_id": 344545,
+      "created_at": "2025-05-26T15:50:37.516639Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(exmateriae) Ah I see. The [one for March](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/mar-2025) shows it as 4.0. I think it's best to resolve using each months report, so that we don't have to constantly reevaluate all our past resolutions. I'll resolve it as 4.0 and add this to the fine print.",
+      "on_post": 22134,
+      "on_post_data": {
+        "id": 22134,
+        "title": "What will the seasonally adjusted unemployment rate be in Australia, for the following months?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348689,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348504,
+      "root_id": 345152,
+      "created_at": "2025-05-26T15:39:06.163876Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(skmmcj) no worries, I was just surprised!",
+      "on_post": 22519,
+      "on_post_data": {
+        "id": 22519,
+        "title": "Will AI capabilities plateau with the next generation (GPT-5, etc.) of language models?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 126626,
+          "username": "skmmcj",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348688,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348508,
+      "root_id": 344545,
+      "created_at": "2025-05-26T15:37:56.969303Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(skmmcj) Do I have a wrong statistic?\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_xi5QedY.png)\n\nI'm looking at this for March [https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/apr-2025](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/apr-2025)",
+      "on_post": 22134,
+      "on_post_data": {
+        "id": 22134,
+        "title": "What will the seasonally adjusted unemployment rate be in Australia, for the following months?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 126626,
+          "username": "skmmcj",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348684,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 332272,
+      "root_id": 332272,
+      "created_at": "2025-05-26T15:31:59.160973Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(admins) is there some incertitude about the criteria ?",
+      "on_post": 13880,
+      "on_post_data": {
+        "id": 13880,
+        "title": "What will be the largest payload capacity (in tons) of a successfully reused launch vehicle in the following years?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348581,
+      "author": {
+        "id": 113860,
+        "username": "RuslanBes",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T14:50:53.574978Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "Resolving this question will wi tougher because Germany annouced they won't publish their Ukraine military help officially.\n\nAlso Merz tweeted today that they \"don't have any range restrictions\" anymore.\n\n[https://x.com/bundeskanzler/status/1926985204498829795](https://x.com/bundeskanzler/status/1926985204498829795)",
+      "on_post": 37354,
+      "on_post_data": {
+        "id": 37354,
+        "title": "\u0427\u0438 \u043e\u0442\u0440\u0438\u043c\u0430\u0454 \u0423\u043a\u0440\u0430\u0457\u043d\u0430 \u0422\u0430\u0443\u0440\u0443\u0441\u0438 \u0434\u043e \u043b\u0438\u043f\u043d\u044f 2025? / Will Ukraine acquire Taurus missiles before July 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348555,
+      "author": {
+        "id": 139161,
+        "username": "Zaldath",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348553,
+      "root_id": 344678,
+      "created_at": "2025-05-26T13:34:21.498510Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(Sylvain) Could be better that way, yeah, to avoid making the basic graph too filled with information.",
+      "on_post": 935,
+      "on_post_data": {
+        "id": 935,
+        "title": "Platform feature suggestions"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 105951,
+          "username": "Sylvain",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348553,
+      "author": {
+        "id": 105951,
+        "username": "Sylvain",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 344678,
+      "root_id": 344678,
+      "created_at": "2025-05-26T13:24:05.645647Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(Zaldath) this feature has been in my personal drawer since we switched to the current scores. I think for clarity it will have to live in a separate graph close to the scores section.",
+      "on_post": 935,
+      "on_post_data": {
+        "id": 935,
+        "title": "Platform feature suggestions"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 139161,
+          "username": "Zaldath",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348524,
+      "author": {
+        "id": 126626,
+        "username": "skmmcj",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 344383,
+      "root_id": 343008,
+      "created_at": "2025-05-26T12:57:07.715862Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(RuslanBes) @(DiggerDeeper) It is a bug, but they can be. I fixed it, please ping me if you find other such issues.",
+      "on_post": 36304,
+      "on_post_data": {
+        "id": 36304,
+        "title": "Will Crude Oil Futures outperform S&P 500 Futures in total price return over the following Q2 2025 weeks?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 236930,
+          "username": "DiggerDeeper",
+          "is_bot": false,
+          "is_staff": false
+        },
+        {
+          "id": 113860,
+          "username": "RuslanBes",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    }
+  ],
+  "38056": [
+    {
+      "id": 349037,
+      "author": {
+        "id": 115975,
+        "username": "johnnycaffeine",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348952,
+      "root_id": 348952,
+      "created_at": "2025-05-26T21:56:07.387794Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(palcu) Thanks very much, I'll go ahead and resolve the question as **Nicu\u0219or Dan**.",
+      "on_post": 30859,
+      "on_post_data": {
+        "id": 30859,
+        "title": "Who will be the next President of Romania in 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 116988,
+          "username": "palcu",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 349012,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348897,
+      "root_id": 325258,
+      "created_at": "2025-05-26T20:29:47.135532Z",
+      "text_edited_at": "2025-05-26T20:31:17.595078Z",
+      "is_soft_deleted": false,
+      "text": "@(johnnycaffeine) nothing official, I think it's extremely likely this has happened but no one is showing the subcategories now.\n\nThe problem is that the resolution criteria would resolve this to the date when the model was released and not the day when we get the information. Are we supposed to put a component on the release date of each of the potential models, i.e 2.5 Pro, 3.7 sonnet, 4 Opus, o3, o1 Pro and 4.5? (I may have forgotten some)\n\nEdit: Considering the question is up to 2039 I would prefer annulment to the statu quo because updating non stop for 15 years if no one updates the MMLU rankings anymore...",
+      "on_post": 5276,
+      "on_post_data": {
+        "id": 5276,
+        "title": "When will AI achieve competency on multi-choice questions across diverse fields of expertise (MMLU)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 115975,
+          "username": "johnnycaffeine",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348952,
+      "author": {
+        "id": 116988,
+        "username": "palcu",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T20:08:53.135905Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(admins) as of today Nicusor Dan has taken the vow to become president and this question can now resolve.\n\n[https://en.wikipedia.org/wiki/President\\_of\\_Romania](https://en.wikipedia.org/wiki/President_of_Romania)",
+      "on_post": 30859,
+      "on_post_data": {
+        "id": 30859,
+        "title": "Who will be the next President of Romania in 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348951,
+      "author": {
+        "id": 133407,
+        "username": "jleibowich",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T20:08:50.381837Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "My forecast is 20%. Here are some important things to consider:\n\n\n\nFirst of all, it's important to remember that new business tax credits are almost never reversed within 3 years (if the opposite party takes control during this period). For example, the ACA repeal failed, the TCJA corporate rate was not repealed, and the Bush 2001/2003 tax cuts had a partial sunset.\n\n\n\nAs far as downside pressure: Republicans can only lose three votes in the Senate, but several GOP Senators are hesitant about this legislation (Tillis, Murkowski, Curtis, Moran, Cramer, Capito). See here: [https://www.politico.com/news/2025/05/23/senate-republicans-house-rollback-ira-tax-credits-00366212](https://www.politico.com/news/2025/05/23/senate-republicans-house-rollback-ira-tax-credits-00366212)\n\nAnd in the House, 14 House Republicans wrote a pre-vote letter that asked the GOP leadership to keep transferability throughout any phase-out. See here: [https://www.utilitydive.com/news/rep-kiggans-house-gop-members-request-transferability-placed-in-service-tax-credit-tweaks/748609/](https://www.utilitydive.com/news/rep-kiggans-house-gop-members-request-transferability-placed-in-service-tax-credit-tweaks/748609/)\n\n\n\nThere is some upside pressure, though. For one thing, the House already passed a reconciliation bill that would get rid of most of the \u00a7 6418 framework. See here: [https://www.utilitydive.com/news/house-gop-budget-worse-than-feared-for-clean-energy-analysts/748862/](https://www.utilitydive.com/news/house-gop-budget-worse-than-feared-for-clean-energy-analysts/748862/)\n\n\n\nTaking everything into account, I put the likelihood of this question resolving yes at 20%.",
+      "on_post": 36880,
+      "on_post_data": {
+        "id": 36880,
+        "title": "Will legislation enacted before January 1, 2026 eliminate the transferability of any of these clean energy tax credits (\u00a748E ITC,  \u00a745Y PTC, \u00a745X AMPC)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348897,
+      "author": {
+        "id": 115975,
+        "username": "johnnycaffeine",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348844,
+      "root_id": 325258,
+      "created_at": "2025-05-26T20:01:34.536131Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "Hi @(exmateriae), has any model both gotten \u226570% accuracy on every task and \u226585% mean accuracy across all tasks? I haven't been able to find any information that anything has accomplished both.",
+      "on_post": 5276,
+      "on_post_data": {
+        "id": 5276,
+        "title": "When will AI achieve competency on multi-choice questions across diverse fields of expertise (MMLU)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348895,
+      "author": {
+        "id": 139161,
+        "username": "Zaldath",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348742,
+      "root_id": 348742,
+      "created_at": "2025-05-26T19:38:23.097111Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(exmateriae) Great comments by you recently! I'm actually getting less confident that the commenting prize cap will be reached in this tournament - since let's say one of us two (or AlexK864 etc.) wins the #1 comment prize, which is already a big share of the total prize pool, and then the other top commenters will be competing for the remaining comment prizes... This would not have been such a big issue in some of the past tournaments where the prize cap was 30-40% of the prize pool. However, here the prize cap is 50% of the prize pool, which makes it relatively tougher for one person to reach it (even if the competition wasn't difficult - and it seems to be relatively tough here, since at least 3 people are generating many good comments). I'm still slightly leaning toward a positive resolution, but it's certainly more uncertain than in any of the previous tournaments with commenting prizes (all of which resolved Yes).\n\nAs for your comment itself, it was helpful since this topic is pretty unfamiliar to me. Unfortunately I couldn't get Wayback Machine to work for that site so I was uncertain even if the current top score had changed in recent weeks etc. I guess I'll keep a (small) extra component at the current top score, though, but your comment made me think that it most likely won't stay at that level for three more months.",
+      "on_post": 37126,
+      "on_post_data": {
+        "id": 37126,
+        "title": "What will be the highest score for the \"ARC Prize 2025\" competition on it's public leaderboard on August 31, 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348854,
+      "author": {
+        "id": 121719,
+        "username": "TemetNosce",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T18:37:14.425687Z",
+      "text_edited_at": "2025-05-26T21:20:17.296889Z",
+      "is_soft_deleted": false,
+      "text": "How would this resolve currently, given Harvard got a restraining order against it? As written it seems as if it would resolve positive given the 'in effect' part, but I'd prefer a clarification.\n\n\n\nEdit: Came back and there's also a discrepancy in the resolution criteria about whether it's about on or on or before July 1, which should also be clarified.",
+      "on_post": 37920,
+      "on_post_data": {
+        "id": 37920,
+        "title": "Will Harvard University have a Student and Exchange Visitor Program certification on July 1, 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348844,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 325258,
+      "root_id": 325258,
+      "created_at": "2025-05-26T18:29:27.508042Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(admins) tagging because this just got even more likely with the release of Claude 4 Opus which reached an average score of 88.8% on MMMLU. Also because I'm forecasting in the past now so if htis does not resolve I have to update...",
+      "on_post": 5276,
+      "on_post_data": {
+        "id": 5276,
+        "title": "When will AI achieve competency on multi-choice questions across diverse fields of expertise (MMLU)?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348789,
+      "author": {
+        "id": 115975,
+        "username": "johnnycaffeine",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T18:06:41.335662Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "Question resolves as **Yes**. The Progressive Reform Party [won](https://en.wikipedia.org/wiki/2025_Surinamese_general_election) 20 seats, which is more than any other party.",
+      "on_post": 37225,
+      "on_post_data": {
+        "id": 37225,
+        "title": "Will the Progressive Reform Party win the most seats in the 2025 Surinamese general election?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348742,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T17:56:39.080058Z",
+      "text_edited_at": "2025-05-26T18:00:16.238610Z",
+      "is_soft_deleted": false,
+      "text": "[Last year](https://arcprize.org/blog/arc-prize-2024-winners-technical-report#:~:text=In%20total%2C%201%2C430%20teams%20submitted,efforts%20to%20tackle%20ARC%2DAGI. \"source\"), there were 1.430 teams with 17.789 entries. For now, only 410 teams and 3k submissions but we are only 2/7th of the total duration. Of note : the prize money is obviously very important but not as much as the technical proficiency, some teams having refused to open source last year, prefering prestige to tens of thousands of dollars. Or maybe they thought they could sell it for more?\n\n> In total, 1,430 teams submitted 17,789 entries for ARC Prize 2024. We're aware of at least seven well-funded startups who shifted priorities to work on ARC-AGI and heard from multiple large corporate labs who've spun up internal efforts to tackle ARC-AGI.\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_qDw1hOl.png)\n\nIf you've been following AI in the last three years, one thing is extremely clear : benchmark saturation is not a possibility but a *short time* inevitability. Lmarena has been rendered pretty much useless because most answers are now good enough to simple queries and you need to go for more and more difficult questions to get the AI stuck.\n\nARC Prize 1 was supposed to be able to challenge open source AIs and determine how far away from AGI we were. The results of the best AIs were so good that a new benchmark was needed and planned for as soon as the competition was over. What this first competition showed was that humans are absolutely unable to evaluate what is general intelligence : ARC was supposed to be pretty hard and yet in six months, 55% of the problems were solved. I'm pretty sure ARC 2 will be the same and out of the window by EOY. The same thing happened with the so called Humanity's Last Exam, which has now gotten a version 2...\n\nIn the first two months of competition, SOTA in ARC 2 went from 3% to 15.3%, a 410% increase. Increase in the last month was \"only\" 50% but even with only two more 50% increases by August 31, that would mean a result around 33%.\n\nAdvancement through time of SOTA ARC 2:\n\n| Period and score                       | Leaderboard                                                                       |\n| -------------------------------------- | --------------------------------------------------------------------------------- |\n| Late March, baseline score at launch : | ![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_oUXWJj0.png) |\n| April 10 - 10.14%                      | ![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_9s5RP0O.png) |\n| May 14 - 15.3%                         | ![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_qz8pEJF.png) |\n\nThis is already impressive compared to last year's progress:\n\n1 11 Jun 2024 34%\n\n2 19 Jun 2024 38%\n\n3 18 Jul 2024 41%\n\n4 20 Jul 2024 42%\n\n5 19 Aug 2024 46%\n\n6 29 Sep 2024 48%\n\n7 09 Oct 2024 49%\n\n8 23 Oct 2024 53%\n\n9 29 Oct 2024 54.5%&#x20;\n\nThe progress last year was barely above one 50% increase and even in term of pure point increase, there's already been almost 2/3rd of last year's progress : 12.3/20.5. Note that a lot of the progress was made in the last 6 weeks : almost a 10 point increase, half the total progress. This will matter a lot regarding my forecast as I think at least a third of the final gain will be made out of this forecast's time window.\n\nThere is however one difference compared to most other benchmarks, it seems that scaling has a limited effect and algorithm upgrades are the only way to really improve performance. First that's a really good achievement for a benchmark. Second, it would be great if it could bring algorithmic advances, I think it will, and it seems to have already been partially the case.\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_Z7K9PLg.png)\n\nComparison of results on ARC-AGI-1 and 2: (yes the first benchmark will soon be saturated)\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_I8pbv7C.png)\n\nIn theory, the benchmark is supposed to show \"easy\" tasks for humans that do not scale well on AIs. Have you tried some of the puzzles? I don't know if there was a mistake on my side but I was unable to do the daily puzzle today, this seems much harder than last year's.\n\nAdd to that the very strict limitations on the prize (50\\$ of compute only) and I think there are diminishing returns and it will actually be difficult for competitors to keep improving as fast as they have done until now. End period is similar to last year's (3 Nov this year, 10 Nov last year) but it started \\~10 weeks earlier which ended up mattering quite a bit. More teams will also get in before the end, I don't see a reason why there would be significantly less participants than last year as AI is becoming more and more popular and easier to access.\n\nI don't think there's more than 5% chance that someone gets the grand prize this year but I think there's a decent chance that the score of 40-45% will be reached by the end of the competition. As I said earlier two 50% increases by end of August (which would be a significant but logical, almost inevitable, slow down) would bring this around 33% which seems possible and would likely not be my 75% but a lower point. I'm actually surprised that the prediction scope is so narrow. I will have significant weight on the higher side to account for surprising breakthroughs, which are almost ubiquitous in AI right now. On the lower side I will not hedge as much as I would be surprised if 25% was not reached by end of August. (there's still three months)",
+      "on_post": 37126,
+      "on_post_data": {
+        "id": 37126,
+        "title": "What will be the highest score for the \"ARC Prize 2025\" competition on it's public leaderboard on August 31, 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 2,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": [
+        {
+          "id": 147,
+          "text": "Algorithmic breakthrough",
+          "author": {
+            "id": 119188,
+            "username": "exmateriae",
+            "is_bot": false,
+            "is_staff": false
+          },
+          "comment_id": 348742,
+          "post_id": 37126,
+          "user_votes": [],
+          "votes_score": 0,
+          "vote_type": null
+        },
+        {
+          "id": 148,
+          "text": "Progress faster than previous year",
+          "author": {
+            "id": 119188,
+            "username": "exmateriae",
+            "is_bot": false,
+            "is_staff": false
+          },
+          "comment_id": 348742,
+          "post_id": 37126,
+          "user_votes": [],
+          "votes_score": 0,
+          "vote_type": null
+        }
+      ]
+    },
+    {
+      "id": 348723,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348694,
+      "root_id": 332272,
+      "created_at": "2025-05-26T16:31:38.562873Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(skmmcj) sorry and thanks!",
+      "on_post": 13880,
+      "on_post_data": {
+        "id": 13880,
+        "title": "What will be the largest payload capacity (in tons) of a successfully reused launch vehicle in the following years?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 126626,
+          "username": "skmmcj",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348694,
+      "author": {
+        "id": 126626,
+        "username": "skmmcj",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348684,
+      "root_id": 332272,
+      "created_at": "2025-05-26T16:02:18.472037Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(exmateriae) I was getting to this!\n\n> Unless Block 3 also fulfills the successfully reused criteria by then, it should not be counted right?\n\n> It seemed to me this would resolve if even only Booster and not Ship was reused? Booster 14 is supposed to be used in Flight Test 9 so if SFT9 is successful by the FP criteria, then 150 tons would be the current resolution value?\n\nBoth of these seem correct to me, according to the criteria.",
+      "on_post": 13880,
+      "on_post_data": {
+        "id": 13880,
+        "title": "What will be the largest payload capacity (in tons) of a successfully reused launch vehicle in the following years?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348692,
+      "author": {
+        "id": 126626,
+        "username": "skmmcj",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 348688,
+      "root_id": 344545,
+      "created_at": "2025-05-26T15:50:37.516639Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(exmateriae) Ah I see. The [one for March](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/mar-2025) shows it as 4.0. I think it's best to resolve using each months report, so that we don't have to constantly reevaluate all our past resolutions. I'll resolve it as 4.0 and add this to the fine print.",
+      "on_post": 22134,
+      "on_post_data": {
+        "id": 22134,
+        "title": "What will the seasonally adjusted unemployment rate be in Australia, for the following months?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 119188,
+          "username": "exmateriae",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348689,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348504,
+      "root_id": 345152,
+      "created_at": "2025-05-26T15:39:06.163876Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(skmmcj) no worries, I was just surprised!",
+      "on_post": 22519,
+      "on_post_data": {
+        "id": 22519,
+        "title": "Will AI capabilities plateau with the next generation (GPT-5, etc.) of language models?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 126626,
+          "username": "skmmcj",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348688,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348508,
+      "root_id": 344545,
+      "created_at": "2025-05-26T15:37:56.969303Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(skmmcj) Do I have a wrong statistic?\n\n![](https://metaculus-web-media.s3.amazonaws.com/user_uploaded/image_xi5QedY.png)\n\nI'm looking at this for March [https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/apr-2025](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/apr-2025)",
+      "on_post": 22134,
+      "on_post_data": {
+        "id": 22134,
+        "title": "What will the seasonally adjusted unemployment rate be in Australia, for the following months?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 126626,
+          "username": "skmmcj",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348684,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 332272,
+      "root_id": 332272,
+      "created_at": "2025-05-26T15:31:59.160973Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(admins) is there some incertitude about the criteria ?",
+      "on_post": 13880,
+      "on_post_data": {
+        "id": 13880,
+        "title": "What will be the largest payload capacity (in tons) of a successfully reused launch vehicle in the following years?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348581,
+      "author": {
+        "id": 113860,
+        "username": "RuslanBes",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": null,
+      "root_id": null,
+      "created_at": "2025-05-26T14:50:53.574978Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "Resolving this question will wi tougher because Germany annouced they won't publish their Ukraine military help officially.\n\nAlso Merz tweeted today that they \"don't have any range restrictions\" anymore.\n\n[https://x.com/bundeskanzler/status/1926985204498829795](https://x.com/bundeskanzler/status/1926985204498829795)",
+      "on_post": 37354,
+      "on_post_data": {
+        "id": 37354,
+        "title": "\u0427\u0438 \u043e\u0442\u0440\u0438\u043c\u0430\u0454 \u0423\u043a\u0440\u0430\u0457\u043d\u0430 \u0422\u0430\u0443\u0440\u0443\u0441\u0438 \u0434\u043e \u043b\u0438\u043f\u043d\u044f 2025? / Will Ukraine acquire Taurus missiles before July 2025?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348555,
+      "author": {
+        "id": 139161,
+        "username": "Zaldath",
+        "is_bot": false,
+        "is_staff": false
+      },
+      "parent_id": 348553,
+      "root_id": 344678,
+      "created_at": "2025-05-26T13:34:21.498510Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(Sylvain) Could be better that way, yeah, to avoid making the basic graph too filled with information.",
+      "on_post": 935,
+      "on_post_data": {
+        "id": 935,
+        "title": "Platform feature suggestions"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 1,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 105951,
+          "username": "Sylvain",
+          "is_bot": false,
+          "is_staff": true
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": null,
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348553,
+      "author": {
+        "id": 105951,
+        "username": "Sylvain",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 344678,
+      "root_id": 344678,
+      "created_at": "2025-05-26T13:24:05.645647Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(Zaldath) this feature has been in my personal drawer since we switched to the current scores. I think for clarity it will have to live in a separate graph close to the scores section.",
+      "on_post": 935,
+      "on_post_data": {
+        "id": 935,
+        "title": "Platform feature suggestions"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 139161,
+          "username": "Zaldath",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    },
+    {
+      "id": 348524,
+      "author": {
+        "id": 126626,
+        "username": "skmmcj",
+        "is_bot": false,
+        "is_staff": true
+      },
+      "parent_id": 344383,
+      "root_id": 343008,
+      "created_at": "2025-05-26T12:57:07.715862Z",
+      "text_edited_at": null,
+      "is_soft_deleted": false,
+      "text": "@(RuslanBes) @(DiggerDeeper) It is a bug, but they can be. I fixed it, please ping me if you find other such issues.",
+      "on_post": 36304,
+      "on_post_data": {
+        "id": 36304,
+        "title": "Will Crude Oil Futures outperform S&P 500 Futures in total price return over the following Q2 2025 weeks?"
+      },
+      "included_forecast": null,
+      "is_private": false,
+      "vote_score": 0,
+      "changed_my_mind": {
+        "count": 0,
+        "for_this_user": false
+      },
+      "is_pinned": false,
+      "mentioned_users": [
+        {
+          "id": 236930,
+          "username": "DiggerDeeper",
+          "is_bot": false,
+          "is_staff": false
+        },
+        {
+          "id": 113860,
+          "username": "RuslanBes",
+          "is_bot": false,
+          "is_staff": false
+        }
+      ],
+      "user_vote": null,
+      "author_staff_permission": "admin",
+      "is_current_content_translated": false,
+      "key_factors": []
+    }
+  ]
+}
