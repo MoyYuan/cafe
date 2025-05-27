@@ -1,9 +1,16 @@
-import os
-
-from cafe.forecast.source_metaculus import MetaculusForecastSource
 
 
-def print_schema(name, obj):
+
+
+mark = .mark.skipif(
+    not .getenv("METACULUS_API_KEY"),
+    reason="Metaculus API key not set; skipping live API tests.",
+)
+
+ MetaculusForecastSource
+
+
+print_schema(name, obj):
     if obj is None:
         print(f"{name}: None (endpoint unavailable or error)")
     elif isinstance(obj, list):
@@ -20,38 +27,38 @@ def print_schema(name, obj):
         print(f"{name}: {type(obj)}")
 
 
-def test_list_questions():
+test_list_questions():
     src = MetaculusForecastSource.from_env()
     questions = src.list_questions()
     print_schema("questions", questions)
     assert isinstance(questions, list) and len(questions) > 0
 
 
-def test_list_users():
+test_list_users():
     src = MetaculusForecastSource.from_env()
     users = src.list_users()
     print_schema("users", users)
     assert users is None or isinstance(users, (list, dict))
 
 
-def test_list_predictions():
+test_list_predictions():
     src = MetaculusForecastSource.from_env()
     preds = src.list_predictions()
     print_schema("predictions", preds)
     assert preds is None or isinstance(preds, (list, dict))
 
 
-import pytest
 
 
-def test_list_series():
+
+test_list_series():
     src = MetaculusForecastSource.from_env()
     series = src.list_series()
     print_schema("series", series)
     assert series is None or isinstance(series, (list, dict))
 
 
-def test_list_groups():
+test_list_groups():
     src = MetaculusForecastSource.from_env()
     groups = src.list_groups()
     print_schema("groups", groups)

@@ -1,10 +1,17 @@
-import json
-import os
-import tempfile
 
-from fastapi.testclient import TestClient
 
-from cafe.main import app
+
+
+
+
+mark = .mark.skipif(
+    not .getenv("METACULUS_API_KEY"),
+    reason="Metaculus API key not set; skipping live API tests.",
+)
+
+ TestClient
+
+ app
 
 client = TestClient(app)
 
@@ -33,7 +40,7 @@ SAMPLE_COMMENTS = [
         "root_id": None,
         "created_at": "2025-05-26T20:00:00",
         "text": "Comment 1",
-        "on_post": 1,
+        "on_pt": 1,
         "included_forecast": None,
         "is_private": None,
         "vote_score": 5,
@@ -48,7 +55,7 @@ SAMPLE_COMMENTS = [
         "root_id": None,
         "created_at": "2025-05-26T20:01:00",
         "text": "Comment 2",
-        "on_post": 1,
+        "on_pt": 1,
         "included_forecast": None,
         "is_private": None,
         "vote_score": 2,
@@ -59,11 +66,11 @@ SAMPLE_COMMENTS = [
 ]
 
 
-def test_questions_cache(tmp_path, monkeypatch):
+test_questions_cache(tmp_path, monkeypatch):
     # Setup: Write sample questions to new cache file
-    cache_file = tmp_path / "questions_cache.json"
+    cache_file = tmp_path / "questions_cache."
     with open(cache_file, "w") as f:
-        json.dump(SAMPLE_QUESTIONS, f)
+        .dump(SAMPLE_QUESTIONS, f)
     # Patch pipeline to use the new cache location
     monkeypatch.setattr(
         "cafe.forecast.processing.metaculus.load_questions",
@@ -72,13 +79,13 @@ def test_questions_cache(tmp_path, monkeypatch):
     # Should load from cache
     resp = client.get(f"/metaculus/questions?questions_cache_path={cache_file}")
     assert resp.status_code == 200
-    data = resp.json()
+    data = resp.()
     assert len(data) == 2
     assert str(data[0]["id"]) == "1"
 
     # Should force refresh (simulate API fetch by monkeypatching list_questions)
     class FakeQ:
-        def __init__(self, d):
+        __init__(self, d):
             self.raw = d
             self.id = d["id"]
             self.title = d["title"]
@@ -86,10 +93,10 @@ def test_questions_cache(tmp_path, monkeypatch):
             self.url = d["url"]
             self.tags = d["tags"]
 
-    def fake_api_list_questions(self):
+    fake_api_list_questions(self):
         return [FakeQ(q) for q in SAMPLE_QUESTIONS[::-1]]  # reverse order
 
-    from cafe.forecast.source_metaculus import MetaculusForecastSource
+    from cafe.forecast.source_metaculus MetaculusForecastSource
 
     monkeypatch.setattr(
         MetaculusForecastSource,
@@ -100,25 +107,25 @@ def test_questions_cache(tmp_path, monkeypatch):
         f"/metaculus/questions?force_refresh=true&questions_cache_path={cache_file}"
     )
     assert resp.status_code == 200
-    data = resp.json()
+    data = resp.()
     assert str(data[0]["id"]) == "2"  # reversed
 
 
-def test_comments_cache(tmp_path, monkeypatch):
+test_comments_cache(tmp_path, monkeypatch):
     # Setup: Write sample comments to new cache file
     comments_dir = tmp_path / "comments_by_question"
     comments_dir.mkdir(exist_ok=True)
-    cache_file = comments_dir / "1.json"
+    cache_file = comments_dir / "1."
     with open(cache_file, "w") as f:
-        json.dump(SAMPLE_COMMENTS, f)
+        .dump(SAMPLE_COMMENTS, f)
     # Patch pipeline to use the new cache location
 
-    from datetime import datetime
+    from datetime datetime
 
-    from cafe.forecast.source_metaculus import MetaculusForecastSource
+    from cafe.forecast.source_metaculus MetaculusForecastSource
 
     class FakeC:
-        def __init__(self, d):
+        __init__(self, d):
             self.raw = d
             self.id = d["id"]
             self.text = d["text"]
@@ -132,7 +139,7 @@ def test_comments_cache(tmp_path, monkeypatch):
             )
             self.vote_score = d["vote_score"]
 
-    def fake_api_list_comments(self, qid):
+    fake_api_list_comments(self, qid):
         return [FakeC(c) for c in SAMPLE_COMMENTS[::-1]]
 
     monkeypatch.setattr(
@@ -142,5 +149,5 @@ def test_comments_cache(tmp_path, monkeypatch):
     )
     resp = client.get("/metaculus/questions/1/comments?force_refresh=true")
     assert resp.status_code == 200
-    data = resp.json()
+    data = resp.()
     assert data[0]["text"] == "Comment 2"

@@ -1,7 +1,16 @@
-from cafe.forecast.source_metaculus import MetaculusForecastSource
+pytest
+
+from cafe.forecast.source_metaculus os
+
+pytestmark = pytest.mark.skipif(
+    not os.getenv("METACULUS_API_KEY"),
+    reason="Metaculus API key not set; skipping live API tests.",
+)
 
 
-def test_list_metaculus_comments():
+
+
+test_list_metaculus_comments():
     src = MetaculusForecastSource.from_env()
     comments = src.list_metaculus_comments()
     if comments is None:
@@ -16,7 +25,7 @@ def test_list_metaculus_comments():
     assert hasattr(comments[0], "text")
 
 
-def test_get_metaculus_comment():
+test_get_metaculus_comment():
     src = MetaculusForecastSource.from_env()
     comments = src.list_metaculus_comments()
     if not comments:
@@ -33,7 +42,7 @@ def test_get_metaculus_comment():
     assert hasattr(comment, "text")
 
 
-def test_list_metaculus_comments_for_question():
+test_list_metaculus_comments_for_question():
     src = MetaculusForecastSource.from_env()
     # Use a known question id, or fallback to a question from the API
     questions = src.list_questions()
