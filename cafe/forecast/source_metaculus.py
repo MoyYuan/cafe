@@ -164,11 +164,25 @@ class MetaculusForecastSource(ForecastSourceBase):
 
     def list_metaculus_comments_for_question(
         self, question_id: int, params: Optional[dict] = None
-    ):
+    ) -> list:
+        raw: dict
+        q = self.get_question(str(question_id))
+        # Ensure we are working with a dict for 'raw', not a MetaculusForecastQuestion
+        if hasattr(q, "raw") and isinstance(q.raw, dict):
+            raw = q.raw
+        elif isinstance(q, dict):
+            raw = q
+        else:
+            raise ValueError(f"Could not extract raw dict from question: {q}")
         """Fetch all comments for a given Metaculus question by id. Returns List[MetaculusComment]."""
         # Always resolve post_id for the question
         q = self.get_question(str(question_id))
-        raw = getattr(q, "raw", q)
+        # Ensure we are working with a dict for 'raw', not a MetaculusForecastQuestion
+        if not isinstance(raw, dict):
+            # Defensive: if q is a MetaculusForecastQuestion, use its .raw
+            raw = getattr(q, "raw", {})
+            if not isinstance(raw, dict):
+                raise ValueError(f"Could not extract raw dict from question: {q}")
 
         post_id = (
             raw.get("post_id")
