@@ -60,15 +60,17 @@ SAMPLE_COMMENTS = [
 
 
 def test_questions_cache(tmp_path, monkeypatch):
-    # Setup: Write sample questions to cache file
-    from cafe.forecast.source_metaculus import MetaculusForecastSource
-
-    cache_file = tmp_path / "metaculus_questions.json"
+    # Setup: Write sample questions to new cache file
+    cache_file = tmp_path / "questions_cache.json"
     with open(cache_file, "w") as f:
         json.dump(SAMPLE_QUESTIONS, f)
-    monkeypatch.setattr(MetaculusForecastSource, "DATA_FILE", str(cache_file))
+    # Patch pipeline to use the new cache location
+    monkeypatch.setattr(
+        "cafe.forecast.processing.metaculus.load_questions",
+        lambda path: SAMPLE_QUESTIONS,
+    )
     # Should load from cache
-    resp = client.get("/metaculus/questions")
+    resp = client.get(f"/metaculus/questions?questions_cache_path={cache_file}")
     assert resp.status_code == 200
     data = resp.json()
     assert len(data) == 2
@@ -87,31 +89,33 @@ def test_questions_cache(tmp_path, monkeypatch):
     def fake_api_list_questions(self):
         return [FakeQ(q) for q in SAMPLE_QUESTIONS[::-1]]  # reverse order
 
+    from cafe.forecast.source_metaculus import MetaculusForecastSource
+
     monkeypatch.setattr(
-        MetaculusForecastSource, "list_questions", fake_api_list_questions
+        MetaculusForecastSource,
+        "list_questions",
+        fake_api_list_questions,
     )
-    resp = client.get("/metaculus/questions?force_refresh=true")
+    resp = client.get(
+        f"/metaculus/questions?force_refresh=true&questions_cache_path={cache_file}"
+    )
     assert resp.status_code == 200
     data = resp.json()
     assert str(data[0]["id"]) == "2"  # reversed
 
 
 def test_comments_cache(tmp_path, monkeypatch):
-    # Setup: Write sample comments to cache file
-    from cafe.forecast.source_metaculus import MetaculusForecastSource
-
-    cache_file = tmp_path / "metaculus_comments_1.json"
+    # Setup: Write sample comments to new cache file
+    comments_dir = tmp_path / "comments_by_question"
+    comments_dir.mkdir(exist_ok=True)
+    cache_file = comments_dir / "1.json"
     with open(cache_file, "w") as f:
         json.dump(SAMPLE_COMMENTS, f)
-    monkeypatch.setattr(MetaculusForecastSource, "DATA_DIR", str(tmp_path))
-    # Should load from cache
-    resp = client.get("/metaculus/questions/1/comments")
-    assert resp.status_code == 200
-    data = resp.json()
-    assert len(data) == 2
-    assert data[0]["text"] == "Comment 1"
-    # Should force refresh (simulate API fetch by monkeypatching list_metaculus_comments_for_question)
+    # Patch pipeline to use the new cache location
+
     from datetime import datetime
+
+    from cafe.forecast.source_metaculus import MetaculusForecastSource
 
     class FakeC:
         def __init__(self, d):

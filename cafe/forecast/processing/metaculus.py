@@ -32,6 +32,8 @@ def load_comments(path: Union[str, Path]) -> Dict[str, Any]:
                 obj = json.load(f)
                 if isinstance(obj, dict) and "data" in obj:
                     result[file.stem] = obj["data"]
+                elif isinstance(obj, dict) and "comments_by_question" in obj:
+                    result[file.stem] = obj["comments_by_question"]
                 else:
                     result[file.stem] = obj
         return result
@@ -167,4 +169,6 @@ def export_time_series_with_comments(
         qmeta = extract_question_metadata(qid_to_question.get(qid, {}))
         output[qid] = {"metadata": qmeta, "series": series}
     with open(out_file, "w") as f:
-        json.dump({"metadata": meta, "questions": output}, f, indent=2)
+        json.dump(
+            {"metadata": meta, "questions": output}, f, indent=2
+        )  # indent=2 for readability

@@ -23,11 +23,6 @@ class MetaculusForecastSource(ForecastSourceBase):
     Supports questions, users, predictions, comments, series, groups, and more.
     """
 
-    DATA_DIR = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "forecasts"
-    )
-    DATA_FILE = os.path.join(DATA_DIR, "metaculus_questions.json")
-
     def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None):
         load_dotenv()
         # Remove trailing slash if present, then add /questions/
@@ -56,7 +51,19 @@ class MetaculusForecastSource(ForecastSourceBase):
         """
         url = f"{self.api_url}/{resource}/"
         try:
-            response = httpx.get(url, headers=self._headers(), params=params)
+            response = httpx.get(
+                url, headers=self._headers(), params=params, follow_redirects=True
+            )
+            # If redirected, httpx will follow automatically. But if not, check for 301 manually.
+            if response.status_code == 301 and url.startswith("http://"):
+                # Retry with https
+                url_https = url.replace("http://", "https://", 1)
+                response = httpx.get(
+                    url_https,
+                    headers=self._headers(),
+                    params=params,
+                    follow_redirects=True,
+                )
             response.raise_for_status()
             data = response.json()
             if isinstance(data, dict) and "results" in data:
@@ -115,25 +122,38 @@ class MetaculusForecastSource(ForecastSourceBase):
         return self.get_resource("predictions", id)
 
     def list_metaculus_comments(self, params: Optional[dict] = None):
-        """List Metaculus comments from /api/comments/. Returns List[MetaculusComment]."""
-        url = self.api_url.replace("/api2", "/api") + "/comments/"
-        try:
-            response = httpx.get(url, headers=self._headers(), params=params)
-            response.raise_for_status()
-            data = response.json()
-            items = (
-                data["results"]
-                if isinstance(data, dict) and "results" in data
-                else data
-            )
-            return [self._parse_metaculus_comment(item) for item in items]
-        except Exception as e:
-            print(f"[Metaculus] Error fetching comments: {e}")
-            return None
+        """List all Metaculus comments from /api/comments/, handling pagination."""
+        url = (
+            self.api_url.replace("http://", "https://").replace("/api2", "/api")
+            + "/comments/"
+        )
+        all_items = []
+        while url:
+            try:
+                response = httpx.get(url, headers=self._headers(), params=params)
+                response.raise_for_status()
+                data = response.json()
+                items = (
+                    data["results"]
+                    if isinstance(data, dict) and "results" in data
+                    else data
+                )
+                all_items.extend(
+                    [self._parse_metaculus_comment(item) for item in items]
+                )
+                url = data.get("next", None)
+                params = None  # Only send params on the first request
+            except Exception as e:
+                print(f"[Metaculus] Error fetching comments: {e}")
+                break
+        return all_items
 
     def get_metaculus_comment(self, id: str) -> Optional[MetaculusComment]:
         """Get a single comment by id from /api/comments/{id}/. Returns MetaculusComment or None."""
-        url = self.api_url.replace("/api2", "/api") + f"/comments/{id}/"
+        url = (
+            self.api_url.replace("http://", "https://").replace("/api2", "/api")
+            + f"/comments/{id}/"
+        )
         try:
             response = httpx.get(url, headers=self._headers())
             response.raise_for_status()
@@ -146,24 +166,32 @@ class MetaculusForecastSource(ForecastSourceBase):
         self, question_id: int, params: Optional[dict] = None
     ):
         """Fetch all comments for a given Metaculus question by id. Returns List[MetaculusComment]."""
-        # According to API, filter by on_post (which is the post id, not question id). Need mapping.
-        # Try using question id directly (if supported), else fetch question and use its post id.
-        if params is None:
-            params = {}
-        params["question"] = question_id
-        comments = self.list_metaculus_comments(params=params)
-        if comments:
-            return comments
-        # If above doesn't work, fetch question, extract post id, then filter comments by on_post
+        # Always resolve post_id for the question
         q = self.get_question(str(question_id))
+        raw = getattr(q, "raw", q)
+
         post_id = (
-            q.get("post", None) if isinstance(q, dict) else getattr(q, "post", None)
+            raw.get("post_id")
+            or raw.get("post")
+            or (
+                raw.get("question", {}).get("post_id")
+                if isinstance(raw.get("question", {}), dict)
+                else None
+            )
+            or (
+                raw.get("question", {}).get("id")
+                if isinstance(raw.get("question", {}), dict)
+                else None
+            )
+            or raw.get("id")
         )
         if not post_id:
             print(f"[Metaculus] Could not resolve post id for question {question_id}")
-            return None
+            return []
+        if params is None:
+            params = {}
         params.pop("question", None)
-        params["on_post"] = post_id
+        params["post"] = post_id
         return self.list_metaculus_comments(params=params)
 
     def _parse_metaculus_comment(self, item: dict) -> MetaculusComment:
@@ -263,31 +291,6 @@ class MetaculusForecastSource(ForecastSourceBase):
             return datetime.fromisoformat(s.replace("Z", "+00:00"))
         except Exception:
             return None
-
-    @staticmethod
-    def save_questions_to_json(
-        questions: List[MetaculusForecastQuestion], filepath: Optional[str] = None
-    ):
-        if filepath is None:
-            filepath = MetaculusForecastSource.DATA_FILE
-        os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        with open(filepath, "w", encoding="utf-8") as f:
-            json.dump([q.raw for q in questions], f, ensure_ascii=False, indent=2)
-
-    @staticmethod
-    def load_questions_from_json(
-        filepath: Optional[str] = None,
-    ) -> List[MetaculusForecastQuestion]:
-        if filepath is None:
-            filepath = MetaculusForecastSource.DATA_FILE
-        if not os.path.exists(filepath):
-            return []
-        with open(filepath, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return [
-            MetaculusForecastSource._parse_metaculus_question_static(item)
-            for item in data
-        ]
 
     @staticmethod
     def _parse_metaculus_question_static(item: dict) -> MetaculusForecastQuestion:

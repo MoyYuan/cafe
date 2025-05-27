@@ -72,7 +72,7 @@ def save_questions_and_comments(
                     },
                     f,
                     indent=2,
-                )
+                )  # Ensure indent=2 for readability
     else:
         raise ValueError(f"Unknown comments_mode: {comments_mode}")
 
@@ -106,7 +106,19 @@ def main():
         "--verbose", action="store_true", help="Print raw JSON for inspection"
     )
     parser.add_argument(
-        "--refresh", action="store_true", help="Force re-fetch all data, ignore cache."
+        "--refresh",
+        action="store_true",
+        help="Force re-fetch all data, ignore cache (global shortcut).",
+    )
+    parser.add_argument(
+        "--refresh-questions",
+        action="store_true",
+        help="Force re-fetch questions, ignore questions cache.",
+    )
+    parser.add_argument(
+        "--refresh-comments",
+        action="store_true",
+        help="Force re-fetch comments, ignore comments cache.",
     )
     parser.add_argument(
         "--no-cache", action="store_true", help="Do not use or write cache at all."
@@ -114,7 +126,23 @@ def main():
     parser.add_argument(
         "--resume",
         action="store_true",
-        help="Resume from last checkpoint if available.",
+        help="Resume from last checkpoint if available (global shortcut).",
+    )
+    parser.add_argument(
+        "--resume-questions",
+        action="store_true",
+        help="Resume questions fetching from last checkpoint.",
+    )
+    parser.add_argument(
+        "--resume-comments",
+        action="store_true",
+        help="Resume comments fetching from last checkpoint.",
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Limit the number of questions to fetch/process.",
     )
     args = parser.parse_args()
 
@@ -128,20 +156,25 @@ def main():
 
     questions = []
     fetched_qids = set()
+    # Determine question cache/refresh/resume modes
+    refresh_questions = args.refresh or args.refresh_questions
+    resume_questions = args.resume or args.resume_questions
     # Load cache if allowed and available
-    if not args.no_cache and cache_questions_file.exists() and not args.refresh:
+    if not args.no_cache and cache_questions_file.exists() and not refresh_questions:
         with cache_questions_file.open() as f:
             questions = json.load(f)
         fetched_qids = set(str(q.get("id")) for q in questions)
         print(f"Loaded {len(questions)} questions from cache.")
+    else:
+        print("Not using questions cache (refresh or no cache mode).")
 
     # Resume support: load checkpoint
     resume_page = 0
-    if args.resume and checkpoint_file.exists():
+    if resume_questions and checkpoint_file.exists():
         with checkpoint_file.open() as f:
             checkpoint = json.load(f)
             resume_page = checkpoint.get("page", 0)
-            print(f"Resuming from checkpoint: page {resume_page}")
+            print(f"Resuming questions fetching from checkpoint: page {resume_page}")
 
     params = {
         "created_time__gt": f"{args.after}T00:00:00Z",
@@ -174,13 +207,21 @@ def main():
         new_questions = [q for q in items if str(q.get("id")) not in fetched_qids]
         all_questions.extend(new_questions)
         fetched_qids.update(str(q.get("id")) for q in new_questions)
-        if not args.no_cache:
-            with cache_questions_file.open("w") as f:
-                json.dump(all_questions, f)
-        # Save checkpoint
-        if not args.no_cache:
+        if args.limit is not None and len(all_questions) >= args.limit:
+            all_questions = all_questions[: args.limit]
+            if not args.no_cache:
+                with cache_questions_file.open("w") as f:
+                    json.dump(all_questions, f, indent=2)
+            # Save checkpoint
             with checkpoint_file.open("w") as f:
                 json.dump({"page": page}, f)
+            break
+        if not args.no_cache:
+            with cache_questions_file.open("w") as f:
+                json.dump(all_questions, f, indent=2)
+        # Save checkpoint
+        with checkpoint_file.open("w") as f:
+            json.dump({"page": page}, f)
         # Pagination
         next_url = data.get("next") if isinstance(data, dict) else None
         page += 1
@@ -190,26 +231,45 @@ def main():
     if not all_questions:
         print("No questions found.")
         return
+    # Apply limit if set
+    if args.limit is not None:
+        all_questions = all_questions[: args.limit]
+
+    # Determine comments cache/refresh/resume modes
+    refresh_comments = args.refresh or args.refresh_comments
+    resume_comments = args.resume or args.resume_comments
     # Fetch comments, using cache if available
     comments_by_qid = {}
     for q in all_questions:
         qid = str(q.get("id"))
         comment_file = comments_dir / f"{qid}.json"
         comments = None
-        if not args.no_cache and comment_file.exists() and not args.refresh:
+        if not args.no_cache and comment_file.exists() and not refresh_comments:
             with comment_file.open() as f:
-                comments = json.load(f)
-            print(f"Loaded comments for QID {qid} from cache.")
+                loaded = json.load(f)
+                if isinstance(loaded, dict) and "data" in loaded:
+                    comments = loaded["data"]
+                else:
+                    comments = loaded
         else:
             comments = [
                 c.raw if hasattr(c, "raw") else c
                 for c in src.list_metaculus_comments_for_question(qid) or []
             ]
-            if not args.no_cache:
+            if not args.no_cache or refresh_comments:
+                c_metadata = {
+                    "qid": qid,
+                    "comment_count": len(comments),
+                }
                 with comment_file.open("w") as f:
-                    json.dump(comments, f)
-            print(f"Fetched {len(comments)} comments for QID {qid} from API.")
-        comments_by_qid[qid] = comments or []
+                    json.dump({"metadata": c_metadata, "data": comments}, f, indent=2)
+        comments_by_qid[qid] = comments
+    if refresh_comments:
+        print("Comments: forced refresh mode (ignore cache).")
+    elif not args.no_cache:
+        print("Comments: using cache if available.")
+    else:
+        print("Comments: not using cache (no-cache mode).")
         if args.verbose and comments:
             for c in comments:
                 print("  -", c)

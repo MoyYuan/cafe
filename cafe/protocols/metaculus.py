@@ -32,18 +32,30 @@ from cafe.forecast.source_local import LocalForecastSource
 
 
 @router.get("/metaculus/questions", response_model=List[MetaculusQuestionOut])
-def get_metaculus_questions(force_refresh: bool = False):
+def get_metaculus_questions(
+    force_refresh: bool = False, questions_cache_path: Optional[str] = None
+):
     """
     Returns Metaculus questions. If force_refresh is True, fetch from API and overwrite local cache.
     Otherwise, load from local if available, else fetch from API and save.
+    Optionally override the questions cache file path with ?questions_cache_path=...
     """
-    local_path = MetaculusForecastSource.DATA_FILE
+    default_path = os.path.join(
+        "data", "forecasts", "metaculus", "questions_cache.json"
+    )
+    local_path = questions_cache_path or default_path
     if not force_refresh and os.path.exists(local_path):
-        questions = LocalForecastSource(local_path).list_questions()
+        with open(local_path, "r") as f:
+            questions_data = json.load(f)
+        # If the cache contains dicts, convert to MetaculusForecastQuestion objects if needed
+        questions = [LocalForecastSource("")._parse_question(q) for q in questions_data]
     else:
         questions = MetaculusForecastSource().list_questions()
         # Save to cache
-        MetaculusForecastSource.save_questions_to_json(questions, filepath=local_path)
+        with open(local_path, "w") as f:
+            json.dump(
+                [q.raw if hasattr(q, "raw") else q for q in questions], f, indent=2
+            )
     return [
         MetaculusQuestionOut(
             id=str(q.id),
@@ -60,33 +72,40 @@ def get_metaculus_questions(force_refresh: bool = False):
     "/metaculus/questions/{question_id}/comments",
     response_model=List[MetaculusCommentOut],
 )
-def get_metaculus_comments_for_question(question_id: str, force_refresh: bool = False):
+def get_metaculus_comments_for_question(
+    question_id: str,
+    force_refresh: bool = False,
+    comments_cache_path: Optional[str] = None,
+):
     """
     Returns comments for a Metaculus question. If force_refresh is True, fetch from API and overwrite local cache.
     Otherwise, load from local if available, else fetch from API and save.
+    Optionally override the comments cache file path with ?comments_cache_path=...
     """
     from cafe.forecast.source_local import LocalForecastCommentSource
 
-    comment_cache_dir = MetaculusForecastSource.DATA_DIR
-    os.makedirs(comment_cache_dir, exist_ok=True)
-    local_path = os.path.join(
-        comment_cache_dir, f"metaculus_comments_{question_id}.json"
+    default_comments_dir = os.path.join(
+        "data", "forecasts", "metaculus", "comments_by_question"
+    )
+    os.makedirs(default_comments_dir, exist_ok=True)
+    local_path = comments_cache_path or os.path.join(
+        default_comments_dir, f"{question_id}.json"
     )
     if not force_refresh and os.path.exists(local_path):
-        comments = LocalForecastCommentSource(local_path).list_comments_for_question(
-            question_id
-        )
+        with open(local_path, "r") as f:
+            comments_data = json.load(f)
+        comments = [
+            LocalForecastCommentSource("")._parse_comment(c) for c in comments_data
+        ]
     else:
         comments = MetaculusForecastSource().list_metaculus_comments_for_question(
             int(question_id)
         )
-        if comments is None:
-            raise HTTPException(
-                status_code=404, detail=f"No comments found for question {question_id}"
+        # Save to cache
+        with open(local_path, "w") as f:
+            json.dump(
+                [c.raw if hasattr(c, "raw") else c for c in comments], f, indent=2
             )
-        # Save to cache as list of dicts
-        with open(local_path, "w", encoding="utf-8") as f:
-            json.dump([c.raw for c in comments], f, ensure_ascii=False, indent=2)
     return [
         MetaculusCommentOut(
             id=c.id,
