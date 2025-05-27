@@ -1,38 +1,53 @@
+import os
 
+import pytest
 
-
-
-
-mark = .mark.skipif(
-    not .getenv("METACULUS_API_KEY"),
+pytestmark = pytest.mark.skipif(
+    not os.getenv("METACULUS_API_KEY"),
     reason="Metaculus API key not set; skipping live API tests.",
 )
 
- MetaculusForecastSource
+from cafe.forecast.source_metaculus import MetaculusForecastSource
 
 
-test_fetch_and_save_metaculus_questions():
+def test_metaculus_fetch_placeholder():
+    assert True  # placeholder test
+
+
+import os
+
+import pytest
+
+pytestmark = pytest.mark.skipif(
+    not os.getenv("METACULUS_API_KEY"),
+    reason="Metaculus API key not set; skipping live API tests.",
+)
+
+from cafe.forecast.source_metaculus import MetaculusForecastSource
+
+
+def test_fetch_and_save_metaculus_questions():
     # Fetch questions from Metaculus
     src = MetaculusForecastSource()
     questions = src.list_questions()
     assert questions, "No questions fetched from Metaculus!"
 
     # Save questions to JSON
-    test_file = .path.join(
-        .path.dirname(__file__),
+    test_file = os.path.join(
+        os.path.dirname(__file__),
         "..",
         "data",
         "forecasts",
-        "test_metaculus_questions.",
+        "test_metaculus_questions.json",
     )
     with open(test_file, "w") as f:
-        .dump([q.raw if hasattr(q, "raw") else q for q in questions], f, indent=2)
+        json.dump([q.raw if hasattr(q, "raw") else q for q in questions], f, indent=2)
 
-    assert .path.exists(test_file), "Questions JSON file was not created!"
+    assert os.path.exists(test_file), "Questions JSON file was not created!"
 
     # Load questions back from JSON
     with open(test_file, "r") as f:
-        loaded = .load(f)
+        loaded = json.load(f)
     assert loaded, "No questions loaded from JSON!"
     assert loaded[0]["title"] == (
         questions[0].title if hasattr(questions[0], "title") else questions[0]["title"]
@@ -49,4 +64,4 @@ test_fetch_and_save_metaculus_questions():
         assert hasattr(comment, "text"), "Comment object missing 'text' field!"
 
     # Cleanup
-    .remove(test_file)
+    os.remove(test_file)
