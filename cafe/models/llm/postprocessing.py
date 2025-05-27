@@ -102,6 +102,24 @@ class GeminiPostprocessor(AdvancedPostprocessor):
         super().__init__(regex_patterns=regex_patterns, fallbacks=fallbacks)
 
 
+class HuggingFacePostprocessor(AdvancedPostprocessor):
+    def __init__(self):
+        # Patterns for extracting numbers, percentages, or quoted answers from HF LLM output
+        regex_patterns = [
+            r"(?:answer|probability|confidence)[^\d]*(\d+(?:\.\d+)?)",
+            r"(\d{1,3}(?:\.\d+)?)%",
+            r"([-+]?[0-9]*\.?[0-9]+)",
+        ]
+
+        def extract_quoted(text: str):
+            m = re.search(r'"([^"]+)"', text)
+            return m.group(1) if m else None
+
+        # Add more HuggingFace-specific extraction logic here if needed
+        fallbacks = [extract_quoted]
+        super().__init__(regex_patterns=regex_patterns, fallbacks=fallbacks)
+
+
 class VLLMPostprocessor(AdvancedPostprocessor):
     def __init__(self):
         regex_patterns = [

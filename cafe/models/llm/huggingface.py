@@ -1,1 +1,62 @@
-from typing import Any, Dict, Optional\nfrom .base import BaseModel\nfrom .postprocessing import VLLMPostprocessor\n\nclass HuggingFaceModel(BaseModel):\n    \"\"\"\n    Local LLM model using HuggingFace Transformers as backend.\n    \"\"\"\n    def __init__(self, model_path: str = \"gpt2\", device: Optional[str] = None, **kwargs):\n        self.model_path = model_path\n        self.device = device or \"cpu\"\n        self.model = None\n        self.tokenizer = None\n        self.postprocessor = VLLMPostprocessor()\n        self._load_model(**kwargs)\n\n    def _load_model(self, **kwargs):\n        try:\n            from transformers import AutoModelForCausalLM, AutoTokenizer\n            self.tokenizer = AutoTokenizer.from_pretrained(self.model_path, **kwargs)\n            self.model = AutoModelForCausalLM.from_pretrained(self.model_path, **kwargs)\n            self.model.to(self.device)\n        except ImportError:\n            self.model = None\n            self.tokenizer = None\n            print(\"[HuggingFaceModel] transformers not installed. Model will not run.\")\n        except Exception as e:\n            print(f\"[HuggingFaceModel] Model loading failed: {e}\")\n            self.model = None\n            self.tokenizer = None\n\n    def predict(self, prompt: str, parameters: Dict[str, Any], context: Any) -> Any:\n        if self.model is None or self.tokenizer is None:\n            return {\"error\": \"Local model not loaded. Check transformers install and model path.\"}\n        gen_kwargs = dict(\n            max_new_tokens=parameters.get(\"max_new_tokens\", 64),\n            temperature=parameters.get(\"temperature\", 1.0),\n        )\n        gen_kwargs.update({k: v for k, v in parameters.items() if k not in gen_kwargs})\n        import torch\n        inputs = self.tokenizer(prompt, return_tensors=\"pt\").to(self.device)\n        with torch.no_grad():\n            outputs = self.model.generate(**inputs, **gen_kwargs)\n        output_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)\n        return self.postprocessor.extract_answer(output_text)\n
+from typing import Any, Dict, Optional
+
+from .base import BaseModel
+from .postprocessing import HuggingFacePostprocessor
+
+
+class HuggingFaceModel(BaseModel):
+    """
+    Local LLM model using HuggingFace Transformers as backend.
+    """
+
+    def __init__(
+        self, model_path: str = "gpt2", device: Optional[str] = None, **kwargs
+    ):
+        self.model_path = model_path
+        self.device = device or "cpu"
+        self.model = None
+        self.tokenizer = None
+        self.postprocessor = HuggingFacePostprocessor()
+        self._load_model(**kwargs)
+
+    def _load_model(self, **kwargs):
+        try:
+            from transformers import AutoModelForCausalLM, AutoTokenizer
+
+            self.tokenizer = AutoTokenizer.from_pretrained(self.model_path, **kwargs)
+            self.model = AutoModelForCausalLM.from_pretrained(self.model_path, **kwargs)
+            self.model.to(self.device)
+        except ImportError:
+            self.model = None
+            self.tokenizer = None
+            print("[HuggingFaceModel] transformers not installed. Model will not run.")
+        except Exception as e:
+            print(f"[HuggingFaceModel] Model loading failed: {e}")
+            self.model = None
+            self.tokenizer = None
+
+    def predict(self, prompt: str, parameters: Dict[str, Any], context: Any) -> Any:
+        if self.model is None or self.tokenizer is None:
+            return {
+                "error": "Local model not loaded. Check transformers install and model path."
+            }
+        # Normalize parameter names for compatibility
+        max_tokens = parameters.get("max_tokens") or parameters.get(
+            "max_new_tokens", 64
+        )
+        temperature = parameters.get("temperature", 1.0)
+        gen_kwargs = dict(
+            max_new_tokens=max_tokens,
+            temperature=temperature,
+        )
+        gen_kwargs.update({k: v for k, v in parameters.items() if k not in gen_kwargs})
+        import torch
+
+        inputs = self.tokenizer(prompt, return_tensors="pt")
+        # Move all tensors to the correct device
+        inputs = {k: v.to(self.device) for k, v in inputs.items()}
+        with torch.no_grad():
+            outputs = self.model.generate(**inputs, **gen_kwargs)
+        output_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        answer = self.postprocessor.extract_answer(output_text)
+        return {"text": output_text, "answer": answer}

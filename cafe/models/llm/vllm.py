@@ -1,13 +1,21 @@
 from typing import Any, Dict, Optional
+
 from .base import BaseModel
 from .postprocessing import VLLMPostprocessor
+
 
 class VLLMModel(BaseModel):
     """
     Local LLM model using vLLM Python API for high-performance inference.
     See: https://docs.vllm.ai/en/latest/getting_started/quickstart.html#offline-batched-inference
     """
-    def __init__(self, model_path: str = "facebook/opt-125m", dtype: Optional[str] = None, **kwargs):
+
+    def __init__(
+        self,
+        model_path: str = "facebook/opt-125m",
+        dtype: Optional[str] = None,
+        **kwargs,
+    ):
         self.model_path = model_path
         self.dtype = dtype
         self.llm = None
@@ -17,6 +25,7 @@ class VLLMModel(BaseModel):
     def _load_model(self, **kwargs):
         try:
             from vllm import LLM
+
             init_kwargs = dict(model=self.model_path)
             if self.dtype:
                 init_kwargs["dtype"] = self.dtype
@@ -40,9 +49,12 @@ class VLLMModel(BaseModel):
             Postprocessed model output (str, dict, etc.).
         """
         if self.llm is None:
-            return {"error": "vLLM model not loaded. Check vllm install and model path."}
+            return {
+                "error": "vLLM model not loaded. Check vllm install and model path."
+            }
         try:
             from vllm import SamplingParams
+
             sampling_params = SamplingParams(
                 max_tokens=parameters.get("max_tokens", 64),
                 temperature=parameters.get("temperature", 1.0),
