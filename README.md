@@ -4,7 +4,7 @@ A modular forecasting platform integrating LLMs, time-series forecasting, and li
 
 ## Features
 - Modular, package-centric architecture
-- Integrates LLMs (vLLM, Gemini) and time-series models
+- Integrates LLMs (vLLM, Gemini, HuggingFace) and time-series models
 - Pluggable news/data retrieval (API or local)
 - Evaluation and experiment tracking modules
 - FastAPI-based API layer
@@ -12,12 +12,14 @@ A modular forecasting platform integrating LLMs, time-series forecasting, and li
 - Extensible and easy to onboard
 
 ## Architecture
-- **Model**: Forecasting logic (vLLM, Gemini, time-series)
+- **Model**: Forecasting logic (vLLM, Gemini, HuggingFace, time-series)
 - **Tools**: News retrieval utilities (local and API)
 - **Context**: State, data, config, storage abstraction
 - **Protocol**: API endpoints, schemas, validation
 
 ## Quickstart
+
+> **Note:** Type checking configuration is now handled in `mypy.ini` (not `pyproject.toml`). vLLM and statsmodels are ignored for type checking via `mypy.ini`.
 1. Create and activate the virtual environment using [uv](https://github.com/astral-sh/uv):
    ```bash
    uv venv .venv
@@ -117,6 +119,7 @@ See `.roadmap.md` and `.progress.md`.
 - **LLMs**
   - `llm/vllm`: Local vLLM model (stub) — import from `cafe.models.llm.vllm`
   - `llm/gemini`: Gemini API model (stub) — import from `cafe.models.llm.gemini`
+  - `llm/huggingface`: HuggingFace Transformers model — import from `cafe.models.llm.huggingface`
 - **Time-Series Models**
   - `timeseries/local`: Local forecasting model (stub) — import from `cafe.models.timeseries.local`
   - `timeseries/api`: API-based forecasting model (stub) — import from `cafe.models.timeseries.api`
