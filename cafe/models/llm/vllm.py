@@ -1,3 +1,4 @@
+import hashlib
 from typing import Any, Dict, Optional
 
 from .base import BaseModel
@@ -44,10 +45,16 @@ class VLLMModel(BaseModel):
         Args:
             prompt: Input prompt string.
             parameters: Dict of generation parameters (e.g., max_tokens, temperature).
-            context: (Unused for now, for API compatibility).
+            context: Used for caching and stateful workflows.
         Returns:
             Postprocessed model output (str, dict, etc.).
         """
+        # Generate a context cache key
+        param_hash = hashlib.md5(str(sorted(parameters.items())).encode()).hexdigest()
+        cache_key = f"vllm:{hashlib.md5((prompt + param_hash).encode()).hexdigest()}"
+        cached = context.get_data(cache_key)
+        if cached is not None:
+            return cached
         if self.llm is None:
             return {
                 "error": "vLLM model not loaded. Check vllm install and model path."
@@ -65,6 +72,8 @@ class VLLMModel(BaseModel):
             if not outputs or not outputs[0].outputs:
                 return None
             output_text = outputs[0].outputs[0].text
-            return self.postprocessor.extract_answer(output_text)
+            result = self.postprocessor.extract_answer(output_text)
+            context.set_data(cache_key, result)
+            return result
         except Exception as e:
             return {"error": f"vLLM inference failed: {e}"}

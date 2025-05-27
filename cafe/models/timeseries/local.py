@@ -1,3 +1,4 @@
+import hashlib
 from typing import Any, Dict
 
 from .base import BaseModel
@@ -12,6 +13,12 @@ class TimeSeriesLocalModel(BaseModel):
             - order: tuple (p, d, q) for ARIMA (default: (1, 1, 1))
             - steps: int, forecast horizon (default: 1)
         """
+        # Generate a context cache key
+        param_hash = hashlib.md5(str(sorted(parameters.items())).encode()).hexdigest()
+        cache_key = f"timeseries_local:{hashlib.md5((prompt + param_hash).encode()).hexdigest()}"
+        cached = context.get_data(cache_key)
+        if cached is not None:
+            return cached
         try:
             import numpy as np
             from statsmodels.tsa.arima.model import ARIMA
@@ -21,11 +28,10 @@ class TimeSeriesLocalModel(BaseModel):
         series = parameters.get("series")
         order = parameters.get("order", (1, 1, 1))
         steps = parameters.get("steps", 1)
-
-        if not isinstance(series, list) or not all(
-            isinstance(x, (int, float)) for x in series
-        ):
-            return {"error": "Parameter 'series' must be a list of numbers."}
+        if not isinstance(series, (list, tuple)) or not series:
+            return {
+                "error": "Parameter 'series' must be a non-empty list or tuple of floats."
+            }
         if not (isinstance(order, (tuple, list)) and len(order) == 3):
             return {
                 "error": "Parameter 'order' must be a tuple/list of length 3 (ARIMA order)."
@@ -39,6 +45,8 @@ class TimeSeriesLocalModel(BaseModel):
             model = ARIMA(series, order=tuple(order))
             model_fit = model.fit()
             forecast = model_fit.forecast(steps=steps)
-            return {"forecast": forecast.tolist()}
+            result = {"forecast": forecast.tolist()}
+            context.set_data(cache_key, result)
+            return result
         except Exception as e:
             return {"error": str(e)}

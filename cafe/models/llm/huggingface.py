@@ -36,10 +36,20 @@ class HuggingFaceModel(BaseModel):
             self.tokenizer = None
 
     def predict(self, prompt: str, parameters: Dict[str, Any], context: Any) -> Any:
+        import hashlib
+
         if self.model is None or self.tokenizer is None:
             return {
                 "error": "Local model not loaded. Check transformers install and model path."
             }
+        # Generate a context cache key
+        param_hash = hashlib.md5(str(sorted(parameters.items())).encode()).hexdigest()
+        cache_key = (
+            f"huggingface:{hashlib.md5((prompt + param_hash).encode()).hexdigest()}"
+        )
+        cached = context.get_data(cache_key)
+        if cached is not None:
+            return cached
         # Normalize parameter names for compatibility
         max_tokens = parameters.get("max_tokens") or parameters.get(
             "max_new_tokens", 64
@@ -59,4 +69,6 @@ class HuggingFaceModel(BaseModel):
             outputs = self.model.generate(**inputs, **gen_kwargs)
         output_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
         answer = self.postprocessor.extract_answer(output_text)
-        return {"text": output_text, "answer": answer}
+        result = {"text": output_text, "answer": answer}
+        context.set_data(cache_key, result)
+        return result

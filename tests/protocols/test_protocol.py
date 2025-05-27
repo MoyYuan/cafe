@@ -5,7 +5,11 @@ from cafe.main import app
 client = TestClient(app)
 
 
+import pytest
+
+
 def test_forecast_vllm():
+    pytest.importorskip("vllm", reason="vllm not installed; skipping vLLM test.")
     response = client.post("/forecast", json={"model": "vllm", "prompt": "Test prompt"})
     assert response.status_code == 200
     data = response.json()
