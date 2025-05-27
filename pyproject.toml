@@ -34,14 +34,11 @@ gpu = [
     "vllm",
 ]
 
+[tool.mypy]
+
+
 [tool.setuptools.packages.find]
 where = ["cafe"]
 
 [tool.isort]
 profile = "black"
-
-[tool.mypy]
-
-[[tool.mypy.overrides]]
-module = "vllm.*"
-ignore_missing_imports = true
