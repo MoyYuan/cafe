@@ -24,7 +24,7 @@ class VLLMModel(BaseModel):
 
     def _load_model(self, **kwargs):
         try:
-            from vllm import LLM
+            from vllm import LLM  # type: ignore
 
             init_kwargs = dict(model=self.model_path)
             if self.dtype:
@@ -53,7 +53,7 @@ class VLLMModel(BaseModel):
                 "error": "vLLM model not loaded. Check vllm install and model path."
             }
         try:
-            from vllm import SamplingParams
+            from vllm import SamplingParams  # type: ignore
 
             sampling_params = SamplingParams(
                 max_tokens=parameters.get("max_tokens", 64),
