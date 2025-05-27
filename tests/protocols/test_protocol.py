@@ -16,6 +16,7 @@ def test_forecast_vllm():
 def test_forecast_gemini_no_key(monkeypatch):
     # Remove API key for this test
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.setattr("cafe.config.config.Config.GEMINI_API_KEY", None)
     response = client.post(
         "/forecast", json={"model": "gemini", "prompt": "Test prompt"}
     )

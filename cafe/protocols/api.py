@@ -18,28 +18,36 @@ from .metaculus import router as metaculus_router
 # Context instance (in-memory)
 context = InMemoryContext()
 
-# Model registry
-models: dict[str, Predictable] = {
-    "vllm": VLLMModel(),
-    "gemini": GeminiModel(api_key=os.getenv("GEMINI_API_KEY")),
-    "timeseries_local": TimeSeriesLocalModel(),
-    "timeseries_api": TimeSeriesAPIModel(),
-}
+# Lazy model getter
+
+
+def get_model(name: str) -> Predictable:
+    if name == "vllm":
+        return VLLMModel()
+    if name == "gemini":
+        return GeminiModel(api_key=os.getenv("GEMINI_API_KEY"))
+    if name == "timeseries_local":
+        return TimeSeriesLocalModel()
+    if name == "timeseries_api":
+        return TimeSeriesAPIModel()
+    raise ValueError(f"Unknown model: {name}")
 
 
 @router.post("/forecast", response_model=ForecastResponse)
 def forecast(request: ForecastRequest):
-    model = models.get(request.model)
-    if not model:
-        valid_models = ", ".join(models.keys())
+    try:
+        model = get_model(request.model)
+    except ValueError as e:
+        valid_models = ["vllm", "gemini", "timeseries_local", "timeseries_api"]
         raise HTTPException(
             status_code=400,
-            detail=f"Unknown model: {request.model}. Valid models: {valid_models}",
+            detail=f"Unknown model: {request.model}. Valid models: {', '.join(valid_models)}",
         )
     try:
         result = model.predict(request.prompt, request.parameters or {}, context)
         return ForecastResponse(result=result, model=request.model)
     except Exception as e:
+        # Always return error in response, even for missing API key
         return ForecastResponse(result=None, model=request.model, error=str(e))
 
 

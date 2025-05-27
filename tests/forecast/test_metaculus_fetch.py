@@ -41,6 +41,7 @@ def test_fetch_and_save_metaculus_questions():
         "forecasts",
         "test_metaculus_questions.json",
     )
+    os.makedirs(os.path.dirname(test_file), exist_ok=True)
     with open(test_file, "w") as f:
         json.dump([q.raw if hasattr(q, "raw") else q for q in questions], f, indent=2)
 
