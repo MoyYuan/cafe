@@ -24,6 +24,9 @@ dependencies = [
     "python-dotenv",
     "numpy",
     "google-genai>=1.16.1",
+    "transformers>=4.52.3",
+    "torch>=2.7.0",
+    "vllm",
 ]
 
 [tool.setuptools.packages.find]
