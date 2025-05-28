@@ -41,12 +41,28 @@ def load_comments(path: Union[str, Path]) -> Dict[str, Any]:
         raise FileNotFoundError(f"No such file or directory: {path}")
 
 
+from .helpers import filter_questions_by_metadata
+
 def filter_questions(
-    questions: List[dict],
+    questions: list,
     status: Optional[str] = None,
     tag: Optional[str] = None,
     min_forecasters: Optional[int] = None,
-) -> List[dict]:
+    created_after: Optional[str] = None,
+    created_before: Optional[str] = None,
+    has_resolution_criteria: Optional[bool] = None,
+    min_comments: Optional[int] = None,
+    custom_predicate: Optional[callable] = None,
+) -> list:
+    """
+    Filter questions by status, tag, min_forecasters, and metadata fields.
+    Dates should be in ISO format (YYYY-MM-DD).
+    """
+    from datetime import datetime
+    # Parse date strings if provided
+    created_after_dt = datetime.fromisoformat(created_after) if created_after else None
+    created_before_dt = datetime.fromisoformat(created_before) if created_before else None
+    # Filter by direct fields first, then metadata
     filtered = []
     for q in questions:
         if status and q.get("status") != status:
@@ -58,6 +74,16 @@ def filter_questions(
             if fc is None or fc < min_forecasters:
                 continue
         filtered.append(q)
+    # Now apply metadata-based filtering
+    filtered = filter_questions_by_metadata(
+        filtered,
+        created_after=created_after_dt,
+        created_before=created_before_dt,
+        has_resolution_criteria=has_resolution_criteria,
+        min_comments=min_comments,
+        tag=tag,
+        custom_predicate=custom_predicate,
+    )
     return filtered
 
 

@@ -32,6 +32,29 @@ def main():
         default=None,
         help="Filter questions by minimum number of forecasters",
     )
+    parser.add_argument(
+        "--created-after",
+        type=str,
+        default=None,
+        help="Filter questions created after this date (YYYY-MM-DD)",
+    )
+    parser.add_argument(
+        "--created-before",
+        type=str,
+        default=None,
+        help="Filter questions created before this date (YYYY-MM-DD)",
+    )
+    parser.add_argument(
+        "--has-resolution-criteria",
+        action="store_true",
+        help="Filter questions to only those with resolution criteria",
+    )
+    parser.add_argument(
+        "--min-comments",
+        type=int,
+        default=None,
+        help="Filter questions by minimum number of comments (if available)",
+    )
     args = parser.parse_args()
 
     questions = mproc.load_questions(args.questions)
@@ -41,6 +64,10 @@ def main():
         status=args.status,
         tag=args.tag,
         min_forecasters=args.min_forecasters,
+        created_after=args.created_after,
+        created_before=args.created_before,
+        has_resolution_criteria=args.has_resolution_criteria if args.has_resolution_criteria else None,
+        min_comments=args.min_comments,
     )
     print(f"Loaded {len(questions)} questions, {len(filtered)} after filtering.")
     series = mproc.link_comments_to_forecasts(filtered, comments)
@@ -53,6 +80,10 @@ def main():
             "status": args.status,
             "tag": args.tag,
             "min_forecasters": args.min_forecasters,
+            "created_after": args.created_after,
+            "created_before": args.created_before,
+            "has_resolution_criteria": args.has_resolution_criteria,
+            "min_comments": args.min_comments,
         },
         questions=filtered,
     )
