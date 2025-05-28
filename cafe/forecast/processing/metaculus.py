@@ -41,6 +41,8 @@ def load_comments(path: Union[str, Path]) -> Dict[str, Any]:
         raise FileNotFoundError(f"No such file or directory: {path}")
 
 
+from typing import Callable
+
 from .helpers import filter_questions_by_metadata
 
 

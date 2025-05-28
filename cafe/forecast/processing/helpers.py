@@ -1,18 +1,16 @@
 from datetime import datetime
 from typing import Any, Callable, List, Optional
 
-from cafe.forecast.question import MetaculusForecastQuestion
-
 
 def filter_questions_by_metadata(
-    questions: List[MetaculusForecastQuestion],
+    questions: List[dict],
     created_after: Optional[datetime] = None,
     created_before: Optional[datetime] = None,
     has_resolution_criteria: Optional[bool] = None,
     min_comments: Optional[int] = None,
     tag: Optional[str] = None,
-    custom_predicate: Optional[Callable[[MetaculusForecastQuestion], bool]] = None,
-) -> List[MetaculusForecastQuestion]:
+    custom_predicate: Optional[Callable[[dict], bool]] = None,
+) -> List[dict]:
     """
     Filter a list of MetaculusForecastQuestion objects by various metadata fields.
     Args:
@@ -28,23 +26,32 @@ def filter_questions_by_metadata(
     """
     filtered = []
     for q in questions:
-        if created_after and (not q.created_at or q.created_at < created_after):
-            continue
-        if created_before and (not q.created_at or q.created_at > created_before):
-            continue
+        created_at = q.get("created_at")
+        if created_after:
+            if (
+                created_at is None
+                or not isinstance(created_at, datetime)
+                or created_at < created_after
+            ):
+                continue
+        if created_before:
+            if (
+                created_at is None
+                or not isinstance(created_at, datetime)
+                or created_at > created_before
+            ):
+                continue
         if (
             has_resolution_criteria is not None
-            and bool(q.resolution_criteria) != has_resolution_criteria
+            and bool(q.get("resolution_criteria")) != has_resolution_criteria
         ):
             continue
-        if (
-            min_comments is not None
-            and hasattr(q, "comments")
-            and len(getattr(q, "comments", [])) < min_comments
-        ):
+        if min_comments is not None and len(q.get("comments", [])) < min_comments:
             continue
-        if tag and (not q.tags or tag not in q.tags):
-            continue
+        tags = q.get("tags")
+        if tag:
+            if not tags or not isinstance(tags, list) or tag not in tags:
+                continue
         if custom_predicate and not custom_predicate(q):
             continue
         filtered.append(q)
