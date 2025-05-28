@@ -43,6 +43,7 @@ def load_comments(path: Union[str, Path]) -> Dict[str, Any]:
 
 from .helpers import filter_questions_by_metadata
 
+
 def filter_questions(
     questions: list,
     status: Optional[str] = None,
@@ -59,9 +60,12 @@ def filter_questions(
     Dates should be in ISO format (YYYY-MM-DD).
     """
     from datetime import datetime
+
     # Parse date strings if provided
     created_after_dt = datetime.fromisoformat(created_after) if created_after else None
-    created_before_dt = datetime.fromisoformat(created_before) if created_before else None
+    created_before_dt = (
+        datetime.fromisoformat(created_before) if created_before else None
+    )
     # Filter by direct fields first, then metadata
     filtered = []
     for q in questions:

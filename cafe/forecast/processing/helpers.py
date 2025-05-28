@@ -1,7 +1,8 @@
 from datetime import datetime
-from typing import List, Optional, Callable, Any
+from typing import Any, Callable, List, Optional
 
 from cafe.forecast.question import MetaculusForecastQuestion
+
 
 def filter_questions_by_metadata(
     questions: List[MetaculusForecastQuestion],
@@ -31,9 +32,16 @@ def filter_questions_by_metadata(
             continue
         if created_before and (not q.created_at or q.created_at > created_before):
             continue
-        if has_resolution_criteria is not None and bool(q.resolution_criteria) != has_resolution_criteria:
+        if (
+            has_resolution_criteria is not None
+            and bool(q.resolution_criteria) != has_resolution_criteria
+        ):
             continue
-        if min_comments is not None and hasattr(q, "comments") and len(getattr(q, "comments", [])) < min_comments:
+        if (
+            min_comments is not None
+            and hasattr(q, "comments")
+            and len(getattr(q, "comments", [])) < min_comments
+        ):
             continue
         if tag and (not q.tags or tag not in q.tags):
             continue

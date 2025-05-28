@@ -66,7 +66,9 @@ def main():
         min_forecasters=args.min_forecasters,
         created_after=args.created_after,
         created_before=args.created_before,
-        has_resolution_criteria=args.has_resolution_criteria if args.has_resolution_criteria else None,
+        has_resolution_criteria=(
+            args.has_resolution_criteria if args.has_resolution_criteria else None
+        ),
         min_comments=args.min_comments,
     )
     print(f"Loaded {len(questions)} questions, {len(filtered)} after filtering.")
