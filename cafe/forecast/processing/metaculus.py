@@ -53,7 +53,7 @@ def filter_questions(
     created_before: Optional[str] = None,
     has_resolution_criteria: Optional[bool] = None,
     min_comments: Optional[int] = None,
-    custom_predicate: Optional[callable] = None,
+    custom_predicate: Optional[Callable[[dict], bool]] = None,
 ) -> list:
     """
     Filter questions by status, tag, min_forecasters, and metadata fields.
