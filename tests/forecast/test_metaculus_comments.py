@@ -16,17 +16,11 @@ def test_metaculus_comments_placeholder():
 
 def test_list_metaculus_comments_for_question():
     src = MetaculusForecastSource.from_env()
-    # Use a known question id, or fallback to a question from the API
-    questions = src.list_questions()
-    if not questions:
-        print("No questions available.")
-        assert False
-    qid = questions[0].id if hasattr(questions[0], "id") else questions[0]["id"]
+    # Test with a known question id that should have >20 comments
+    qid = "36934"
     comments = src.list_metaculus_comments_for_question(qid)
-    if comments is None:
-        print(f"No comments found for question id {qid}.")
-        return
+    assert isinstance(comments, list)
     print(f"Fetched {len(comments)} comments for question id {qid}.")
     for c in comments[:3]:
         print(f"Comment id={c.id}, author={c.author.username}, text={c.text[:40]}...")
-    assert isinstance(comments, list)
+    assert len(comments) > 20, f"Expected >20 comments, got {len(comments)}"

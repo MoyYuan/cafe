@@ -23,6 +23,112 @@ class MetaculusForecastSource(ForecastSourceBase):
     Supports questions, users, predictions, comments, series, groups, and more.
     """
 
+    def fetch_and_cache_questions_and_comments(
+        self,
+        after: str = "2023-10-01",
+        output_dir: str = "data/forecasts/metaculus",
+        comments_mode: str = "all-in-one",
+        limit: Optional[int] = None,
+        refresh_questions: bool = False,
+        refresh_comments: bool = False,
+        no_cache: bool = False,
+        verbose: bool = False,
+    ):
+        """
+        Fetch questions and comments from Metaculus, with caching and checkpointing.
+        Logic refactored from scripts/metaculus/fetch_metaculus_questions.py.
+        """
+        import sys
+        import time
+        from pathlib import Path
+        import json
+        from cafe.forecast.processing.metadata import get_metadata
+
+        out_dir = Path(output_dir)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        cache_questions_file = out_dir / "questions_cache.json"
+        comments_dir = out_dir / "comments_by_question"
+        comments_dir.mkdir(exist_ok=True)
+        checkpoint_file = out_dir / "fetch_checkpoint.json"
+        questions = []
+        fetched_qids = set()
+        # Questions cache logic
+        if not no_cache and cache_questions_file.exists() and not refresh_questions:
+            with cache_questions_file.open() as f:
+                questions = json.load(f)
+            fetched_qids = set(str(q.get("id")) for q in questions)
+            print(f"Loaded {len(questions)} questions from cache.")
+        params = {
+            "created_time__gt": f"{after}T00:00:00Z",
+            "limit": 100,
+        }
+        page = 0
+        all_questions = questions.copy()
+        next_url = None
+        while True:
+            if next_url:
+                if next_url.startswith("http://"):
+                    next_url = "https://" + next_url[len("http://") :]
+                resp = httpx.get(next_url, headers=self._headers())
+                resp.raise_for_status()
+                data = resp.json()
+            else:
+                base_url = self.base_url
+                if base_url.startswith("http://"):
+                    base_url = "https://" + base_url[len("http://") :]
+                data = httpx.get(base_url, headers=self._headers(), params=params).json()
+            items = (
+                data["results"] if isinstance(data, dict) and "results" in data else data
+            )
+            if not items:
+                break
+            new_questions = [q for q in items if str(q.get("id")) not in fetched_qids]
+            all_questions.extend(new_questions)
+            fetched_qids.update(str(q.get("id")) for q in new_questions)
+            if limit is not None and len(all_questions) >= limit:
+                all_questions = all_questions[:limit]
+                break
+            next_url = data.get("next") if isinstance(data, dict) else None
+            page += 1
+            if not next_url:
+                break
+            time.sleep(0.2)
+        # Save cache
+        if (refresh_questions or not cache_questions_file.exists()) and not no_cache:
+            with cache_questions_file.open("w") as f:
+                json.dump(all_questions, f, indent=2)
+            print(f"Wrote {len(all_questions)} questions to cache.")
+        # Fetch comments
+        comments_by_qid = {}
+        for q in all_questions:
+            qid = str(q.get("id"))
+            comment_file = comments_dir / f"{qid}.json"
+            comments = None
+            if not no_cache and comment_file.exists() and not refresh_comments:
+                with comment_file.open() as f:
+                    loaded = json.load(f)
+                    if isinstance(loaded, dict) and "data" in loaded:
+                        comments = loaded["data"]
+                    else:
+                        comments = loaded
+            else:
+                comments = [
+                    c.raw if hasattr(c, "raw") else c
+                    for c in self.list_metaculus_comments_for_question(qid) or []
+                ]
+                if not no_cache or refresh_comments:
+                    c_metadata = {
+                        "qid": qid,
+                        "comment_count": len(comments),
+                    }
+                    with comment_file.open("w") as f:
+                        json.dump({"metadata": c_metadata, "data": comments}, f, indent=2)
+            comments_by_qid[qid] = comments
+            if verbose and comments:
+                for c in comments[:3]:
+                    print("  -", c)
+        return all_questions, comments_by_qid
+
     def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None):
         load_dotenv()
         # Remove trailing slash if present, then add /questions/
@@ -122,20 +228,21 @@ class MetaculusForecastSource(ForecastSourceBase):
         return self.get_resource("predictions", id)
 
     def list_metaculus_comments(self, params: Optional[dict] = None):
-        """List all Metaculus comments from /api/comments/, handling pagination."""
+        """List all Metaculus comments from /api/comments/, handling pagination, always including params (e.g. 'post') in every request, even if the API omits them in the next URL."""
+        import urllib.parse
+
         url = (
             self.api_url.replace("http://", "https://").replace("/api2", "/api")
             + "/comments/"
         )
         all_items = []
-        first = True
+        next_params = params.copy() if params else None
         while url:
             try:
-                if first:
-                    response = httpx.get(url, headers=self._headers(), params=params)
-                    first = False
-                else:
-                    response = httpx.get(url, headers=self._headers())
+                # Always convert http to https for every paginated request
+                if url.startswith("http://"):
+                    url = "https://" + url[len("http://"):]
+                response = httpx.get(url, headers=self._headers(), params=next_params)
                 response.raise_for_status()
                 data = response.json()
                 items = (
@@ -146,25 +253,28 @@ class MetaculusForecastSource(ForecastSourceBase):
                 all_items.extend(
                     [self._parse_metaculus_comment(item) for item in items]
                 )
-                url = data.get("next", None)
+                next_url = data.get("next", None)
+                if next_url:
+                    # Always convert http to https in next_url
+                    if next_url.startswith("http://"):
+                        next_url = "https://" + next_url[len("http://"):]
+                    # If the original filter param (e.g. 'post') is missing from the next_url, add it back
+                    parsed = urllib.parse.urlparse(next_url)
+                    query = dict(urllib.parse.parse_qsl(parsed.query))
+                    if params:
+                        for k, v in params.items():
+                            if k not in query:
+                                query[k] = v
+                    # Rebuild the url with merged params
+                    next_url = parsed._replace(query=urllib.parse.urlencode(query)).geturl()
+                    url = next_url
+                    next_params = None  # params now included in the URL
+                else:
+                    url = None
             except Exception as e:
                 print(f"[Metaculus] Error fetching comments: {e}")
                 break
         return all_items
-
-    def get_metaculus_comment(self, id: str) -> Optional[MetaculusComment]:
-        """Get a single comment by id from /api/comments/{id}/. Returns MetaculusComment or None."""
-        url = (
-            self.api_url.replace("http://", "https://").replace("/api2", "/api")
-            + f"/comments/{id}/"
-        )
-        try:
-            response = httpx.get(url, headers=self._headers())
-            response.raise_for_status()
-            return self._parse_metaculus_comment(response.json())
-        except Exception as e:
-            print(f"[Metaculus] Error fetching comment {id}: {e}")
-            return None
 
     def list_metaculus_comments_for_question(
         self, question_id: int, params: Optional[dict] = None

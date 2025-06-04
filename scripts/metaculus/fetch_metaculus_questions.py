@@ -3,8 +3,6 @@ import json
 import sys
 from pathlib import Path
 
-import httpx
-
 from cafe.forecast.processing.metadata import get_metadata
 from cafe.forecast.source_metaculus import MetaculusForecastSource
 
@@ -78,8 +76,6 @@ def save_questions_and_comments(
 
 
 def main():
-    import time
-
     parser = argparse.ArgumentParser(
         description="Fetch Metaculus questions and their comments after a given date."
     )
@@ -124,21 +120,6 @@ def main():
         "--no-cache", action="store_true", help="Do not use or write cache at all."
     )
     parser.add_argument(
-        "--resume",
-        action="store_true",
-        help="Resume from last checkpoint if available (global shortcut).",
-    )
-    parser.add_argument(
-        "--resume-questions",
-        action="store_true",
-        help="Resume questions fetching from last checkpoint.",
-    )
-    parser.add_argument(
-        "--resume-comments",
-        action="store_true",
-        help="Resume comments fetching from last checkpoint.",
-    )
-    parser.add_argument(
         "--limit",
         type=int,
         default=None,
@@ -147,40 +128,16 @@ def main():
     args = parser.parse_args()
 
     src = MetaculusForecastSource()
-    out_dir = Path(args.output_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    cache_questions_file = out_dir / "questions_cache.json"
-    comments_dir = out_dir / "comments_by_question"
-    comments_dir.mkdir(exist_ok=True)
-    checkpoint_file = out_dir / "fetch_checkpoint.json"
-
-    questions = []
-    fetched_qids = set()
-    # Determine question cache/refresh/resume modes
-    refresh_questions = args.refresh or args.refresh_questions
-    resume_questions = args.resume or args.resume_questions
-    # --- Questions cache logic ---
-    # If cache exists and not refreshing, use it. Otherwise, fetch questions.
-    if not args.no_cache and cache_questions_file.exists() and not refresh_questions:
-        with cache_questions_file.open() as f:
-            questions = json.load(f)
-        fetched_qids = set(str(q.get("id")) for q in questions)
-        print(f"Loaded {len(questions)} questions from cache.")
-    else:
-        if not cache_questions_file.exists():
-            print("Questions cache not found: fetching questions from API...")
-        else:
-            print("Refreshing questions from API (refresh flag set)...")
-        # The actual fetching logic will run below (see while True loop)
-        # Cache will be written after fetching if not --no-cache.
-
-    # Resume support: load checkpoint
-    resume_page = 0
-    if resume_questions and checkpoint_file.exists():
-        with checkpoint_file.open() as f:
-            checkpoint = json.load(f)
-            resume_page = checkpoint.get("page", 0)
-            print(f"Resuming questions fetching from checkpoint: page {resume_page}")
+    all_questions, comments_by_qid = src.fetch_and_cache_questions_and_comments(
+        after=args.after,
+        output_dir=args.output_dir,
+        comments_mode=args.comments_mode,
+        limit=args.limit,
+        refresh_questions=args.refresh or args.refresh_questions,
+        refresh_comments=args.refresh or args.refresh_comments,
+        no_cache=args.no_cache,
+        verbose=args.verbose,
+    )
 
     params = {
         "created_time__gt": f"{args.after}T00:00:00Z",
