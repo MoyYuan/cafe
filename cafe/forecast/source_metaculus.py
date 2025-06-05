@@ -105,12 +105,17 @@ class MetaculusForecastSource(ForecastSourceBase):
             fetched_qids.update(str(q.get("id")) for q in new_questions)
             print(f"Fetched {len(all_questions)} questions so far (page {page+1}).")
             if verbose:
-                print("  - Question IDs in this page:", [q.get("id") for q in new_questions])
+                print(
+                    "  - Question IDs in this page:",
+                    [q.get("id") for q in new_questions],
+                )
             # Save cache after every page
             if not no_cache:
                 with cache_questions_file.open("w") as f:
                     json.dump(all_questions, f, indent=2)
-                print(f"[Checkpoint] Wrote {len(all_questions)} questions to cache (after page {page+1}).")
+                print(
+                    f"[Checkpoint] Wrote {len(all_questions)} questions to cache (after page {page+1})."
+                )
             if limit is not None and len(all_questions) >= limit:
                 all_questions = all_questions[:limit]
                 break
@@ -124,7 +129,9 @@ class MetaculusForecastSource(ForecastSourceBase):
         comments_by_qid = {}
         for idx, q in enumerate(all_questions):
             qid = str(q.get("id"))
-            print(f"Fetching comments for question {qid} ({idx+1}/{len(all_questions)})...")
+            print(
+                f"Fetching comments for question {qid} ({idx+1}/{len(all_questions)})..."
+            )
             comment_file = comments_dir / f"{qid}.json"
             comments = None
             if not no_cache and comment_file.exists() and not refresh_comments:
@@ -314,7 +321,7 @@ class MetaculusForecastSource(ForecastSourceBase):
             + "/comments/"
         )
         all_items = []
-        next_params: Optional[Dict[str, str | int | float | bool, None]] = (
+        next_params: Optional[Dict[str, Union[str, int, float, bool, None]]] = (
             dict(params) if params else None
         )
         seen_urls = set()
