@@ -337,6 +337,12 @@ class MetaculusForecastSource(ForecastSourceBase):
     def list_series(self, params: Optional[dict] = None):
         return self.list_resource("series", params=params or {})
 
+    def list_predictions(self, params: Optional[dict] = None):
+        return self.list_resource("predictions", params=params or {})
+
+    def list_groups(self, params: Optional[dict] = None):
+        return self.list_resource("groups", params=params or {})
+
     def _parse_date(self, s):
         if not s:
             return None
