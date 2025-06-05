@@ -103,6 +103,14 @@ class MetaculusForecastSource(ForecastSourceBase):
             new_questions = [q for q in items if str(q.get("id")) not in fetched_qids]
             all_questions.extend(new_questions)
             fetched_qids.update(str(q.get("id")) for q in new_questions)
+            print(f"Fetched {len(all_questions)} questions so far (page {page+1}).")
+            if verbose:
+                print("  - Question IDs in this page:", [q.get("id") for q in new_questions])
+            # Save cache after every page
+            if not no_cache:
+                with cache_questions_file.open("w") as f:
+                    json.dump(all_questions, f, indent=2)
+                print(f"[Checkpoint] Wrote {len(all_questions)} questions to cache (after page {page+1}).")
             if limit is not None and len(all_questions) >= limit:
                 all_questions = all_questions[:limit]
                 break
@@ -111,15 +119,12 @@ class MetaculusForecastSource(ForecastSourceBase):
             if not next_url:
                 break
             time.sleep(0.2)
-        # Save cache
-        if (refresh_questions or not cache_questions_file.exists()) and not no_cache:
-            with cache_questions_file.open("w") as f:
-                json.dump(all_questions, f, indent=2)
-            print(f"Wrote {len(all_questions)} questions to cache.")
+        print(f"Total questions fetched: {len(all_questions)}")
         # Fetch comments
         comments_by_qid = {}
-        for q in all_questions:
+        for idx, q in enumerate(all_questions):
             qid = str(q.get("id"))
+            print(f"Fetching comments for question {qid} ({idx+1}/{len(all_questions)})...")
             comment_file = comments_dir / f"{qid}.json"
             comments = None
             if not no_cache and comment_file.exists() and not refresh_comments:
@@ -144,9 +149,12 @@ class MetaculusForecastSource(ForecastSourceBase):
                             {"metadata": c_metadata, "data": comments}, f, indent=2
                         )
             comments_by_qid[qid] = comments
+            print(f"  - Got {len(comments)} comments for question {qid}.")
             if verbose and comments:
-                for c in comments[:3]:
-                    print("  -", c)
+                print(
+                    "    - First 3 comment IDs:",
+                    [getattr(c, "id", None) for c in comments[:3]],
+                )
         return all_questions, comments_by_qid
 
     def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None):
