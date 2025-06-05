@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-from typing import Any, Dict, List, Mapping, Optional, Sequence, Union
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Union, cast
 
 import httpx
 from dotenv import load_dotenv
@@ -17,6 +17,11 @@ from .source_base import ForecastSourceBase
 
 
 class MetaculusForecastSource(ForecastSourceBase):
+    @classmethod
+    def from_env(cls, base_url: Optional[str] = None, api_key: Optional[str] = None):
+        """Instantiate using environment variables or provided overrides."""
+        return cls(base_url=base_url, api_key=api_key)
+
     """
     Fetches resources from Metaculus API. Accepts base_url and api_key as arguments,
     with environment variable defaults. Provides static save/load utilities.
@@ -59,13 +64,13 @@ class MetaculusForecastSource(ForecastSourceBase):
                 questions = json.load(f)
             fetched_qids = set(str(q.get("id")) for q in questions)
             print(f"Loaded {len(questions)} questions from cache.")
-        params = {
+        params: dict[str, str | int | float | bool | None] = {
             "created_time__gt": f"{after}T00:00:00Z",
             "limit": 100,
         }
         page = 0
         all_questions = questions.copy()
-        next_url = None
+        next_url: Optional[str] = None
         while True:
             if next_url:
                 if next_url.startswith("http://"):
@@ -93,7 +98,7 @@ class MetaculusForecastSource(ForecastSourceBase):
             if limit is not None and len(all_questions) >= limit:
                 all_questions = all_questions[:limit]
                 break
-            next_url = data.get("next") if isinstance(data, dict) else None
+            next_url = data.get("next") if isinstance(data, dict) else None  # type: ignore
             page += 1
             if not next_url:
                 break
@@ -119,7 +124,7 @@ class MetaculusForecastSource(ForecastSourceBase):
             else:
                 comments = [
                     c.raw if hasattr(c, "raw") else c
-                    for c in self.list_metaculus_comments_for_question(qid) or []
+                    for c in self.list_metaculus_comments_for_question(int(qid)) or []
                 ]
                 if not no_cache or refresh_comments:
                     c_metadata = {
@@ -230,30 +235,23 @@ class MetaculusForecastSource(ForecastSourceBase):
     def get_user(self, id: str):
         return self.get_resource("users", id)
 
-    def list_predictions(
-        self, params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None
-    ):
-        """List Metaculus predictions (raw dicts or list)."""
-        return self.list_resource("predictions", params=params or {})
-
-    def get_prediction(self, id: str) -> dict:
-        return self.get_resource("predictions", id)
-
     def list_metaculus_comments(
-        self, params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None
+        self,
+        params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None,
     ) -> list:
-        """List all Metaculus comments from /api/comments/, handling pagination, always including params (e.g. 'post') in every request, even if the API omits them in the next URL."""
+        """Fetch all comments from the /api/comments/ endpoint, handling pagination. Returns List[MetaculusComment]."""
         import urllib.parse
 
-        url = (
+        url: Optional[str] = (
             self.api_url.replace("http://", "https://").replace("/api2", "/api")
             + "/comments/"
         )
         all_items = []
-        next_params = dict(params) if params else None
+        next_params: Optional[Dict[str, str | int | float | bool | None]] = (
+            dict(params) if params else None
+        )
         while url:
             try:
-                # Always convert http to https for every paginated request
                 if url.startswith("http://"):
                     url = "https://" + url[len("http://") :]
                 response = httpx.get(url, headers=self._headers(), params=next_params)
@@ -267,24 +265,27 @@ class MetaculusForecastSource(ForecastSourceBase):
                 all_items.extend(
                     [self._parse_metaculus_comment(item) for item in items]
                 )
-                next_url = data.get("next", None)
-                if next_url:
-                    # Always convert http to https in next_url
+                next_url: Optional[str] = data.get("next", None)
+                if next_url is not None:
                     if next_url.startswith("http://"):
                         next_url = "https://" + next_url[len("http://") :]
-                    # If the original filter param (e.g. 'post') is missing from the next_url, add it back
                     parsed = urllib.parse.urlparse(next_url)
-                    query = dict(urllib.parse.parse_qsl(parsed.query))
+                    query: Dict[str, str] = dict(urllib.parse.parse_qsl(parsed.query))
                     if params:
                         for k, v in params.items():
                             if k not in query:
-                                query[k] = v
-                    # Rebuild the url with merged params
-                    next_url = parsed._replace(
-                        query=urllib.parse.urlencode(query)
-                    ).geturl()
-                    url = next_url
-                    next_params = None  # params now included in the URL
+                                query[k] = str(v)
+                    query_str = {}
+                    for k, v in query.items():
+                        if v is not None:
+                            query_str[str(k)] = str(v)
+                    query_str = cast(Dict[str, str], query_str)
+                    url = str(
+                        parsed._replace(
+                            query=urllib.parse.urlencode(query_str)
+                        ).geturl()
+                    )
+                    next_params = None
                 else:
                     url = None
             except Exception as e:
@@ -323,26 +324,35 @@ class MetaculusForecastSource(ForecastSourceBase):
         if not post_id:
             print(f"[Metaculus] Could not resolve post id for question {question_id}")
             return []
-        # Always work with a mutable dict internally
         params_dict: Dict[str, Union[str, int, float, bool, None]] = (
             dict(params) if params else {}
         )
         params_dict.pop("question", None)
-        params_dict["post"] = (
-            int(post_id)
-            if not isinstance(post_id, int) and str(post_id).isdigit()
-            else post_id
-        )
+        if not isinstance(post_id, int) and str(post_id).isdigit():
+            params_dict["post"] = int(post_id)
+        else:
+            params_dict["post"] = post_id
         return self.list_metaculus_comments(params=params_dict)
+
+    def list_series(self, params: Optional[dict] = None):
+        return self.list_resource("series", params=params or {})
+
+    def _parse_date(self, s):
+        if not s:
+            return None
+        try:
+            return datetime.fromisoformat(s.replace("Z", "+00:00"))
+        except Exception:
+            return None
 
     def _parse_metaculus_comment(self, item: dict) -> MetaculusComment:
         def parse_author(a):
             return (
                 MetaculusCommentAuthor(
                     id=a.get("id"),
+                    is_staff=a.get("is_staff", False),
                     username=a.get("username"),
                     is_bot=a.get("is_bot", False),
-                    is_staff=a.get("is_staff", False),
                 )
                 if a
                 else None
@@ -392,47 +402,6 @@ class MetaculusForecastSource(ForecastSourceBase):
             raw=item,
         )
 
-    def list_series(self, params: Optional[dict] = None):
-        return self.list_resource("series", params=params or {})
-
-    def get_series(self, id: str) -> dict:
-        return self.get_resource("series", id)
-
-    def list_groups(self, params: Optional[dict] = None):
-        return self.list_resource("groups", params=params or {})
-
-    def get_group(self, id: str) -> dict:
-        return self.get_resource("groups", id)
-
-    @classmethod
-    def from_env(cls):
-        """Factory for instantiating from environment variables."""
-        return cls()
-
-    def _parse_metaculus_question(self, item: dict) -> MetaculusForecastQuestion:
-        return MetaculusForecastQuestion(
-            id=str(item.get("id")),
-            title=item.get("title", ""),
-            description=item.get("description"),
-            resolution_criteria=item.get("resolution_criteria"),
-            created_at=self._parse_date(item.get("created_time")),
-            deadline=self._parse_date(item.get("publish_time")),
-            resolved_at=self._parse_date(item.get("resolve_time")),
-            status=item.get("status"),
-            community_prediction=item.get("community_prediction"),
-            url=f"https://www.metaculus.com/questions/{item.get('id')}/",
-            tags=item.get("tags", []),
-            raw=item,
-        )
-
-    def _parse_date(self, s):
-        if not s:
-            return None
-        try:
-            return datetime.fromisoformat(s.replace("Z", "+00:00"))
-        except Exception:
-            return None
-
     @staticmethod
     def _parse_metaculus_question_static(item: dict) -> MetaculusForecastQuestion:
         # Static version for loading from JSON
@@ -458,3 +427,7 @@ class MetaculusForecastSource(ForecastSourceBase):
             tags=item.get("tags", []),
             raw=item,
         )
+
+    def _parse_metaculus_question(self, item: dict) -> MetaculusForecastQuestion:
+        """Instance method to parse a question dict into a MetaculusForecastQuestion."""
+        return self._parse_metaculus_question_static(item)
