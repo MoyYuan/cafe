@@ -5,6 +5,8 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Union, cast
 
 import httpx
 from dotenv import load_dotenv
+import time
+from httpx import HTTPStatusError, RequestError
 
 from .comment import (
     MetaculusChangedMyMind,
@@ -17,6 +19,12 @@ from .source_base import ForecastSourceBase
 
 
 class MetaculusForecastSource(ForecastSourceBase):
+    # Retry/backoff config
+    MAX_RETRIES = 5
+    BACKOFF_FACTOR = 2.0  # exponential
+    INITIAL_DELAY = 1.0   # seconds
+    PAGINATED_REQUEST_DELAY = 0.5  # seconds between paginated requests
+
     @classmethod
     def from_env(cls, base_url: Optional[str] = None, api_key: Optional[str] = None):
         """Instantiate using environment variables or provided overrides."""
@@ -173,40 +181,67 @@ class MetaculusForecastSource(ForecastSourceBase):
         """
         url = f"{self.api_url}/{resource}/"
         try:
-            response = httpx.get(url, headers=self._headers(), params=params or {})
-            # If redirected, httpx will follow automatically. But if not, check for 301 manually.
-            if response.status_code == 301 and url.startswith("http://"):
-                # Retry with https
-                url_https = url.replace("http://", "https://", 1)
-                response = httpx.get(
-                    url_https,
-                    headers=self._headers(),
-                    params=params or {},
-                )
-            response.raise_for_status()
+            response = self._httpx_get_with_retries(url, headers=self._headers(), params=params or {})
+            if response is None:
+                return None
             data = response.json()
             if isinstance(data, dict) and "results" in data:
                 return data["results"]
             return data
-        except httpx.HTTPStatusError as e:
+        except Exception as e:
             print(f"[Metaculus] Error fetching {url}: {e}")
             return None
-        except Exception as e:
-            print(f"[Metaculus] Unexpected error fetching {url}: {e}")
-            return None
+
+    def _httpx_get_with_retries(self, url, headers=None, params=None, max_retries=None, backoff_factor=None, initial_delay=None):
+        """HTTP GET with retries and exponential backoff for transient errors."""
+        max_retries = max_retries if max_retries is not None else self.MAX_RETRIES
+        backoff_factor = backoff_factor if backoff_factor is not None else self.BACKOFF_FACTOR
+        initial_delay = initial_delay if initial_delay is not None else self.INITIAL_DELAY
+        delay = initial_delay
+        last_exc = None
+        for attempt in range(max_retries):
+            try:
+                resp = httpx.get(url, headers=headers, params=params)
+                resp.raise_for_status()
+                return resp
+            except HTTPStatusError as e:
+                status = e.response.status_code
+                if status in (429, 500, 502, 503, 504):
+                    print(f"[Metaculus] HTTP {status} for {url} (attempt {attempt+1}/{max_retries}), retrying in {delay:.1f}s...")
+                    time.sleep(delay)
+                    delay *= backoff_factor
+                    last_exc = e
+                    continue
+                else:
+                    print(f"[Metaculus] Fatal HTTP error {status} for {url}: {e}")
+                    raise
+            except RequestError as e:
+                print(f"[Metaculus] Network error for {url} (attempt {attempt+1}/{max_retries}): {e}, retrying in {delay:.1f}s...")
+                time.sleep(delay)
+                delay *= backoff_factor
+                last_exc = e
+                continue
+            except Exception as e:
+                print(f"[Metaculus] Unexpected error for {url} (attempt {attempt+1}/{max_retries}): {e}, retrying in {delay:.1f}s...")
+                time.sleep(delay)
+                delay *= backoff_factor
+                last_exc = e
+                continue
+        print(f"[Metaculus] Giving up on {url} after {max_retries} attempts.")
+        if last_exc:
+            raise last_exc
+        return None
 
     def get_resource(self, resource: str, id: str):
         """Generic get for any Metaculus resource by id. Returns None if not found or error."""
         url = f"{self.api_url}/{resource}/{id}/"
         try:
-            response = httpx.get(url, headers=self._headers())
-            response.raise_for_status()
+            response = self._httpx_get_with_retries(url, headers=self._headers())
+            if response is None:
+                return None
             return response.json()
-        except httpx.HTTPStatusError as e:
-            print(f"[Metaculus] Error fetching {url}: {e}")
-            return None
         except Exception as e:
-            print(f"[Metaculus] Unexpected error fetching {url}: {e}")
+            print(f"[Metaculus] Error fetching {url}: {e}")
             return None
 
     # Convenience wrappers
@@ -253,28 +288,23 @@ class MetaculusForecastSource(ForecastSourceBase):
         while url:
             try:
                 if url.startswith("http://"):
-                    url = "https://" + url[len("http://") :]
-                response = httpx.get(url, headers=self._headers(), params=next_params)
-                response.raise_for_status()
+                    url = url.replace("http://", "https://", 1)
+                response = self._httpx_get_with_retries(url, headers=self._headers(), params=next_params or {})
+                if response is None:
+                    print(f"[Metaculus] Failed to fetch comments page: {url}")
+                    break
                 data = response.json()
-                items = (
-                    data["results"]
-                    if isinstance(data, dict) and "results" in data
-                    else data
-                )
-                all_items.extend(
-                    [self._parse_metaculus_comment(item) for item in items]
-                )
-                next_url: Optional[str] = data.get("next", None)
-                if next_url is not None:
-                    if next_url.startswith("http://"):
-                        next_url = "https://" + next_url[len("http://") :]
-                    parsed = urllib.parse.urlparse(next_url)
-                    query: Dict[str, str] = dict(urllib.parse.parse_qsl(parsed.query))
-                    if params:
-                        for k, v in params.items():
-                            if k not in query:
-                                query[k] = str(v)
+                if isinstance(data, dict) and "results" in data:
+                    items = data["results"]
+                    all_items.extend([self._parse_metaculus_comment(item) for item in items])
+                    url = data.get("next")
+                else:
+                    all_items.extend([self._parse_metaculus_comment(item) for item in data])
+                    url = None
+                # Prepare next_params for pagination
+                if url:
+                    parsed = urllib.parse.urlparse(url)
+                    query = urllib.parse.parse_qs(parsed.query)
                     query_str = {}
                     for k, v in query.items():
                         if v is not None:
@@ -286,6 +316,7 @@ class MetaculusForecastSource(ForecastSourceBase):
                         ).geturl()
                     )
                     next_params = None
+                    time.sleep(self.PAGINATED_REQUEST_DELAY)
                 else:
                     url = None
             except Exception as e:
