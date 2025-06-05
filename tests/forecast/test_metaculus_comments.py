@@ -17,7 +17,7 @@ def test_metaculus_comments_placeholder():
 def test_list_metaculus_comments_for_question():
     src = MetaculusForecastSource.from_env()
     # Test with a known question id that should have >20 comments
-    qid = "36934"
+    qid = 36934
     comments = src.list_metaculus_comments_for_question(qid)
     assert isinstance(comments, list)
     print(f"Fetched {len(comments)} comments for question id {qid}.")

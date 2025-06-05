@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-from typing import List, Optional
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Union
 
 import httpx
 from dotenv import load_dotenv
@@ -38,10 +38,11 @@ class MetaculusForecastSource(ForecastSourceBase):
         Fetch questions and comments from Metaculus, with caching and checkpointing.
         Logic refactored from scripts/metaculus/fetch_metaculus_questions.py.
         """
+        import json
         import sys
         import time
         from pathlib import Path
-        import json
+
         from cafe.forecast.processing.metadata import get_metadata
 
         out_dir = Path(output_dir)
@@ -76,9 +77,13 @@ class MetaculusForecastSource(ForecastSourceBase):
                 base_url = self.base_url
                 if base_url.startswith("http://"):
                     base_url = "https://" + base_url[len("http://") :]
-                data = httpx.get(base_url, headers=self._headers(), params=params).json()
+                data = httpx.get(
+                    base_url, headers=self._headers(), params=params
+                ).json()
             items = (
-                data["results"] if isinstance(data, dict) and "results" in data else data
+                data["results"]
+                if isinstance(data, dict) and "results" in data
+                else data
             )
             if not items:
                 break
@@ -122,7 +127,9 @@ class MetaculusForecastSource(ForecastSourceBase):
                         "comment_count": len(comments),
                     }
                     with comment_file.open("w") as f:
-                        json.dump({"metadata": c_metadata, "data": comments}, f, indent=2)
+                        json.dump(
+                            {"metadata": c_metadata, "data": comments}, f, indent=2
+                        )
             comments_by_qid[qid] = comments
             if verbose and comments:
                 for c in comments[:3]:
@@ -148,7 +155,11 @@ class MetaculusForecastSource(ForecastSourceBase):
             headers["Authorization"] = f"Token {self.api_key}"
         return headers
 
-    def list_resource(self, resource: str, params: Optional[dict] = None):
+    def list_resource(
+        self,
+        resource: str,
+        params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None,
+    ):
         """
         Generic list for any Metaculus resource (e.g., 'users', 'predictions').
         If the response is paginated, returns the 'results' list.
@@ -157,9 +168,7 @@ class MetaculusForecastSource(ForecastSourceBase):
         """
         url = f"{self.api_url}/{resource}/"
         try:
-            response = httpx.get(
-                url, headers=self._headers(), params=params, follow_redirects=True
-            )
+            response = httpx.get(url, headers=self._headers(), params=params or {})
             # If redirected, httpx will follow automatically. But if not, check for 301 manually.
             if response.status_code == 301 and url.startswith("http://"):
                 # Retry with https
@@ -167,8 +176,7 @@ class MetaculusForecastSource(ForecastSourceBase):
                 response = httpx.get(
                     url_https,
                     headers=self._headers(),
-                    params=params,
-                    follow_redirects=True,
+                    params=params or {},
                 )
             response.raise_for_status()
             data = response.json()
@@ -198,7 +206,7 @@ class MetaculusForecastSource(ForecastSourceBase):
 
     # Convenience wrappers
     def list_questions(
-        self, params: Optional[dict] = None
+        self, params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None
     ) -> List[MetaculusForecastQuestion]:
         """List Metaculus questions as MetaculusForecastQuestion objects."""
         raw_items = self.list_resource("questions", params=params or {})
@@ -213,21 +221,27 @@ class MetaculusForecastSource(ForecastSourceBase):
             raise ValueError(f"Question with id {id} not found.")
         return self._parse_metaculus_question(raw)
 
-    def list_users(self, params: Optional[dict] = None):
+    def list_users(
+        self, params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None
+    ):
         """List Metaculus users (raw dicts or list)."""
         return self.list_resource("users", params=params or {})
 
     def get_user(self, id: str):
         return self.get_resource("users", id)
 
-    def list_predictions(self, params: Optional[dict] = None):
+    def list_predictions(
+        self, params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None
+    ):
         """List Metaculus predictions (raw dicts or list)."""
         return self.list_resource("predictions", params=params or {})
 
     def get_prediction(self, id: str) -> dict:
         return self.get_resource("predictions", id)
 
-    def list_metaculus_comments(self, params: Optional[dict] = None):
+    def list_metaculus_comments(
+        self, params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None
+    ) -> list:
         """List all Metaculus comments from /api/comments/, handling pagination, always including params (e.g. 'post') in every request, even if the API omits them in the next URL."""
         import urllib.parse
 
@@ -236,12 +250,12 @@ class MetaculusForecastSource(ForecastSourceBase):
             + "/comments/"
         )
         all_items = []
-        next_params = params.copy() if params else None
+        next_params = dict(params) if params else None
         while url:
             try:
                 # Always convert http to https for every paginated request
                 if url.startswith("http://"):
-                    url = "https://" + url[len("http://"):]
+                    url = "https://" + url[len("http://") :]
                 response = httpx.get(url, headers=self._headers(), params=next_params)
                 response.raise_for_status()
                 data = response.json()
@@ -257,7 +271,7 @@ class MetaculusForecastSource(ForecastSourceBase):
                 if next_url:
                     # Always convert http to https in next_url
                     if next_url.startswith("http://"):
-                        next_url = "https://" + next_url[len("http://"):]
+                        next_url = "https://" + next_url[len("http://") :]
                     # If the original filter param (e.g. 'post') is missing from the next_url, add it back
                     parsed = urllib.parse.urlparse(next_url)
                     query = dict(urllib.parse.parse_qsl(parsed.query))
@@ -266,7 +280,9 @@ class MetaculusForecastSource(ForecastSourceBase):
                             if k not in query:
                                 query[k] = v
                     # Rebuild the url with merged params
-                    next_url = parsed._replace(query=urllib.parse.urlencode(query)).geturl()
+                    next_url = parsed._replace(
+                        query=urllib.parse.urlencode(query)
+                    ).geturl()
                     url = next_url
                     next_params = None  # params now included in the URL
                 else:
@@ -277,27 +293,18 @@ class MetaculusForecastSource(ForecastSourceBase):
         return all_items
 
     def list_metaculus_comments_for_question(
-        self, question_id: int, params: Optional[dict] = None
+        self,
+        question_id: int,
+        params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None,
     ) -> list:
-        raw: dict
-        q = self.get_question(str(question_id))
-        # Ensure we are working with a dict for 'raw', not a MetaculusForecastQuestion
-        if hasattr(q, "raw") and isinstance(q.raw, dict):
-            raw = q.raw
-        elif isinstance(q, dict):
-            raw = q
-        else:
-            raise ValueError(f"Could not extract raw dict from question: {q}")
         """Fetch all comments for a given Metaculus question by id. Returns List[MetaculusComment]."""
-        # Always resolve post_id for the question
         q = self.get_question(str(question_id))
-        # Ensure we are working with a dict for 'raw', not a MetaculusForecastQuestion
-        if not isinstance(raw, dict):
-            # Defensive: if q is a MetaculusForecastQuestion, use its .raw
-            raw = getattr(q, "raw", {})
-            if not isinstance(raw, dict):
-                raise ValueError(f"Could not extract raw dict from question: {q}")
-
+        # Always work with a dict for 'raw'
+        raw = (
+            q.raw
+            if hasattr(q, "raw") and isinstance(q.raw, dict)
+            else q if isinstance(q, dict) else {}
+        )
         post_id = (
             raw.get("post_id")
             or raw.get("post")
@@ -316,11 +323,17 @@ class MetaculusForecastSource(ForecastSourceBase):
         if not post_id:
             print(f"[Metaculus] Could not resolve post id for question {question_id}")
             return []
-        if params is None:
-            params = {}
-        params.pop("question", None)
-        params["post"] = post_id
-        return self.list_metaculus_comments(params=params)
+        # Always work with a mutable dict internally
+        params_dict: Dict[str, Union[str, int, float, bool, None]] = (
+            dict(params) if params else {}
+        )
+        params_dict.pop("question", None)
+        params_dict["post"] = (
+            int(post_id)
+            if not isinstance(post_id, int) and str(post_id).isdigit()
+            else post_id
+        )
+        return self.list_metaculus_comments(params=params_dict)
 
     def _parse_metaculus_comment(self, item: dict) -> MetaculusComment:
         def parse_author(a):
