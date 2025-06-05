@@ -128,6 +128,9 @@ def test_questions_cache(tmp_path, monkeypatch):
 
 
 def test_comments_cache(tmp_path, monkeypatch):
+    # Guard: never allow writes to the real data directory
+    real_data_dir = "data/forecasts/metaculus/comments_by_question"
+    assert str(tmp_path) not in real_data_dir, "Test must use a temporary directory for output!"
     # Setup: Write sample comments to new cache file
     comments_dir = tmp_path / "comments_by_question"
     comments_dir.mkdir(exist_ok=True)

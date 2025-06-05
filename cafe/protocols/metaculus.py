@@ -84,6 +84,7 @@ def get_metaculus_comments_for_question(
     """
     from cafe.forecast.source_local import LocalForecastCommentSource
 
+    import os
     default_comments_dir = os.path.join(
         "data", "forecasts", "metaculus", "comments_by_question"
     )
@@ -91,6 +92,16 @@ def get_metaculus_comments_for_question(
     local_path = comments_cache_path or os.path.join(
         default_comments_dir, f"{question_id}.json"
     )
+    # PROTECT: Never allow tests to write to production comments dir
+    if (
+        os.environ.get("PYTEST_CURRENT_TEST")
+        and default_comments_dir in local_path
+        and "/tmp" not in local_path
+    ):
+        raise RuntimeError(
+            f"Test attempted to access production comments cache: {local_path}. "
+            "Patch your test to use a temporary comments_cache_path!"
+        )
     if not force_refresh and os.path.exists(local_path):
         with open(local_path, "r") as f:
             comments_data = json.load(f)
