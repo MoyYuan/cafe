@@ -128,6 +128,7 @@ def main():
     args = parser.parse_args()
 
     src = MetaculusForecastSource()
+    src.verbose = args.verbose  # Ensure deep verbose logging
     all_questions, comments_by_qid = src.fetch_and_cache_questions_and_comments(
         after=args.after,
         output_dir=args.output_dir,
@@ -139,122 +140,18 @@ def main():
         verbose=args.verbose,
     )
 
-    params = {
-        "created_time__gt": f"{args.after}T00:00:00Z",
-        "limit": 100,  # Metaculus API max page size (adjust if API changes)
-    }
-    page = 0
-    all_questions = questions.copy()
-    next_url = None
-    while True:
-        if page < resume_page:
-            page += 1
-            continue
-        if next_url:
-            if next_url.startswith("http://"):
-                next_url = "https://" + next_url[len("http://") :]
-            resp = httpx.get(next_url, headers=src._headers())
-            resp.raise_for_status()
-            data = resp.json()
-        else:
-            base_url = src.base_url
-            if base_url.startswith("http://"):
-                base_url = "https://" + base_url[len("http://") :]
-            data = httpx.get(base_url, headers=src._headers(), params=params).json()
-        items = (
-            data["results"] if isinstance(data, dict) and "results" in data else data
-        )
-        if not items:
-            break
-        # Only add new questions
-        new_questions = [q for q in items if str(q.get("id")) not in fetched_qids]
-        all_questions.extend(new_questions)
-        fetched_qids.update(str(q.get("id")) for q in new_questions)
-        if args.limit is not None and len(all_questions) >= args.limit:
-            all_questions = all_questions[: args.limit]
-            # Always write cache after every page, unless --no-cache
-            if not args.no_cache:
-                with cache_questions_file.open("w") as f:
-                    json.dump(all_questions, f, indent=2)
-            # Save checkpoint
-            with checkpoint_file.open("w") as f:
-                json.dump({"page": page}, f)
-            break
-        # Always write cache after every page, unless --no-cache
-        if not args.no_cache:
-            with cache_questions_file.open("w") as f:
-                json.dump(all_questions, f, indent=2)
-        # Save checkpoint
-        with checkpoint_file.open("w") as f:
-            json.dump({"page": page}, f)
-        # Pagination
-        next_url = data.get("next") if isinstance(data, dict) else None
-        page += 1
-        if not next_url:
-            break
-        time.sleep(0.2)  # Be nice to API
-    if not all_questions:
-        print("No questions found.")
-        return
-    # Always write cache if we fetched questions (cache missing or refresh), unless --no-cache
-    if (refresh_questions or not cache_questions_file.exists()) and not args.no_cache:
-        with cache_questions_file.open("w") as f:
-            json.dump(all_questions, f, indent=2)
-        print(f"Wrote {len(all_questions)} questions to cache.")
-    # Apply limit if set
-    if args.limit is not None:
-        all_questions = all_questions[: args.limit]
-
-    # Determine comments cache/refresh/resume modes
-    refresh_comments = args.refresh or args.refresh_comments
-    resume_comments = args.resume or args.resume_comments
-    # Fetch comments, using cache if available
-    comments_by_qid = {}
-    for q in all_questions:
-        qid = str(q.get("id"))
-        comment_file = comments_dir / f"{qid}.json"
-        comments = None
-        if not args.no_cache and comment_file.exists() and not refresh_comments:
-            with comment_file.open() as f:
-                loaded = json.load(f)
-                if isinstance(loaded, dict) and "data" in loaded:
-                    comments = loaded["data"]
-                else:
-                    comments = loaded
-        else:
-            comments = [
-                c.raw if hasattr(c, "raw") else c
-                for c in src.list_metaculus_comments_for_question(qid) or []
-            ]
-            if not args.no_cache or refresh_comments:
-                c_metadata = {
-                    "qid": qid,
-                    "comment_count": len(comments),
-                }
-                with comment_file.open("w") as f:
-                    json.dump({"metadata": c_metadata, "data": comments}, f, indent=2)
-        comments_by_qid[qid] = comments
-    if refresh_comments:
-        print("Comments: forced refresh mode (ignore cache).")
-    elif not args.no_cache:
-        print("Comments: using cache if available.")
-    else:
-        print("Comments: not using cache (no-cache mode).")
-        if args.verbose and comments:
-            for c in comments:
-                print("  -", c)
-    print(
-        f"\nSaving to {args.output_dir} (questions + comments, mode: {args.comments_mode})..."
-    )
+    # Always save after fetch (even if fetch_and_cache... already saves, this guarantees output)
     save_questions_and_comments(
         all_questions,
         comments_by_qid,
         args.output_dir,
         args.after,
-        args.comments_mode,
-        params=params,
+        comments_mode=args.comments_mode,
     )
-    print("Done.")
+
+    print(
+        f"Saved {len(all_questions)} questions and {sum(len(v) for v in comments_by_qid.values())} comments to {args.output_dir} (mode: {args.comments_mode})"
+    )
 
 
 if __name__ == "__main__":

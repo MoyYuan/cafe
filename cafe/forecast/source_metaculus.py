@@ -1,11 +1,11 @@
 import json
 import os
+import time
 from datetime import datetime
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Union, cast
 
 import httpx
 from dotenv import load_dotenv
-import time
 from httpx import HTTPStatusError, RequestError
 
 from .comment import (
@@ -22,7 +22,7 @@ class MetaculusForecastSource(ForecastSourceBase):
     # Retry/backoff config
     MAX_RETRIES = 5
     BACKOFF_FACTOR = 2.0  # exponential
-    INITIAL_DELAY = 1.0   # seconds
+    INITIAL_DELAY = 1.0  # seconds
     PAGINATED_REQUEST_DELAY = 0.5  # seconds between paginated requests
 
     @classmethod
@@ -181,7 +181,9 @@ class MetaculusForecastSource(ForecastSourceBase):
         """
         url = f"{self.api_url}/{resource}/"
         try:
-            response = self._httpx_get_with_retries(url, headers=self._headers(), params=params or {})
+            response = self._httpx_get_with_retries(
+                url, headers=self._headers(), params=params or {}
+            )
             if response is None:
                 return None
             data = response.json()
@@ -192,22 +194,39 @@ class MetaculusForecastSource(ForecastSourceBase):
             print(f"[Metaculus] Error fetching {url}: {e}")
             return None
 
-    def _httpx_get_with_retries(self, url, headers=None, params=None, max_retries=None, backoff_factor=None, initial_delay=None):
+    def _httpx_get_with_retries(
+        self,
+        url,
+        headers=None,
+        params=None,
+        max_retries=None,
+        backoff_factor=None,
+        initial_delay=None,
+        timeout=30.0,
+    ):
         """HTTP GET with retries and exponential backoff for transient errors."""
         max_retries = max_retries if max_retries is not None else self.MAX_RETRIES
-        backoff_factor = backoff_factor if backoff_factor is not None else self.BACKOFF_FACTOR
-        initial_delay = initial_delay if initial_delay is not None else self.INITIAL_DELAY
+        backoff_factor = (
+            backoff_factor if backoff_factor is not None else self.BACKOFF_FACTOR
+        )
+        initial_delay = (
+            initial_delay if initial_delay is not None else self.INITIAL_DELAY
+        )
         delay = initial_delay
         last_exc = None
         for attempt in range(max_retries):
             try:
-                resp = httpx.get(url, headers=headers, params=params)
-                resp.raise_for_status()
-                return resp
+                response = httpx.get(
+                    url, headers=headers, params=params, timeout=timeout
+                )
+                response.raise_for_status()
+                return response
             except HTTPStatusError as e:
                 status = e.response.status_code
                 if status in (429, 500, 502, 503, 504):
-                    print(f"[Metaculus] HTTP {status} for {url} (attempt {attempt+1}/{max_retries}), retrying in {delay:.1f}s...")
+                    print(
+                        f"[Metaculus] HTTP {status} for {url} (attempt {attempt+1}/{max_retries}), retrying in {delay:.1f}s..."
+                    )
                     time.sleep(delay)
                     delay *= backoff_factor
                     last_exc = e
@@ -216,13 +235,17 @@ class MetaculusForecastSource(ForecastSourceBase):
                     print(f"[Metaculus] Fatal HTTP error {status} for {url}: {e}")
                     raise
             except RequestError as e:
-                print(f"[Metaculus] Network error for {url} (attempt {attempt+1}/{max_retries}): {e}, retrying in {delay:.1f}s...")
+                print(
+                    f"[Metaculus] Network error for {url} (attempt {attempt+1}/{max_retries}): {e}, retrying in {delay:.1f}s..."
+                )
                 time.sleep(delay)
                 delay *= backoff_factor
                 last_exc = e
                 continue
             except Exception as e:
-                print(f"[Metaculus] Unexpected error for {url} (attempt {attempt+1}/{max_retries}): {e}, retrying in {delay:.1f}s...")
+                print(
+                    f"[Metaculus] Unexpected error for {url} (attempt {attempt+1}/{max_retries}): {e}, retrying in {delay:.1f}s..."
+                )
                 time.sleep(delay)
                 delay *= backoff_factor
                 last_exc = e
@@ -273,6 +296,7 @@ class MetaculusForecastSource(ForecastSourceBase):
     def list_metaculus_comments(
         self,
         params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None,
+        max_pages: int = 50,
     ) -> list:
         """Fetch all comments from the /api/comments/ endpoint, handling pagination. Returns List[MetaculusComment]."""
         import urllib.parse
@@ -282,24 +306,47 @@ class MetaculusForecastSource(ForecastSourceBase):
             + "/comments/"
         )
         all_items = []
-        next_params: Optional[Dict[str, str | int | float | bool | None]] = (
+        next_params: Optional[Dict[str, str | int | float | bool, None]] = (
             dict(params) if params else None
         )
+        seen_urls = set()
+        page_count = 0
         while url:
+            if url in seen_urls:
+                print(
+                    f"[Metaculus] Detected repeating URL in comments pagination: {url}. Breaking to prevent infinite loop."
+                )
+                break
+            seen_urls.add(url)
+            page_count += 1
+            if page_count > max_pages:
+                print(
+                    f"[Metaculus] Reached max_pages={max_pages} in comments pagination for url {url}. Breaking loop."
+                )
+                break
             try:
                 if url.startswith("http://"):
                     url = url.replace("http://", "https://", 1)
-                response = self._httpx_get_with_retries(url, headers=self._headers(), params=next_params or {})
+                # Log current URL for debugging
+                if hasattr(self, "verbose") and getattr(self, "verbose", False):
+                    print(f"[Metaculus] Fetching comments page {page_count}: {url}")
+                response = self._httpx_get_with_retries(
+                    url, headers=self._headers(), params=next_params or {}
+                )
                 if response is None:
                     print(f"[Metaculus] Failed to fetch comments page: {url}")
                     break
                 data = response.json()
                 if isinstance(data, dict) and "results" in data:
                     items = data["results"]
-                    all_items.extend([self._parse_metaculus_comment(item) for item in items])
+                    all_items.extend(
+                        [self._parse_metaculus_comment(item) for item in items]
+                    )
                     url = data.get("next")
                 else:
-                    all_items.extend([self._parse_metaculus_comment(item) for item in data])
+                    all_items.extend(
+                        [self._parse_metaculus_comment(item) for item in data]
+                    )
                     url = None
                 # Prepare next_params for pagination
                 if url:
