@@ -82,9 +82,10 @@ def get_metaculus_comments_for_question(
     Otherwise, load from local if available, else fetch from API and save.
     Optionally override the comments cache file path with ?comments_cache_path=...
     """
+    import os
+
     from cafe.forecast.source_local import LocalForecastCommentSource
 
-    import os
     default_comments_dir = os.path.join(
         "data", "forecasts", "metaculus", "comments_by_question"
     )

@@ -83,16 +83,24 @@ class MetaculusForecastSource(ForecastSourceBase):
             if next_url:
                 if next_url.startswith("http://"):
                     next_url = "https://" + next_url[len("http://") :]
-                resp = httpx.get(next_url, headers=self._headers())
-                resp.raise_for_status()
+                resp = self._httpx_get_with_retries(
+                    next_url, headers=self._headers(), timeout=60
+                )
+                if resp is None:
+                    print(f"[ERROR] Failed to fetch page: {next_url}")
+                    break
                 data = resp.json()
             else:
                 base_url = self.base_url
                 if base_url.startswith("http://"):
                     base_url = "https://" + base_url[len("http://") :]
-                data = httpx.get(
-                    base_url, headers=self._headers(), params=params
-                ).json()
+                resp = self._httpx_get_with_retries(
+                    base_url, headers=self._headers(), params=params, timeout=60
+                )
+                if resp is None:
+                    print(f"[ERROR] Failed to fetch initial page: {base_url}")
+                    break
+                data = resp.json()
             items = (
                 data["results"]
                 if isinstance(data, dict) and "results" in data

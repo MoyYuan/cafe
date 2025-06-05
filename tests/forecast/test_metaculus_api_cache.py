@@ -130,7 +130,9 @@ def test_questions_cache(tmp_path, monkeypatch):
 def test_comments_cache(tmp_path, monkeypatch):
     # Guard: never allow writes to the real data directory
     real_data_dir = "data/forecasts/metaculus/comments_by_question"
-    assert str(tmp_path) not in real_data_dir, "Test must use a temporary directory for output!"
+    assert (
+        str(tmp_path) not in real_data_dir
+    ), "Test must use a temporary directory for output!"
     # Setup: Write sample comments to new cache file
     comments_dir = tmp_path / "comments_by_question"
     comments_dir.mkdir(exist_ok=True)
@@ -166,7 +168,11 @@ def test_comments_cache(tmp_path, monkeypatch):
         "list_metaculus_comments_for_question",
         fake_api_list_comments,
     )
-    resp = client.get("/metaculus/questions/1/comments?force_refresh=true")
+    # Always use a temporary comments_cache_path so we never pollute real data
+    comments_cache_path = str(cache_file)
+    resp = client.get(
+        f"/metaculus/questions/1/comments?force_refresh=true&comments_cache_path={comments_cache_path}"
+    )
     assert resp.status_code == 200
     data = resp.json()
     assert data[0]["text"] == "Comment 2"
