@@ -58,7 +58,12 @@ Fetched and processed Metaculus data is saved in a structured directory:
 This structure enables both bulk and per-question access, robust resumption, and efficient incremental updates.
 
 ### Key Features
-- **Incremental Caching**: The questions cache (`questions_cache.json`) is written after every page of results. If the script is interrupted, progress is saved and fetching will resume from the cache on next run.
+- **Robust Retry & Backoff**: All API fetches (questions and comments) use robust retry and exponential backoff logic. Network timeouts or transient errors will not crash the fetcher; progress is checkpointed and fetches can resume safely.
+- **Incremental Caching & Checkpointing**: The questions cache (`questions_cache.json`) is written after every page of results. If the script is interrupted, progress is saved and fetching will resume from the cache on next run. Comments are also cached per-question with metadata and checkpointing.
+- **Test Isolation Guarantee**: All tests are strictly isolated from production data. Test runs are forbidden (enforced by code) from writing to or reading from real data directories (e.g., `data/forecasts/metaculus/comments_by_question`). All tests must use a temporary cache path, and this is checked at runtime.
+- **Troubleshooting**: If you encounter a network timeout or ReadTimeout, simply re-run the fetch script. Progress will resume from the last checkpoint. If a page fails after all retries, the script will log an error and stop safely without data loss.
+- **API Protocol Layer**: MCP protocol endpoints (API layer) are under active development. Endpoints and schemas may move as the project evolves. See `cafe/protocols/` for current API implementations.
+
 - **Checkpointing**: Progress is also tracked in `fetch_checkpoint.json` for safe resumption.
 - **Flexible Refresh**: Use `--refresh`, `--refresh-questions`, or `--refresh-comments` to force re-fetching of questions, comments, or both, ignoring the cache as needed.
 - **Resume Logic**: Use `--resume`, `--resume-questions`, or `--resume-comments` to resume from the last checkpoint for questions or comments.
