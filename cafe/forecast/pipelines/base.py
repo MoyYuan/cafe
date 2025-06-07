@@ -1,13 +1,26 @@
 from abc import ABC, abstractmethod
+from typing import Any, Dict, List
 
-
-class ForecastPipeline(ABC):
+class PipelineComponent(ABC):
     @abstractmethod
-    def run(self, input_data):
-        """Run the pipeline on provided input_data and return results."""
+    def run(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Process the input context and return the updated context.
+        """
         pass
 
-    @abstractmethod
-    def describe(self):
-        """Return a description of the pipeline (for metadata/logging)."""
-        pass
+    def describe(self) -> str:
+        return self.__class__.__name__
+
+class ForecastPipeline:
+    def __init__(self, components: List[PipelineComponent]):
+        self.components = components
+
+    def run(self, initial_context: Dict[str, Any]) -> Dict[str, Any]:
+        context = initial_context
+        for component in self.components:
+            context = component.run(context)
+        return context
+
+    def describe(self) -> str:
+        return " -> ".join([c.describe() for c in self.components])
