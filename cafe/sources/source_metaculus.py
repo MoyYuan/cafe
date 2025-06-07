@@ -56,7 +56,7 @@ class MetaculusForecastSource(ForecastSourceBase):
         import time
         from pathlib import Path
 
-        from cafe.forecast.processing.metadata import get_metadata
+        from cafe.sources.processing.metadata import get_metadata
 
         out_dir = Path(output_dir)
         out_dir.mkdir(parents=True, exist_ok=True)

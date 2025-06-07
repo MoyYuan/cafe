@@ -2,8 +2,8 @@ import json
 import os
 import tempfile
 
-from cafe.forecast.comment import MetaculusComment
-from cafe.forecast.source_local import LocalForecastCommentSource
+from cafe.sources.comment import MetaculusComment
+from cafe.sources.source_local import LocalForecastCommentSource
 
 
 def sample_comment(comment_id=1, question_id="101"):
