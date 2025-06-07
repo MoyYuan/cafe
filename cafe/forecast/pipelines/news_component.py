@@ -1,5 +1,7 @@
 from typing import Any, Dict
+
 from cafe.forecast.pipelines.base import PipelineComponent
+
 
 class NewsSearchComponent(PipelineComponent):
     def __init__(self, news_api):

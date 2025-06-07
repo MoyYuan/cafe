@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List
 
+
 class PipelineComponent(ABC):
     @abstractmethod
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:
@@ -11,6 +12,7 @@ class PipelineComponent(ABC):
 
     def describe(self) -> str:
         return self.__class__.__name__
+
 
 class ForecastPipeline:
     def __init__(self, components: List[PipelineComponent]):
