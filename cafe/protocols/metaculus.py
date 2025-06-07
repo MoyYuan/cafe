@@ -5,9 +5,9 @@ from typing import List, Optional
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from cafe.forecast.comment import MetaculusComment
-from cafe.forecast.question import MetaculusForecastQuestion
-from cafe.forecast.source_metaculus import MetaculusForecastSource
+from cafe.sources.comment import MetaculusComment
+from cafe.sources.question import MetaculusForecastQuestion
+from cafe.sources.source_metaculus import MetaculusForecastSource
 
 router = APIRouter()
 
@@ -28,7 +28,7 @@ class MetaculusCommentOut(BaseModel):
     vote_score: Optional[int]
 
 
-from cafe.forecast.source_local import LocalForecastSource
+from cafe.sources.source_local import LocalForecastSource
 
 
 @router.get("/metaculus/questions", response_model=List[MetaculusQuestionOut])
@@ -41,7 +41,7 @@ def get_metaculus_questions(
     Optionally override the questions cache file path with ?questions_cache_path=...
     """
     default_path = os.path.join(
-        "data", "forecasts", "metaculus", "questions_cache.json"
+        MetaculusForecastSource.cache_dir, "questions_cache.json"
     )
     local_path = questions_cache_path or default_path
     if not force_refresh and os.path.exists(local_path):
@@ -84,10 +84,10 @@ def get_metaculus_comments_for_question(
     """
     import os
 
-    from cafe.forecast.source_local import LocalForecastCommentSource
+    from cafe.sources.source_local import LocalForecastCommentSource
 
     default_comments_dir = os.path.join(
-        "data", "forecasts", "metaculus", "comments_by_question"
+        MetaculusForecastSource.cache_dir, "comments_by_question"
     )
     os.makedirs(default_comments_dir, exist_ok=True)
     local_path = comments_cache_path or os.path.join(

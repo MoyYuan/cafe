@@ -8,7 +8,7 @@ pytestmark = pytest.mark.skipif(
     reason="Metaculus API key not set; skipping live API tests.",
 )
 
-from cafe.forecast.source_metaculus import MetaculusForecastSource
+from cafe.sources.source_metaculus import MetaculusForecastSource
 
 
 def test_metaculus_api_cache_placeholder():
@@ -89,7 +89,7 @@ def test_questions_cache(tmp_path, monkeypatch):
         json.dump(SAMPLE_QUESTIONS, f)
     # Patch pipeline to use the new cache location
     monkeypatch.setattr(
-        "cafe.forecast.processing.metaculus.load_questions",
+        "cafe.sources.processing.metaculus.load_questions",
         lambda path: SAMPLE_QUESTIONS,
     )
     # Should load from cache
@@ -112,7 +112,7 @@ def test_questions_cache(tmp_path, monkeypatch):
     def fake_api_list_questions(self):
         return [FakeQ(q) for q in SAMPLE_QUESTIONS[::-1]]  # reverse order
 
-    from cafe.forecast.source_metaculus import MetaculusForecastSource
+    from cafe.sources.source_metaculus import MetaculusForecastSource
 
     monkeypatch.setattr(
         MetaculusForecastSource,
@@ -143,7 +143,7 @@ def test_comments_cache(tmp_path, monkeypatch):
 
     from datetime import datetime
 
-    from cafe.forecast.source_metaculus import MetaculusForecastSource
+    from cafe.sources.source_metaculus import MetaculusForecastSource
 
     class FakeC:
         def __init__(self, d):

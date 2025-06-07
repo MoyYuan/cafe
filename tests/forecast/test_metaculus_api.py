@@ -7,7 +7,7 @@ pytestmark = pytest.mark.skipif(
     reason="Metaculus API key not set; skipping live API tests.",
 )
 
-from cafe.forecast.source_metaculus import MetaculusForecastSource
+from cafe.sources.source_metaculus import MetaculusForecastSource
 
 
 def test_metaculus_api_placeholder():
@@ -21,7 +21,7 @@ pytestmark = pytest.mark.skipif(
     reason="Metaculus API key not set; skipping live API tests.",
 )
 
-from cafe.forecast.source_metaculus import MetaculusForecastSource
+from cafe.sources.source_metaculus import MetaculusForecastSource
 
 
 def print_schema(name, obj):

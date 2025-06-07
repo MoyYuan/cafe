@@ -1,6 +1,6 @@
 import argparse
 
-from cafe.forecast.processing import metaculus as mproc
+from cafe.sources.processing import metaculus as mproc
 
 
 def main():

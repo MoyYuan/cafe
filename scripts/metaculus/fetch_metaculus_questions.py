@@ -3,8 +3,8 @@ import json
 import sys
 from pathlib import Path
 
-from cafe.forecast.processing.metadata import get_metadata
-from cafe.forecast.source_metaculus import MetaculusForecastSource
+from cafe.sources.processing.metadata import get_metadata
+from cafe.sources.source_metaculus import MetaculusForecastSource
 
 
 def save_questions_and_comments(
