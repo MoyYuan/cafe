@@ -19,6 +19,7 @@ from .source_base import ForecastSourceBase
 
 
 class MetaculusForecastSource(ForecastSourceBase):
+    cache_dir: str = "data/forecasts/metaculus"
     # Retry/backoff config
     MAX_RETRIES = 5
     BACKOFF_FACTOR = 2.0  # exponential
