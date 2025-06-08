@@ -99,6 +99,11 @@ cafe/
 │   ├── protocols/
 │   ├── utils/
 │   ├── forecast/
+│   │   ├── pipelines/           # Composable forecasting pipelines
+│   │   │   ├── base.py          # PipelineComponent and ForecastPipeline base abstractions
+│   │   │   ├── llm_component.py # LLMForecastComponent: uses LLM to answer questions
+│   │   │   ├── news_component.py# NewsSearchComponent: retrieves news for questions
+│   ├── sources/                 # Data fetching and source integration (Metaculus, local, etc.)
 ├── tests/
 ├── scripts/
 │   ├── metaculus/
@@ -116,6 +121,47 @@ cafe/
 ├── README.md
 ├── requirements.txt
 ```
+
+## Forecasting Pipelines (Composable, Extensible)
+Cafe now supports composable forecasting pipelines, where each pipeline is a sequence of pluggable components (steps). Each component processes a shared context and can be swapped, added, or removed as needed.
+
+### Example Pipeline Usage
+```python
+from cafe.forecast.pipelines.base import ForecastPipeline
+from cafe.forecast.pipelines.llm_component import LLMForecastComponent
+from cafe.forecast.pipelines.news_component import NewsSearchComponent
+from cafe.sources.question import MetaculusForecastQuestion
+
+llm = ...        # Your LLM implementation (must have .predict(prompt))
+news_api = ...   # Your news API implementation (must have .search(query))
+
+pipeline = ForecastPipeline([
+    NewsSearchComponent(news_api),
+    LLMForecastComponent(llm),
+])
+
+question = MetaculusForecastQuestion(id="1", title="Will it rain tomorrow?", description="Probability of rain in London tomorrow.")
+context = {"question": question}
+result = pipeline.run(context)
+print(result)
+```
+
+- Add or remove components such as news, comments, time-series, or post-processing as needed.
+- Each component is isolated, testable, and extensible.
+
+## Data Sources
+- All data fetching and source integration logic is now under `cafe/sources/` (formerly part of `forecast/`).
+- To add a new data source, subclass `ForecastSourceBase` in `sources/source_base.py`.
+
+## Testing
+`pytest`
+
+## CI/CD
+See `.github/workflows/ci.yml`.
+
+---
+_This project is under active development._
+
 
 ## Roadmap & Progress
 See `.roadmap.md` and `.progress.md`.
