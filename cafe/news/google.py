@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional
 from urllib.parse import quote_plus
 
 import httpx
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 from cafe.config.config import get_settings  # Assumed config pattern
 from cafe.utils.logging import get_logger  # Assumed logging util
@@ -110,11 +110,15 @@ class GoogleNewsFetcher:
                     else ""
                 )
                 meta_desc = soup.find("meta", attrs={"name": "description"})
-                full_snippet = (
-                    meta_desc["content"].strip()
-                    if meta_desc and meta_desc.has_attr("content")
-                    else fallback_summary
+                content = (
+                    meta_desc.get("content") if isinstance(meta_desc, Tag) else None
                 )
+                if isinstance(content, str):
+                    full_snippet = content.strip()
+                elif isinstance(content, list):  # AttributeValueList
+                    full_snippet = " ".join(str(x) for x in content).strip()
+                else:
+                    full_snippet = fallback_summary
                 summary = f"{full_title} - {full_snippet}".strip(" -")
                 return summary or fallback_summary
         except Exception as e:
