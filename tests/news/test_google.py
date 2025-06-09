@@ -11,10 +11,10 @@ from datetime import datetime, timedelta
 def test_google_news_fetcher_basic():
     fetcher = GoogleNewsFetcher()
     today = datetime.now().date()
-    week_ago = today - timedelta(days=7)
+    year_ago = today - timedelta(days=365)
     results = fetcher.fetch_news(
         query="OpenAI",
-        start_date=str(week_ago),
+        start_date=str(year_ago),
         end_date=str(today),
         max_results=5
     )

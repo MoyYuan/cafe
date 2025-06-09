@@ -32,13 +32,12 @@ class GoogleNewsFetcher:
     def generate_query_params(
         self, query: str, start_date: str, end_date: str, start: int = 1
     ) -> Dict[str, Any]:
+        # Remove sort parameter for compatibility with free CSE
         encoded_query = quote_plus(query)
-        sort_param = f"date:r:{end_date.replace('-', '')}:{start_date.replace('-', '')}"
         return {
             "q": encoded_query,
             "cx": self.search_engine_id,
             "key": self.api_key,
-            "sort": sort_param,
             "num": 10,
             "start": start,
         }
@@ -49,31 +48,46 @@ class GoogleNewsFetcher:
         """
         Fetches news results for a query and date range.
         Returns a list of news items (dicts with at least 'link', 'title', 'snippet').
+        Adds debug printing/logging for troubleshooting.
         """
+        print("[DEBUG] --- GoogleNewsFetcher.fetch_news ---")
+        print(f"[DEBUG] API Key (masked): {self.api_key[:4]}...{'*' * (len(self.api_key) - 8)}...{self.api_key[-4:]}")
+        print(f"[DEBUG] Search Engine ID: {self.search_engine_id}")
+        print(f"[DEBUG] Query: {query} | Dates: {start_date} to {end_date}")
         all_results = []
         with httpx.Client(timeout=10.0) as client:
             for start in range(1, max_results + 1, 10):
                 params = self.generate_query_params(query, start_date, end_date, start)
+                print(f"[DEBUG] Request params: {params}")
                 try:
                     resp = client.get(GOOGLE_SEARCH_URL, params=params)
+                    print(f"[DEBUG] Request URL: {resp.url}")
+                    print(f"[DEBUG] Status code: {resp.status_code}")
                     resp.raise_for_status()
                     data = resp.json()
+                    print(f"[DEBUG] Raw API response: {data}")
                     items = data.get("items", [])
+                    print(f"[DEBUG] Items returned: {len(items)}")
                     all_results.extend(items)
                     if not items:
+                        print("[DEBUG] No more items, breaking loop.")
                         break  # No more results
                 except httpx.HTTPStatusError as e:
+                    print(f"[ERROR] Google API error: {e.response.status_code} - {e.response.text}")
                     self.logger.error(
                         f"Google API error: {e.response.status_code} - {e.response.text}"
                     )
                     if e.response.status_code == 429:
+                        print("[WARNING] Rate limit hit.")
                         self.logger.warning(
                             "Rate limit hit. Consider retry/backoff in pipeline."
                         )
                     break
                 except Exception as e:
+                    print(f"[ERROR] Unexpected error during news fetch: {e}")
                     self.logger.error(f"Unexpected error during news fetch: {e}")
                     break
+        print(f"[DEBUG] Total results returned: {len(all_results)}")
         return all_results
 
     def get_full_summary(self, link: str, fallback_summary: str = "") -> str:
