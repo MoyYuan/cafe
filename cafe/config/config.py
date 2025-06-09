@@ -15,3 +15,15 @@ class Config:
     GOOGLE_SEARCH_CX = os.getenv("GOOGLE_SEARCH_CX", "")
     VLLM_MODEL_PATH = os.getenv("VLLM_MODEL_PATH", "")
     # Add more config as needed
+
+
+_settings_instance = None
+
+def get_settings():
+    """
+    Returns a singleton Config instance with environment variables loaded.
+    """
+    global _settings_instance
+    if _settings_instance is None:
+        _settings_instance = Config()
+    return _settings_instance
