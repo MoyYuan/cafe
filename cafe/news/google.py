@@ -1,19 +1,23 @@
-import os
 import logging
-from typing import List, Dict, Any, Optional
+import os
+from typing import Any, Dict, List, Optional
 from urllib.parse import quote_plus
+
 import httpx
 from bs4 import BeautifulSoup
+
 from cafe.config.config import get_settings  # Assumed config pattern
-from cafe.utils.logging import get_logger   # Assumed logging util
+from cafe.utils.logging import get_logger  # Assumed logging util
 
 GOOGLE_SEARCH_URL = "https://www.googleapis.com/customsearch/v1"
+
 
 class GoogleNewsFetcher:
     """
     Fetches news results from Google Custom Search API and extracts article summaries.
     Designed for modular use in pipelines or API endpoints.
     """
+
     def __init__(
         self,
         api_key: Optional[str] = None,
@@ -25,7 +29,9 @@ class GoogleNewsFetcher:
         self.search_engine_id = search_engine_id or settings.GOOGLE_SEARCH_CX
         self.logger = logger or get_logger(__name__)
 
-    def generate_query_params(self, query: str, start_date: str, end_date: str, start: int = 1) -> Dict[str, Any]:
+    def generate_query_params(
+        self, query: str, start_date: str, end_date: str, start: int = 1
+    ) -> Dict[str, Any]:
         encoded_query = quote_plus(query)
         sort_param = f"date:r:{end_date.replace('-', '')}:{start_date.replace('-', '')}"
         return {
@@ -34,10 +40,12 @@ class GoogleNewsFetcher:
             "key": self.api_key,
             "sort": sort_param,
             "num": 10,
-            "start": start
+            "start": start,
         }
 
-    def fetch_news(self, query: str, start_date: str, end_date: str, max_results: int = 20) -> List[Dict[str, Any]]:
+    def fetch_news(
+        self, query: str, start_date: str, end_date: str, max_results: int = 20
+    ) -> List[Dict[str, Any]]:
         """
         Fetches news results for a query and date range.
         Returns a list of news items (dicts with at least 'link', 'title', 'snippet').
@@ -55,9 +63,13 @@ class GoogleNewsFetcher:
                     if not items:
                         break  # No more results
                 except httpx.HTTPStatusError as e:
-                    self.logger.error(f"Google API error: {e.response.status_code} - {e.response.text}")
+                    self.logger.error(
+                        f"Google API error: {e.response.status_code} - {e.response.text}"
+                    )
                     if e.response.status_code == 429:
-                        self.logger.warning("Rate limit hit. Consider retry/backoff in pipeline.")
+                        self.logger.warning(
+                            "Rate limit hit. Consider retry/backoff in pipeline."
+                        )
                     break
                 except Exception as e:
                     self.logger.error(f"Unexpected error during news fetch: {e}")
@@ -74,9 +86,17 @@ class GoogleNewsFetcher:
                 resp = client.get(link)
                 resp.raise_for_status()
                 soup = BeautifulSoup(resp.text, "html.parser")
-                full_title = soup.title.string.strip() if soup.title and soup.title.string else ""
+                full_title = (
+                    soup.title.string.strip()
+                    if soup.title and soup.title.string
+                    else ""
+                )
                 meta_desc = soup.find("meta", attrs={"name": "description"})
-                full_snippet = meta_desc["content"].strip() if meta_desc and meta_desc.has_attr("content") else fallback_summary
+                full_snippet = (
+                    meta_desc["content"].strip()
+                    if meta_desc and meta_desc.has_attr("content")
+                    else fallback_summary
+                )
                 summary = f"{full_title} - {full_snippet}".strip(" -")
                 return summary or fallback_summary
         except Exception as e:
