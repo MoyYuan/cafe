@@ -51,7 +51,9 @@ class GoogleNewsFetcher:
         Adds debug printing/logging for troubleshooting.
         """
         print("[DEBUG] --- GoogleNewsFetcher.fetch_news ---")
-        print(f"[DEBUG] API Key (masked): {self.api_key[:4]}...{'*' * (len(self.api_key) - 8)}...{self.api_key[-4:]}")
+        print(
+            f"[DEBUG] API Key (masked): {self.api_key[:4]}...{'*' * (len(self.api_key) - 8)}...{self.api_key[-4:]}"
+        )
         print(f"[DEBUG] Search Engine ID: {self.search_engine_id}")
         print(f"[DEBUG] Query: {query} | Dates: {start_date} to {end_date}")
         all_results = []
@@ -73,7 +75,9 @@ class GoogleNewsFetcher:
                         print("[DEBUG] No more items, breaking loop.")
                         break  # No more results
                 except httpx.HTTPStatusError as e:
-                    print(f"[ERROR] Google API error: {e.response.status_code} - {e.response.text}")
+                    print(
+                        f"[ERROR] Google API error: {e.response.status_code} - {e.response.text}"
+                    )
                     self.logger.error(
                         f"Google API error: {e.response.status_code} - {e.response.text}"
                     )

@@ -19,6 +19,7 @@ class Config:
 
 _settings_instance = None
 
+
 def get_settings():
     """
     Returns a singleton Config instance with environment variables loaded.
