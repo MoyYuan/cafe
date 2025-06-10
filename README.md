@@ -105,16 +105,13 @@ cafe/
 │   ├── protocols/
 │   ├── utils/
 │   ├── forecast/
-│   │   ├── pipelines/           # Composable forecasting pipelines
-│   │   │   ├── base.py          # PipelineComponent and ForecastPipeline base abstractions
-│   │   │   ├── llm_component.py # LLMForecastComponent: uses LLM to answer questions
-│   │   │   ├── news_component.py# NewsSearchComponent: retrieves news for questions
-│   ├── sources/                 # Data fetching and source integration (Metaculus, local, etc.)
+│   │   ├── pipelines/
+│   ├── sources/                 
 ├── tests/
 ├── scripts/
 │   ├── metaculus/
-│   ├── news/         # (suggested for future organization)
-│   ├── utils/        # (suggested for future organization)
+│   ├── news/
+│   ├── utils/
 ├── data/
 │   ├── forecasts/
 │   │   ├── metaculus/
