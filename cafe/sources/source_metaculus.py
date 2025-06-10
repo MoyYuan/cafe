@@ -83,7 +83,7 @@ class MetaculusForecastSource(ForecastSourceBase):
             print(f"Loaded {len(questions)} questions from cache.")
         # params is now set from filters argument above; no more hardcoded after or date filters
         page = 0
-        all_questions = questions.copy() if 'questions' in locals() else []
+        all_questions = questions.copy() if "questions" in locals() else []
         next_url: Optional[str] = None
         while True:
             if next_url:
@@ -184,10 +184,10 @@ class MetaculusForecastSource(ForecastSourceBase):
         base = (
             base_url
             if base_url is not None
-            else os.getenv("METACULUS_API_URL", "https://www.metaculus.com/api2/")
+            else os.getenv("METACULUS_API_URL", "https://www.metaculus.com/api/")
         )
         base = base.rstrip("/")
-        self.base_url = f"{base}/questions/"
+        self.base_url = f"{base}/posts/"
         self.api_url = base  # For generic resources
         self.api_key = api_key or os.getenv("METACULUS_API_KEY", "")
 
@@ -300,15 +300,15 @@ class MetaculusForecastSource(ForecastSourceBase):
     def list_questions(
         self, params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None
     ) -> List[MetaculusForecastQuestion]:
-        """List Metaculus questions as MetaculusForecastQuestion objects."""
-        raw_items = self.list_resource("questions", params=params or {})
+        """List Metaculus questions as MetaculusForecastQuestion objects (using /api/posts/)."""
+        raw_items = self.list_resource("posts", params=params or {})
         if not raw_items:
             return []
         return [self._parse_metaculus_question(item) for item in raw_items]
 
     def get_question(self, id: str) -> MetaculusForecastQuestion:
-        """Get a Metaculus question by id (MetaculusForecastQuestion object)."""
-        raw = self.get_resource("questions", id)
+        """Get a Metaculus question by id (MetaculusForecastQuestion object, using /api/posts/)."""
+        raw = self.get_resource("posts", id)
         if not raw:
             raise ValueError(f"Question with id {id} not found.")
         return self._parse_metaculus_question(raw)

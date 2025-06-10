@@ -51,40 +51,43 @@ def filter_questions(
     status: Optional[str] = None,
     tag: Optional[str] = None,
     min_forecasters: Optional[int] = None,
-    created_after: Optional[str] = None,
-    created_before: Optional[str] = None,
     has_resolution_criteria: Optional[bool] = None,
     min_comments: Optional[int] = None,
     custom_predicate: Optional[Callable[[dict], bool]] = None,
+    filters: Optional[dict] = None,
 ) -> list:
     """
     Filter questions by status, tag, min_forecasters, and metadata fields.
     Dates should be in ISO format (YYYY-MM-DD).
     """
-    from datetime import datetime
-
-    # Parse date strings if provided
-    created_after_dt = datetime.fromisoformat(created_after) if created_after else None
-    created_before_dt = (
-        datetime.fromisoformat(created_before) if created_before else None
-    )
-    # Filter by direct fields first, then metadata
     filtered = []
     for q in questions:
         if status and q.get("status") != status:
             continue
-        if tag and tag not in (q.get("tags") or []):
+        if tag and tag not in q.get("tags", []):
             continue
-        if min_forecasters:
-            fc = q.get("community_prediction", {}).get("num_forecasters")
-            if fc is None or fc < min_forecasters:
+        if min_forecasters and q.get("num_forecasters", 0) < min_forecasters:
+            continue
+        if filters:
+            if 'published_at__gt' in filters:
+                published_at = q.get('published_at')
+                if published_at and published_at < filters['published_at__gt']:
+                    continue
+            if 'published_at__lt' in filters:
+                published_at = q.get('published_at')
+                if published_at and published_at > filters['published_at__lt']:
+                    continue
+        if has_resolution_criteria is not None:
+            if bool(q.get("resolution_criteria")) != has_resolution_criteria:
                 continue
+        if min_comments and q.get("num_comments", 0) < min_comments:
+            continue
+        if custom_predicate and not custom_predicate(q):
+            continue
         filtered.append(q)
     # Now apply metadata-based filtering
     filtered = filter_questions_by_metadata(
         filtered,
-        created_after=created_after_dt,
-        created_before=created_before_dt,
         has_resolution_criteria=has_resolution_criteria,
         min_comments=min_comments,
         tag=tag,

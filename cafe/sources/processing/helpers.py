@@ -4,8 +4,7 @@ from typing import Any, Callable, List, Optional
 
 def filter_questions_by_metadata(
     questions: List[dict],
-    created_after: Optional[datetime] = None,
-    created_before: Optional[datetime] = None,
+    filters: Optional[dict] = None,
     has_resolution_criteria: Optional[bool] = None,
     min_comments: Optional[int] = None,
     tag: Optional[str] = None,
@@ -15,8 +14,7 @@ def filter_questions_by_metadata(
     Filter a list of MetaculusForecastQuestion objects by various metadata fields.
     Args:
         questions: List of questions to filter.
-        created_after: Only include questions created after this datetime.
-        created_before: Only include questions created before this datetime.
+        filters: Optional dict of filters (e.g., {'published_at__gt': ..., 'status': ...}).
         has_resolution_criteria: If set, include only questions with (or without) resolution criteria.
         min_comments: If set, include only questions with at least this many comments (if comments attribute exists).
         tag: If set, include only questions with this tag.
@@ -26,21 +24,16 @@ def filter_questions_by_metadata(
     """
     filtered = []
     for q in questions:
-        created_at = q.get("created_at")
-        if created_after:
-            if (
-                created_at is None
-                or not isinstance(created_at, datetime)
-                or created_at < created_after
-            ):
-                continue
-        if created_before:
-            if (
-                created_at is None
-                or not isinstance(created_at, datetime)
-                or created_at > created_before
-            ):
-                continue
+        # Example: apply published_at__gt filter if present
+        if filters:
+            if 'published_at__gt' in filters:
+                published_at = q.get('published_at')
+                if published_at and published_at < filters['published_at__gt']:
+                    continue
+            if 'published_at__lt' in filters:
+                published_at = q.get('published_at')
+                if published_at and published_at > filters['published_at__lt']:
+                    continue
         if (
             has_resolution_criteria is not None
             and bool(q.get("resolution_criteria")) != has_resolution_criteria

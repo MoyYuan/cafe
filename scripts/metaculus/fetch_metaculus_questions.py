@@ -8,7 +8,7 @@ from cafe.sources.source_metaculus import MetaculusForecastSource
 
 
 def save_questions_and_comments(
-    questions, comments_by_qid, out_dir, after, comments_mode="all-in-one", params=None
+    questions, comments_by_qid, out_dir, comments_mode="all-in-one", params=None
 ):
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -17,11 +17,18 @@ def save_questions_and_comments(
     q_metadata = get_metadata(
         script=script,
         params=params or {},
-        api_endpoint="https://www.metaculus.com/api2/questions/",
+        api_endpoint="https://www.metaculus.com/api/posts/",
         record_count=len(questions),
     )
-    # Save questions with metadata
-    qfile = out_dir / f"questions_{after}.json"
+    # Choose a date string for the filename if present
+    date_str = None
+    for key in ["published_at__gt", "open_time__gt", "created_time__gt"]:
+        if params and key in params:
+            date_str = params[key]
+            break
+    if date_str is None:
+        date_str = "latest"
+    qfile = out_dir / f"questions_{date_str}.json"
     with qfile.open("w") as f:
         json.dump(
             {
@@ -38,15 +45,12 @@ def save_questions_and_comments(
             api_endpoint="https://www.metaculus.com/api2/comments/",
             record_count=sum(len(clist) for clist in comments_by_qid.values()),
         )
-        cfile = out_dir / f"comments_{after}.json"
+        cfile = out_dir / f"comments_{date_str}.json"
         with cfile.open("w") as f:
             json.dump(
                 {
                     "metadata": c_metadata,
-                    "comments_by_question": {
-                        str(qid): [c.raw if hasattr(c, "raw") else c for c in clist]
-                        for qid, clist in comments_by_qid.items()
-                    },
+                    "data": comments_by_qid,
                 },
                 f,
                 indent=2,
@@ -58,7 +62,7 @@ def save_questions_and_comments(
             c_metadata = get_metadata(
                 script=script,
                 params={"question_id": qid, **(params or {})},
-                api_endpoint=f"https://www.metaculus.com/api2/questions/{qid}/comments/",
+                api_endpoint=f"https://www.metaculus.com/api/comments/{qid}/", 
                 record_count=len(clist),
             )
             cfile = comments_dir / f"{qid}.json"
@@ -131,11 +135,11 @@ def main():
     # Parse filters from --filter key=value
     filters = {}
     for filt in args.filter:
-        if '=' in filt:
-            k, v = filt.split('=', 1)
+        if "=" in filt:
+            k, v = filt.split("=", 1)
             # Support lists for some keys (comma-separated)
-            if ',' in v:
-                v = [item.strip() for item in v.split(',')]
+            if "," in v:
+                v = [item.strip() for item in v.split(",")]
             filters[k] = v
         else:
             print(f"Warning: Ignoring malformed filter: {filt}")
@@ -153,11 +157,11 @@ def main():
     )
 
     # Always save after fetch (even if fetch_and_cache... already saves, this guarantees output)
+    # All endpoints now use /api/posts/ and /api/comments/
     save_questions_and_comments(
         all_questions,
         comments_by_qid,
         args.output_dir,
-        args.after,
         comments_mode=args.comments_mode,
     )
 
