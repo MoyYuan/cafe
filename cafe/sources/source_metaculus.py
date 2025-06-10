@@ -142,7 +142,7 @@ class MetaculusForecastSource(ForecastSourceBase):
         # Fetch comments
         comments_by_qid = {}
         for idx, q in enumerate(all_questions):
-            qid = str(q.id)
+            qid = str(q["id"]) if isinstance(q, dict) else str(q.id)
             print(
                 f"Fetching comments for question {qid} ({idx+1}/{len(all_questions)})..."
             )
@@ -312,6 +312,21 @@ class MetaculusForecastSource(ForecastSourceBase):
         if not raw:
             raise ValueError(f"Question with id {id} not found.")
         return self._parse_metaculus_question(raw)
+
+    def get_full_question_details_api2(self, id: str) -> dict:
+        """
+        Fetch the full question details from /api2/questions/{id}/ (for forecast/aggregation fields).
+        Returns the raw dict or None if not found.
+        """
+        api2_url = f"https://www.metaculus.com/api2/questions/{id}/"
+        try:
+            response = self._httpx_get_with_retries(api2_url, headers=self._headers())
+            if response is None:
+                return None
+            return response.json()
+        except Exception as e:
+            print(f"[Metaculus] Error fetching full details from {api2_url}: {e}")
+            return None
 
     def list_users(
         self, params: Optional[Mapping[str, Union[str, int, float, bool, None]]] = None

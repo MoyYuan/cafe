@@ -18,27 +18,59 @@ def load_questions(path: Union[str, Path]) -> List[dict]:
 
 
 def load_comments(path: Union[str, Path]) -> Dict[str, Any]:
+    """
+    Load comments and return a dict mapping question IDs (as strings) to lists of comments.
+    If a directory is provided, merge all found mappings.
+    """
     path = Path(path)
+    comments_by_qid: Dict[str, list] = {}
     if path.is_file():
         with path.open("r") as f:
             obj = json.load(f)
             if isinstance(obj, dict) and "comments_by_question" in obj:
-                return obj["comments_by_question"]
-            return obj
+                for k, v in obj["comments_by_question"].items():
+                    comments_by_qid[str(k)] = v
+            elif isinstance(obj, dict):
+                # Try to treat the whole dict as comments_by_qid
+                for k, v in obj.items():
+                    comments_by_qid[str(k)] = v
     elif path.is_dir():
-        result: Dict[str, Any] = {}
         for file in path.glob("*.json"):
             with file.open("r") as f:
                 obj = json.load(f)
-                if isinstance(obj, dict) and "data" in obj:
-                    result[file.stem] = obj["data"]
+                # Handle structure: { 'metadata': { 'qid': ... }, 'data': [...] }
+                if (
+                    isinstance(obj, dict)
+                    and "metadata" in obj
+                    and "qid" in obj["metadata"]
+                    and "data" in obj
+                    and isinstance(obj["data"], list)
+                ):
+                    qid = str(obj["metadata"]["qid"])
+                    comments_by_qid.setdefault(qid, []).extend(obj["data"])
                 elif isinstance(obj, dict) and "comments_by_question" in obj:
-                    result[file.stem] = obj["comments_by_question"]
-                else:
-                    result[file.stem] = obj
-        return result
+                    for k, v in obj["comments_by_question"].items():
+                        comments_by_qid[str(k)] = v
+                elif isinstance(obj, dict) and "data" in obj:
+                    # Sometimes "data" is a list of comments, try to infer qid from comments
+                    data = obj["data"]
+                    if isinstance(data, list):
+                        for comment in data:
+                            qid = str(
+                                comment.get("question_id")
+                                or comment.get("questionId")
+                                or comment.get("qid")
+                            )
+                            if qid and qid != "None":
+                                comments_by_qid.setdefault(qid, []).append(comment)
+                elif isinstance(obj, dict):
+                    for k, v in obj.items():
+                        # If value is a list of comments, treat as qid -> comments
+                        if isinstance(v, list) and all(isinstance(c, dict) for c in v):
+                            comments_by_qid[str(k)] = v
     else:
         raise FileNotFoundError(f"No such file or directory: {path}")
+    return comments_by_qid
 
 
 from typing import Callable
@@ -114,8 +146,10 @@ def link_comments_to_forecasts(
         'forecast': ...,
         'comments': [ ... ]
       }
-    Comments are attached to the nearest (not after) forecast snapshot.
+    Comments are attached to the nearest (not after) forecast snapshot, by date only (YYYY-MM-DD).
     """
+    from datetime import datetime
+
     result = {}
     for q in questions:
         qid = str(q.get("id"))
@@ -138,6 +172,14 @@ def link_comments_to_forecasts(
             for f in forecasts
             if "end_time" in f and f["end_time"] is not None
         ]
+        forecast_dates = [
+            (
+                datetime.utcfromtimestamp(ft).date()
+                if isinstance(ft, (int, float))
+                else None
+            )
+            for ft in forecast_times
+        ]
         time_series = [
             {"timestamp": f.get("end_time"), "forecast": f, "comments": []}
             for f in forecasts
@@ -147,8 +189,14 @@ def link_comments_to_forecasts(
         comments = comments_by_qid.get(qid, [])
         for c in comments:
             ctime = parse_time(c["created_at"])
-            # Find the right forecast snapshot (not after comment)
-            idx = bisect.bisect_right(forecast_times, ctime) - 1
+            cdate = datetime.utcfromtimestamp(ctime).date()
+            # Find the right forecast snapshot (not after comment date)
+            idx = -1
+            for i, fdate in enumerate(forecast_dates):
+                if fdate is not None and fdate <= cdate:
+                    idx = i
+                elif fdate is not None and fdate > cdate:
+                    break
             if idx >= 0:
                 time_series[idx]["comments"].append(c)
         result[qid] = time_series

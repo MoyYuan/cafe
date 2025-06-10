@@ -103,6 +103,12 @@ def main():
         help="Add a filter as key=value (can be repeated)",
     )
     parser.add_argument(
+        "--status",
+        action="append",
+        default=None,
+        help="Question status to include (can be repeated or comma-separated, default: all statuses)",
+    )
+    parser.add_argument(
         "--verbose", action="store_true", help="Print raw JSON for inspection"
     )
     parser.add_argument(
@@ -134,27 +140,57 @@ def main():
 
     # Parse filters from --filter key=value
     filters = {}
-    for filt in args.filter:
-        if "=" in filt:
-            k, v = filt.split("=", 1)
-            # Support lists for some keys (comma-separated)
-            if "," in v:
-                v = [item.strip() for item in v.split(",")]
-            filters[k] = v
-        else:
-            print(f"Warning: Ignoring malformed filter: {filt}")
+    for f in args.filter:
+        if "=" not in f:
+            print(f"Invalid filter: {f}")
+            continue
+        k, v = f.split("=", 1)
+        filters[k] = v
+    # Parse statuses from --status (support repeated and comma-separated)
+    statuses = []
+    if args.status:
+        for s in args.status:
+            statuses.extend([item.strip() for item in s.split(",") if item.strip()])
+    if not statuses:
+        statuses = ["upcoming", "closed", "resolved", "open"]
+    filters["statuses"] = statuses
 
     src = MetaculusForecastSource()
     src.verbose = args.verbose  # Ensure deep verbose logging
     all_questions, comments_by_qid = src.fetch_and_cache_questions_and_comments(
-        output_dir=args.output_dir,
         filters=filters,
+        output_dir=args.output_dir,
         comments_mode=args.comments_mode,
-        refresh_questions=args.refresh or args.refresh_questions,
-        refresh_comments=args.refresh or args.refresh_comments,
-        no_cache=args.no_cache,
         verbose=args.verbose,
+        limit=args.limit,
+        refresh_comments=args.refresh_comments,
+        no_cache=args.no_cache,
     )
+
+    # Hydrate with full forecast/aggregation fields from /api2/questions/{id}/
+    print(
+        "Hydrating questions with full forecast history from /api2/questions/{id}/ ..."
+    )
+    for q in all_questions:
+        qid = getattr(q, "id", None) or q.get("id")
+        if not qid:
+            continue
+        full = src.get_full_question_details_api2(qid)
+        if full:
+            # Merge in forecast/aggregation fields (community_prediction, metaculus_prediction, etc.)
+            for key in [
+                "community_prediction",
+                "metaculus_prediction",
+                "aggregations",
+                "forecasts",
+                "forecast_count",
+            ]:
+                if key in full:
+                    (
+                        setattr(q, key, full[key])
+                        if hasattr(q, key)
+                        else q.update({key: full[key]})
+                    )
 
     # Always save after fetch (even if fetch_and_cache... already saves, this guarantees output)
     # All endpoints now use /api/posts/ and /api/comments/
