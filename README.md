@@ -6,6 +6,12 @@ A modular forecasting platform integrating LLMs, time-series forecasting, and li
 - Modular, package-centric architecture
 - Integrates LLMs (vLLM, Gemini, HuggingFace) and time-series models
 - Pluggable news/data retrieval (API or local)
+  - Google News fetcher is compatible with free Google Custom Search (no `sort` parameter)
+  - Robust, mypy-safe summary extraction from news articles
+  - No file-based caching in the default refactored version
+  - Configured via environment variables (`.env`)
+  - Only one Google API key/CSE supported at a time (no account switching)
+
 - Evaluation and experiment tracking modules
 - FastAPI-based API layer
 - File-based caching for Metaculus questions and comments (with force-refresh and robust incremental cache writes for long fetches)
@@ -152,16 +158,6 @@ print(result)
 ## Data Sources
 - All data fetching and source integration logic is now under `cafe/sources/` (formerly part of `forecast/`).
 - To add a new data source, subclass `ForecastSourceBase` in `sources/source_base.py`.
-
-## Testing
-`pytest`
-
-## CI/CD
-See `.github/workflows/ci.yml`.
-
----
-_This project is under active development._
-
 
 ## Roadmap & Progress
 See `.roadmap.md` and `.progress.md`.
