@@ -39,8 +39,8 @@ class MetaculusForecastSource(ForecastSourceBase):
 
     def fetch_and_cache_questions_and_comments(
         self,
-        after: str = "2023-10-01",
         output_dir: str = "data/forecasts/metaculus",
+        filters: Optional[dict] = None,
         comments_mode: str = "all-in-one",
         limit: Optional[int] = None,
         refresh_questions: bool = False,
@@ -51,6 +51,7 @@ class MetaculusForecastSource(ForecastSourceBase):
         """
         Fetch questions and comments from Metaculus, with caching and checkpointing.
         Logic refactored from scripts/metaculus/fetch_metaculus_questions.py.
+        Now supports arbitrary API filters via the 'filters' argument.
         """
         import json
         import sys
@@ -64,7 +65,14 @@ class MetaculusForecastSource(ForecastSourceBase):
         cache_questions_file = out_dir / "questions_cache.json"
         comments_dir = out_dir / "comments_by_question"
         comments_dir.mkdir(exist_ok=True)
-        checkpoint_file = out_dir / "fetch_checkpoint.json"
+
+        # Use filters if provided, else empty dict for backward compatibility
+        params = filters or {}
+
+        # Fetch questions with filters
+        all_questions = self.list_questions(params=params)
+
+        # The rest of the method remains unchanged (comments fetching, etc.)        checkpoint_file = out_dir / "fetch_checkpoint.json"
         questions = []
         fetched_qids = set()
         # Questions cache logic
@@ -73,12 +81,9 @@ class MetaculusForecastSource(ForecastSourceBase):
                 questions = json.load(f)
             fetched_qids = set(str(q.get("id")) for q in questions)
             print(f"Loaded {len(questions)} questions from cache.")
-        params: dict[str, str | int | float | bool | None] = {
-            "created_time__gt": f"{after}T00:00:00Z",
-            "limit": 100,
-        }
+        # params is now set from filters argument above; no more hardcoded after or date filters
         page = 0
-        all_questions = questions.copy()
+        all_questions = questions.copy() if 'questions' in locals() else []
         next_url: Optional[str] = None
         while True:
             if next_url:

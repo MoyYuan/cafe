@@ -77,13 +77,7 @@ def save_questions_and_comments(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Fetch Metaculus questions and their comments after a given date."
-    )
-    parser.add_argument(
-        "--after",
-        type=str,
-        default="2023-10-01",
-        help="Fetch questions created after this date (YYYY-MM-DD)",
+        description="Fetch Metaculus questions and their comments with flexible filtering."
     )
     parser.add_argument(
         "--output-dir",
@@ -97,6 +91,12 @@ def main():
         choices=["all-in-one", "per-question"],
         default="all-in-one",
         help="How to save comments: all-in-one file or per-question files",
+    )
+    parser.add_argument(
+        "--filter",
+        action="append",
+        default=[],
+        help="Add a filter as key=value (can be repeated)",
     )
     parser.add_argument(
         "--verbose", action="store_true", help="Print raw JSON for inspection"
@@ -125,15 +125,27 @@ def main():
         default=None,
         help="Limit the number of questions to fetch/process.",
     )
+
     args = parser.parse_args()
+
+    # Parse filters from --filter key=value
+    filters = {}
+    for filt in args.filter:
+        if '=' in filt:
+            k, v = filt.split('=', 1)
+            # Support lists for some keys (comma-separated)
+            if ',' in v:
+                v = [item.strip() for item in v.split(',')]
+            filters[k] = v
+        else:
+            print(f"Warning: Ignoring malformed filter: {filt}")
 
     src = MetaculusForecastSource()
     src.verbose = args.verbose  # Ensure deep verbose logging
     all_questions, comments_by_qid = src.fetch_and_cache_questions_and_comments(
-        after=args.after,
         output_dir=args.output_dir,
+        filters=filters,
         comments_mode=args.comments_mode,
-        limit=args.limit,
         refresh_questions=args.refresh or args.refresh_questions,
         refresh_comments=args.refresh or args.refresh_comments,
         no_cache=args.no_cache,
