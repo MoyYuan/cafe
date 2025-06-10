@@ -58,7 +58,9 @@ def main():
         ),
         min_comments=args.min_comments,
     )
-    print(f"Loaded {len(questions)} questions, {len(filtered)} after filtering.\nNOTE: Date filtering is now supported via --filter key=value (e.g., --filter published_at__gt=YYYY-MM-DD)")
+    print(
+        f"Loaded {len(questions)} questions, {len(filtered)} after filtering.\nNOTE: Date filtering is now supported via --filter key=value (e.g., --filter published_at__gt=YYYY-MM-DD)"
+    )
     series = mproc.link_comments_to_forecasts(filtered, comments)
     mproc.export_time_series_with_comments(
         series,

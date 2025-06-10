@@ -62,7 +62,7 @@ def save_questions_and_comments(
             c_metadata = get_metadata(
                 script=script,
                 params={"question_id": qid, **(params or {})},
-                api_endpoint=f"https://www.metaculus.com/api/comments/{qid}/", 
+                api_endpoint=f"https://www.metaculus.com/api/comments/{qid}/",
                 record_count=len(clist),
             )
             cfile = comments_dir / f"{qid}.json"

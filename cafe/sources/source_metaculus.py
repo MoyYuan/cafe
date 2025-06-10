@@ -142,7 +142,7 @@ class MetaculusForecastSource(ForecastSourceBase):
         # Fetch comments
         comments_by_qid = {}
         for idx, q in enumerate(all_questions):
-            qid = str(q.get("id"))
+            qid = str(q.id)
             print(
                 f"Fetching comments for question {qid} ({idx+1}/{len(all_questions)})..."
             )

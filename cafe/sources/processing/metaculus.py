@@ -69,13 +69,13 @@ def filter_questions(
         if min_forecasters and q.get("num_forecasters", 0) < min_forecasters:
             continue
         if filters:
-            if 'published_at__gt' in filters:
-                published_at = q.get('published_at')
-                if published_at and published_at < filters['published_at__gt']:
+            if "published_at__gt" in filters:
+                published_at = q.get("published_at")
+                if published_at and published_at < filters["published_at__gt"]:
                     continue
-            if 'published_at__lt' in filters:
-                published_at = q.get('published_at')
-                if published_at and published_at > filters['published_at__lt']:
+            if "published_at__lt" in filters:
+                published_at = q.get("published_at")
+                if published_at and published_at > filters["published_at__lt"]:
                     continue
         if has_resolution_criteria is not None:
             if bool(q.get("resolution_criteria")) != has_resolution_criteria:
