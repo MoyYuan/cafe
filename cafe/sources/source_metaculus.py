@@ -313,7 +313,7 @@ class MetaculusForecastSource(ForecastSourceBase):
             raise ValueError(f"Question with id {id} not found.")
         return self._parse_metaculus_question(raw)
 
-    def get_full_question_details_api2(self, id: str) -> dict:
+    def get_full_question_details_api2(self, id: str) -> Optional[dict]:
         """
         Fetch the full question details from /api2/questions/{id}/ (for forecast/aggregation fields).
         Returns the raw dict or None if not found.
